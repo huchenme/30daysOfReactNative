@@ -9,16 +9,31 @@ import {
 } from 'react-native';
 
 export default class Day1 extends Component {
+  constructor(props) {
+    super(props);
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    this.state = {
+      dataSource: ds.cloneWithRows([
+        {
+          lap: 3,
+          time: '00:00.51'
+        },
+        {
+          lap: 2,
+          time: '00:01.20'
+        },
+        {
+          lap: 1,
+          time: '00:04.49'
+        },
+      ])
+    };
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <View style={{
-            height: 180,
-            alignItems: 'center',
-            justifyContent: 'center',
-            borderBottomColor: colors.separator,
-            borderBottomWidth: StyleSheet.hairlineWidth
-          }}>
+        <View style={styles.watchFace}>
           <View style={{
               position: 'relative',
             }}>
@@ -57,12 +72,13 @@ export default class Day1 extends Component {
               }}>
               <TouchableHighlight
                 disabled
-                style={[styles.button, styles.buttonDisabled]}
+                style={[styles.controlButton, styles.buttonDisabled]}
                 underlayColor={colors.buttonUnderlay}
                 onPress={()=>{console.log("on press lap")}}>
                 <Text
                   style={{
                     color: colors.textSecondary,
+                    fontSize: 17,
                   }}>
                   Lap
                 </Text>
@@ -75,12 +91,13 @@ export default class Day1 extends Component {
                 justifyContent: 'center',
               }}>
               <TouchableHighlight
-                style={styles.button}
+                style={styles.controlButton}
                 underlayColor={colors.buttonUnderlay}
                 onPress={()=>{console.log("on press start")}}>
                 <Text
                   style={{
                     color: colors.green,
+                    fontSize: 17,
                   }}>
                   Start
                 </Text>
@@ -90,6 +107,40 @@ export default class Day1 extends Component {
           <View style={{
               flex: 1,
             }}>
+            <ListView
+              automaticallyAdjustContentInsets={false}
+              dataSource={this.state.dataSource}
+              renderRow={(rowData) => (
+                <View style={{
+                    paddingLeft: 45,
+                    paddingRight: 45,
+                    height: 44,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                  }}>
+                  <Text style={{
+                      color: colors.textSecondary,
+                      fontSize: 17
+                    }}>Lap {rowData.lap}</Text>
+                  <Text style={{
+                      color: colors.textPrimary,
+                      fontSize: 22,
+                      fontWeight: '300'
+                    }}>{rowData.time}</Text>
+                </View>
+              )}
+              renderSeparator={(sectionID, rowID, adjacentRowHighlighted) => (
+                <View
+                  key={`${sectionID}-${rowID}`}
+                  style={{
+                    marginLeft: 15,
+                    height: StyleSheet.hairlineWidth,
+                    backgroundColor: colors.separator,
+                  }}
+                />
+              )}
+            />
           </View>
         </View>
       </View>
@@ -100,9 +151,16 @@ export default class Day1 extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 64
+    marginTop: 64,
   },
-  button: {
+  watchFace: {
+    height: 180,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderBottomColor: colors.separator,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+  },
+  controlButton: {
     borderRadius: 75,
     height: 75,
     width: 75,
@@ -111,6 +169,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   buttonDisabled: {
-    backgroundColor: '#F7F7F9'
-  }
+    backgroundColor: '#F7F7F9',
+  },
 });
