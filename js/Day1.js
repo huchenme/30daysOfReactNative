@@ -8,21 +8,19 @@ import {
   TouchableHighlight,
 } from 'react-native';
 
-// TODO: lap
-// TODO: show empty records at beginning
-
 export default class Day1 extends Component {
-  constructor(props) {
-    super(props);
-    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    this.state = {
-      started: false,
-      running: false,
-      initialTime: 0,
-      currentTime: 0,
-      accumulatedTime: 0,
-      dataSource: ds.cloneWithRows([510, 520, 1130])
-    };
+  ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+
+  state = {
+    started: false,
+    running: false,
+    initialTime: 0,
+    initialLapTime: 0,
+    currentTime: 0,
+    accumulatedTime: 0,
+    accumulatedLapTime: 0,
+    lapTimings: [],
+    dataSource: this.ds.cloneWithRows([-1,-1,-1,-1,-1,-1,-1])
   }
 
   timeDisplay = (time) => {
@@ -45,52 +43,79 @@ export default class Day1 extends Component {
     return this.timeDisplay(totalTime);
   }
 
+  lapTimeDisplay = () => {
+    const lapTime = this.state.currentTime - this.state.initialLapTime + this.state.accumulatedLapTime;
+    return this.timeDisplay(lapTime);
+  }
+
   currentTime = () => {
     return (new Date()).getTime();
   }
 
   startTimer = () => {
-    console.log('start timer');
     const currentTime = this.currentTime();
     if (!this.state.started) {
       this.setState({
         started: true,
         running: true,
         accumulatedTime: 0,
+        accumulatedLapTime: 0,
         initialTime: currentTime,
+        initialLapTime: currentTime,
         currentTime
       })
     } else {
       this.setState({
         running: true,
         initialTime: currentTime,
+        initialLapTime: currentTime,
         currentTime
       })
     }
     this._interval = setInterval(
       () => {
         this.setState({
-          currentTime: this.currentTime(),
+          currentTime: this.currentTime()
         })
-        if (!this.state.running) {
-
-          clearInterval(interval)
-        }
       }
     , 10)
   }
 
   stopTimer = () => {
-    console.log('stop timer');
     if (this._interval) {
       this.setState({
         running: false,
         initialTime: this.state.currentTime,
+        initialLapTime: this.state.currentTime,
         accumulatedTime: this.state.currentTime - this.state.initialTime + this.state.accumulatedTime,
+        accumulatedLapTime: this.state.currentTime - this.state.initialLapTime + this.state.accumulatedLapTime,
       })
       clearInterval(this._interval)
       this._interval = null;
     }
+  }
+
+  convertLapTimingsToDataSource = (timings) => {
+    if (timings.length >= 7) {
+      return timings;
+    } else {
+      let newTimings = [...timings];
+      for (let i = timings.length; i < 7; i++) {
+        newTimings = [...newTimings, -1];
+      }
+      return newTimings;
+    }
+  }
+
+  lap = () => {
+    const currentLapTiming = this.state.currentTime - this.state.initialLapTime + this.state.accumulatedLapTime;
+    const newLapTimings = [currentLapTiming, ...this.state.lapTimings]
+    this.setState({
+      lapTimings: newLapTimings,
+      dataSource: this.ds.cloneWithRows(this.convertLapTimingsToDataSource(newLapTimings)),
+      initialLapTime: this.currentTime(),
+      accumulatedLapTime: 0
+    })
   }
 
   resetTimer = () => {
@@ -98,8 +123,12 @@ export default class Day1 extends Component {
       started: false,
       running: false,
       initialTime: 0,
+      initialLapTime: 0,
       currentTime: 0,
       accumulatedTime: 0,
+      accumulatedLapTime: 0,
+      lapTimings: [],
+      dataSource: this.ds.cloneWithRows(this.convertLapTimingsToDataSource([])),
     })
   }
 
@@ -141,7 +170,7 @@ export default class Day1 extends Component {
         disabled={!this.state.started}
         style={style}
         underlayColor={colors.buttonUnderlay}
-        onPress={()=>{console.log("on press lap")}}>
+        onPress={this.lap}>
         <Text
           style={{
             color: textColor,
@@ -209,7 +238,7 @@ export default class Day1 extends Component {
                   fontSize: 21,
                   fontWeight: '300',
                   fontFamily: 'HelveticaNeue'
-                }}>{this.totalTimeDisplay()}</Text>
+                }}>{this.lapTimeDisplay()}</Text>
             </View>
           </View>
         </View>
@@ -235,25 +264,32 @@ export default class Day1 extends Component {
             <ListView
               automaticallyAdjustContentInsets={false}
               dataSource={this.state.dataSource}
+              enableEmptySections
               renderRow={(rowData, sectionID, rowID) => (
                 <View style={{
                     paddingLeft: 45,
                     paddingRight: 45,
                     height: 44,
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
+                    justifyContent: 'center',
                   }}>
-                  <Text style={{
-                      color: colors.textSecondary,
-                      fontSize: 17
-                    }}>Lap {totalLaps - rowID}</Text>
-                  <Text style={{
-                      color: colors.textPrimary,
-                      fontSize: 22,
-                      fontWeight: '300',
-                      fontFamily: 'HelveticaNeue'
-                    }}>{this.timeDisplay(rowData)}</Text>
+                  {rowData >= 0 && (
+                    <View style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                    }}>
+                      <Text style={{
+                          color: colors.textSecondary,
+                          fontSize: 17
+                        }}>Lap {totalLaps - rowID}</Text>
+                      <Text style={{
+                          color: colors.textPrimary,
+                          fontSize: 22,
+                          fontWeight: '300',
+                          fontFamily: 'HelveticaNeue'
+                        }}>{this.timeDisplay(rowData)}</Text>
+                    </View>
+                  )}
                 </View>
               )}
               renderSeparator={(sectionID, rowID, adjacentRowHighlighted) => (
