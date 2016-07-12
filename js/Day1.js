@@ -8,6 +8,9 @@ import {
   TouchableHighlight,
 } from 'react-native';
 
+// TODO: lap
+// TODO: show empty records at beginning
+
 export default class Day1 extends Component {
   constructor(props) {
     super(props);
@@ -18,20 +21,7 @@ export default class Day1 extends Component {
       initialTime: 0,
       currentTime: 0,
       accumulatedTime: 0,
-      dataSource: ds.cloneWithRows([
-        {
-          lap: 3,
-          time: '00:00.51'
-        },
-        {
-          lap: 2,
-          time: '00:01.20'
-        },
-        {
-          lap: 1,
-          time: '00:04.49'
-        },
-      ])
+      dataSource: ds.cloneWithRows([510, 520, 1130])
     };
   }
 
@@ -143,6 +133,49 @@ export default class Day1 extends Component {
     </TouchableHighlight>
   )
 
+  lapButton = () => {
+    const style = this.state.started ? styles.controlButton : [styles.controlButton, styles.buttonDisabled];
+    const textColor = this.state.started ? colors.textPrimary : colors.textSecondary;
+    return (
+      <TouchableHighlight
+        disabled={!this.state.started}
+        style={style}
+        underlayColor={colors.buttonUnderlay}
+        onPress={()=>{console.log("on press lap")}}>
+        <Text
+          style={{
+            color: textColor,
+            fontSize: 17,
+          }}>
+          Lap
+        </Text>
+      </TouchableHighlight>
+    )
+  }
+
+  resetButton = () => (
+    <TouchableHighlight
+      style={styles.controlButton}
+      underlayColor={colors.buttonUnderlay}
+      onPress={this.resetTimer}>
+      <Text
+        style={{
+          color: colors.textPrimary,
+          fontSize: 17,
+        }}>
+        Reset
+      </Text>
+    </TouchableHighlight>
+  )
+
+  leftButton = () => {
+    if (this.state.started && !this.state.running) {
+      return this.resetButton();
+    } else {
+      return this.lapButton();
+    }
+  }
+
   rightButton = () => {
     if (this.state.running) {
       return this.stopButton();
@@ -152,6 +185,8 @@ export default class Day1 extends Component {
   }
 
   render() {
+    const {dataSource} = this.state;
+    const totalLaps = dataSource.getRowCount();
     return (
       <View style={styles.container}>
         <View style={styles.watchFace}>
@@ -161,7 +196,8 @@ export default class Day1 extends Component {
             <Text style={{
                 fontSize: 70,
                 fontWeight: '100',
-                color: colors.textPrimary
+                color: colors.textPrimary,
+                fontFamily: 'HelveticaNeue'
               }}>{this.totalTimeDisplay()}</Text>
             <View style={{
                 position: 'absolute',
@@ -171,7 +207,8 @@ export default class Day1 extends Component {
               <Text style={{
                   color: colors.textSecondary,
                   fontSize: 21,
-                  fontWeight: '300'
+                  fontWeight: '300',
+                  fontFamily: 'HelveticaNeue'
                 }}>{this.totalTimeDisplay()}</Text>
             </View>
           </View>
@@ -186,19 +223,7 @@ export default class Day1 extends Component {
               flexDirection: 'row'
             }}>
             <View style={styles.controlButtonContainer}>
-              <TouchableHighlight
-                disabled
-                style={[styles.controlButton, styles.buttonDisabled]}
-                underlayColor={colors.buttonUnderlay}
-                onPress={()=>{console.log("on press lap")}}>
-                <Text
-                  style={{
-                    color: colors.textSecondary,
-                    fontSize: 17,
-                  }}>
-                  Lap
-                </Text>
-              </TouchableHighlight>
+              {this.leftButton()}
             </View>
             <View style={styles.controlButtonContainer}>
               {this.rightButton()}
@@ -210,7 +235,7 @@ export default class Day1 extends Component {
             <ListView
               automaticallyAdjustContentInsets={false}
               dataSource={this.state.dataSource}
-              renderRow={(rowData) => (
+              renderRow={(rowData, sectionID, rowID) => (
                 <View style={{
                     paddingLeft: 45,
                     paddingRight: 45,
@@ -222,12 +247,13 @@ export default class Day1 extends Component {
                   <Text style={{
                       color: colors.textSecondary,
                       fontSize: 17
-                    }}>Lap {rowData.lap}</Text>
+                    }}>Lap {totalLaps - rowID}</Text>
                   <Text style={{
                       color: colors.textPrimary,
                       fontSize: 22,
-                      fontWeight: '300'
-                    }}>{rowData.time}</Text>
+                      fontWeight: '300',
+                      fontFamily: 'HelveticaNeue'
+                    }}>{this.timeDisplay(rowData)}</Text>
                 </View>
               )}
               renderSeparator={(sectionID, rowID, adjacentRowHighlighted) => (
