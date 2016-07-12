@@ -3,14 +3,14 @@ import {
   StyleSheet,
   TouchableHighlight,
   Text,
-  View
-} from 'react-native';
-import Day1 from './components/Day1';
+  View,
+} from 'react-native'
+import Day1 from './Day1';
 
 export default class Main extends Component {
   goToDay1 = () => {
     this.props.navigator.push({
-      title: 'Day 1',
+      title: 'Stopwatch',
       component: Day1
     });
   }
@@ -31,7 +31,8 @@ export default class Main extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    marginTop: 64,
+    alignItems: "center",
+    justifyContent: "center",
   }
 });
