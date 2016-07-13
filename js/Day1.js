@@ -6,6 +6,7 @@ import {
   StyleSheet,
   ListView,
   TouchableHighlight,
+  Dimensions
 } from 'react-native';
 
 function convertLapTimingsToDataSource(timings = [], row = 6) {
@@ -28,7 +29,18 @@ export default class Day1 extends Component {
     accumulatedTime: 0,
     accumulatedLapTime: 0,
     lapTimings: [],
-    dataSource: this.ds.cloneWithRows(convertLapTimingsToDataSource())
+    rowCount: 0,
+    dataSource: this.ds.cloneWithRows([])
+  }
+
+  componentDidMount() {
+    const {height} = Dimensions.get('window');
+    const rowCount = Math.floor((height - 64 - 180 - 118) / 44);
+    console.log(rowCount);
+    this.setState({
+      rowCount,
+      dataSource: this.ds.cloneWithRows(convertLapTimingsToDataSource([], rowCount))
+    })
   }
 
   timeDisplay = (time) => {
@@ -108,7 +120,7 @@ export default class Day1 extends Component {
     const newLapTimings = [currentLapTiming, ...this.state.lapTimings]
     this.setState({
       lapTimings: newLapTimings,
-      dataSource: this.ds.cloneWithRows(convertLapTimingsToDataSource(newLapTimings)),
+      dataSource: this.ds.cloneWithRows(convertLapTimingsToDataSource(newLapTimings, this.state.rowCount)),
       initialLapTime: this.currentTime(),
       accumulatedLapTime: 0
     })
@@ -124,7 +136,7 @@ export default class Day1 extends Component {
       accumulatedTime: 0,
       accumulatedLapTime: 0,
       lapTimings: [],
-      dataSource: this.ds.cloneWithRows(convertLapTimingsToDataSource()),
+      dataSource: this.ds.cloneWithRows(convertLapTimingsToDataSource([], this.state.rowCount))
     })
   }
 
@@ -222,7 +234,7 @@ export default class Day1 extends Component {
                 fontSize: 70,
                 fontWeight: '100',
                 color: colors.textPrimary,
-                fontFamily: 'HelveticaNeue'
+                fontFamily: 'Helvetica Neue'
               }}>{this.totalTimeDisplay()}</Text>
             <View style={{
                 position: 'absolute',
@@ -233,7 +245,7 @@ export default class Day1 extends Component {
                   color: colors.textSecondary,
                   fontSize: 21,
                   fontWeight: '300',
-                  fontFamily: 'HelveticaNeue'
+                  fontFamily: 'Helvetica Neue'
                 }}>{this.lapTimeDisplay()}</Text>
             </View>
           </View>
