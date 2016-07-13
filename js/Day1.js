@@ -8,6 +8,14 @@ import {
   TouchableHighlight,
 } from 'react-native';
 
+function convertLapTimingsToDataSource(timings = [], row = 6) {
+  let newTimings = timings;
+  for (let i = timings.length; i < row; i++) {
+    newTimings = [...newTimings, 0];
+  }
+  return newTimings;
+}
+
 export default class Day1 extends Component {
   ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
@@ -20,7 +28,7 @@ export default class Day1 extends Component {
     accumulatedTime: 0,
     accumulatedLapTime: 0,
     lapTimings: [],
-    dataSource: this.ds.cloneWithRows([-1,-1,-1,-1,-1,-1,-1])
+    dataSource: this.ds.cloneWithRows(convertLapTimingsToDataSource())
   }
 
   timeDisplay = (time) => {
@@ -95,24 +103,12 @@ export default class Day1 extends Component {
     }
   }
 
-  convertLapTimingsToDataSource = (timings) => {
-    if (timings.length >= 7) {
-      return timings;
-    } else {
-      let newTimings = [...timings];
-      for (let i = timings.length; i < 7; i++) {
-        newTimings = [...newTimings, -1];
-      }
-      return newTimings;
-    }
-  }
-
   lap = () => {
     const currentLapTiming = this.state.currentTime - this.state.initialLapTime + this.state.accumulatedLapTime;
     const newLapTimings = [currentLapTiming, ...this.state.lapTimings]
     this.setState({
       lapTimings: newLapTimings,
-      dataSource: this.ds.cloneWithRows(this.convertLapTimingsToDataSource(newLapTimings)),
+      dataSource: this.ds.cloneWithRows(convertLapTimingsToDataSource(newLapTimings)),
       initialLapTime: this.currentTime(),
       accumulatedLapTime: 0
     })
@@ -128,7 +124,7 @@ export default class Day1 extends Component {
       accumulatedTime: 0,
       accumulatedLapTime: 0,
       lapTimings: [],
-      dataSource: this.ds.cloneWithRows(this.convertLapTimingsToDataSource([])),
+      dataSource: this.ds.cloneWithRows(convertLapTimingsToDataSource()),
     })
   }
 
@@ -272,7 +268,7 @@ export default class Day1 extends Component {
                     height: 44,
                     justifyContent: 'center',
                   }}>
-                  {rowData >= 0 && (
+                  {rowData > 0 && (
                     <View style={{
                       flexDirection: 'row',
                       alignItems: 'center',
