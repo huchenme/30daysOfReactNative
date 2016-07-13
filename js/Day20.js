@@ -98,7 +98,7 @@ export default class Day20 extends Component {
                       alignItems: 'center',
                       justifyContent: 'center'
                     }}>
-                    <Icon name="ios-add" color="#bbb" size={35}/>
+                    <Icon name="ios-add" color="#C6C6C6" size={35}/>
                   </View>
                   <TextInput
                     style={styles.todoTextInput} />
@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
     borderRadius: 23,
     marginRight: 15,
     borderWidth: 1,
-    borderColor: '#bbb',
+    borderColor: '#C6C6C6',
     alignItems: 'center',
     justifyContent: 'center'
   },
