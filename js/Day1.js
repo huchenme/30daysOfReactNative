@@ -36,7 +36,6 @@ export default class Day1 extends Component {
   componentDidMount() {
     const {height} = Dimensions.get('window');
     const rowCount = Math.floor((height - 64 - 180 - 118) / 44);
-    console.log(rowCount);
     this.setState({
       rowCount,
       dataSource: this.ds.cloneWithRows(convertLapTimingsToDataSource([], rowCount))
@@ -223,7 +222,7 @@ export default class Day1 extends Component {
 
   render() {
     const {dataSource} = this.state;
-    const totalLaps = dataSource.getRowCount();
+    const totalLaps = this.state.lapTimings.length;
     return (
       <View style={styles.container}>
         <View style={styles.watchFace}>

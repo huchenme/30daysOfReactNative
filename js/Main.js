@@ -7,6 +7,9 @@ import {
 } from 'react-native'
 import Day1 from './Day1';
 
+// TODO: run on iOS device and debug
+// TODO: change Main to list view
+
 export default class Main extends Component {
   goToDay1 = () => {
     this.props.navigator.push({
