@@ -45,14 +45,11 @@ const animations = {
   },
 };
 
-// TODO: background
-// TODO: separator marginLeft
 // TODO: dynamic height
 // TODO: tap anywhere will focus on textinput
 // TODO: autofocus on next one
 // TODO: should able to toggle when keyboard open
 
-// TODO: text shadow
 // TODO: toggle completed
 // TODO: edit
 
@@ -218,7 +215,10 @@ const styles = StyleSheet.create({
   },
   headerText: {
     fontSize: 30,
-    fontWeight: '500'
+    fontWeight: '500',
+    textShadowColor:"rgba(0, 0, 0, 0.3)",
+    textShadowOffset:{width:0, height:1},
+    textShadowRadius:1,
   },
   todoRow: {
     paddingLeft: 15,
@@ -245,7 +245,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#C6C6C6',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   fill: {
     width: 15,
