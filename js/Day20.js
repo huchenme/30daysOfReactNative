@@ -8,7 +8,8 @@ import {
   ListView,
   TouchableHighlight,
   StatusBar,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
+  LayoutAnimation
 } from 'react-native';
 import Separator from './Separator';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -36,12 +37,20 @@ const TodoToggle = ({onPress, themeColor, completed = false}) => {
   )
 }
 
-// TODO: toggle animation
+const animations = {
+  duration: 200,
+  update: {
+    type: LayoutAnimation.Types.linear,
+    springDamping: 0.7,
+  },
+};
+
 // TODO: background
 // TODO: separator marginLeft
 // TODO: dynamic height
 // TODO: tap anywhere will focus on textinput
 // TODO: autofocus on next one
+// TODO: should able to toggle when keyboard open
 
 // TODO: text shadow
 // TODO: toggle completed
@@ -120,6 +129,7 @@ export default class Day20 extends Component {
       todos: newTodos,
       dataSource: this.ds.cloneWithRows(newTodos)
     })
+    LayoutAnimation.configureNext(animations)
   }
 
   render() {
