@@ -11,40 +11,41 @@ import * as colors from './colors';
 
 // TODO: run on iOS device and debug
 
+const days = [
+  {
+    day: 1,
+    title: "Stopwatch",
+    component: Day1,
+    hideNav: false
+  }
+];
+
 export default class Main extends Component {
   ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
   state = {
-    dataSource: this.ds.cloneWithRows([
-      {
-        day: 1,
-        title: "Stopwatch"
-      }
-    ])
+    dataSource: this.ds.cloneWithRows(days)
   }
 
-  goToDay = (day) => {
-    if (day === 1) {
-      this.props.navigator.push({
-        title: 'Stopwatch',
-        component: Day1
-      });
-    }
+  goToDay = (index) => {
+    const day = days[index];
+    this.props.navigator.push({
+      title: day.title,
+      component: day.component,
+      navigationBarHidden: day.hideNav
+    });
   }
 
   render() {
     return (
       <ListView
-        style={{
-          flex: 1
-        }}
         dataSource={this.state.dataSource}
         enableEmptySections
         renderRow={(rowData, sectionID, rowID, highlightRow) => (
           <TouchableHighlight
             underlayColor={colors.tableUnderlay}
             onPress={() => {
-              this.goToDay(rowData.day);
+              this.goToDay(rowID);
               highlightRow(sectionID, rowID);
             }}
             style={{
