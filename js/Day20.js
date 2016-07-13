@@ -32,7 +32,6 @@ const TodoToggle = ({themeColor, completed = false}) => {
   )
 }
 
-// TODO: addTodo function
 // TODO: toggleTodo function
 // TODO: toggle animation
 // TODO: background
@@ -67,12 +66,30 @@ export default class Day20 extends Component {
   ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
   state = {
+    newTodo: '',
     todos: initialData,
     dataSource: this.ds.cloneWithRows(initialData)
   }
 
   componentDidMount() {
     StatusBar.setBarStyle('light-content');
+  }
+
+  addTodo = () => {
+    if (this.state.newTodo.trim() !== '') {
+      const newTodos = [
+        ...this.state.todos,
+        {
+          text: this.state.newTodo.trim(),
+          complete: false
+        }
+      ];
+      this.setState({
+        newTodo: '',
+        todos: newTodos,
+        dataSource: this.ds.cloneWithRows(newTodos)
+      })
+    }
   }
 
   render() {
@@ -100,6 +117,11 @@ export default class Day20 extends Component {
                     <Icon name="ios-add" color="#C6C6C6" size={35}/>
                   </View>
                   <TextInput
+                    autoFocus
+                    enablesReturnKeyAutomatically
+                    value={this.state.newTodo}
+                    onChangeText={(text) => this.setState({newTodo: text})}
+                    onEndEditing={this.addTodo}
                     style={styles.todoTextInput} />
                 </View>
                 <View style={styles.separator}>
@@ -108,7 +130,6 @@ export default class Day20 extends Component {
               </View>
             )}
             renderRow={(rowData, sectionID, rowID) => {
-              console.log(rowID);
               return (
                 <View>
                   <View style={styles.todoRow}>
