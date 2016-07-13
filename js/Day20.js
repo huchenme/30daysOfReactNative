@@ -32,7 +32,6 @@ const TodoToggle = ({themeColor, completed = false}) => {
   )
 }
 
-// TODO: show addTodo view
 // TODO: addTodo function
 // TODO: toggleTodo function
 // TODO: toggle animation
@@ -115,7 +114,7 @@ export default class Day20 extends Component {
                   <View style={styles.todoRow}>
                     <TodoToggle themeColor={this.props.themeColor} completed={rowData.completed} />
                     <TextInput
-                      style={styles.todoTextInput}
+                      style={[styles.todoTextInput, rowData.completed && styles.todoTextCompleted]}
                       defaultValue={rowData.text} />
                   </View>
                   <View style={styles.separator}>
@@ -170,6 +169,9 @@ const styles = StyleSheet.create({
     flex: 1,
     color: '#3F3F3F',
     fontSize: 17,
+  },
+  todoTextCompleted: {
+    color: colors.textSecondary
   },
   toggle: {
     width: 23,
