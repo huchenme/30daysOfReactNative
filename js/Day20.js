@@ -7,7 +7,8 @@ import {
   StyleSheet,
   ListView,
   TouchableHighlight,
-  StatusBar
+  StatusBar,
+  TouchableWithoutFeedback
 } from 'react-native';
 import Separator from './Separator';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -24,20 +25,23 @@ const Header = ({themeColor, count = 0}) => {
   )
 };
 
-const TodoToggle = ({themeColor, completed = false}) => {
+const TodoToggle = ({onPress, themeColor, completed = false}) => {
   return (
-    <View style={[styles.toggle, completed && {borderColor: themeColor}]}>
-      <View style={completed && [styles.fill, {backgroundColor:themeColor}]}></View>
-    </View>
+    <TouchableWithoutFeedback
+      onPress={onPress}>
+      <View style={[styles.toggle, completed && {borderColor: themeColor}]}>
+        <View style={completed && [styles.fill, {backgroundColor:themeColor}]}></View>
+      </View>
+    </TouchableWithoutFeedback>
   )
 }
 
-// TODO: toggleTodo function
 // TODO: toggle animation
 // TODO: background
 // TODO: separator marginLeft
 // TODO: dynamic height
 // TODO: tap anywhere will focus on textinput
+// TODO: autofocus on next one
 
 // TODO: text shadow
 // TODO: toggle completed
@@ -51,6 +55,14 @@ const initialData = [
   {
     text: 'Day 2',
     completed: true
+  },
+  {
+    text: 'Day 3',
+    completed: false
+  },
+  {
+    text: 'Day 4',
+    completed: false
   }
 ];
 
@@ -90,6 +102,24 @@ export default class Day20 extends Component {
         dataSource: this.ds.cloneWithRows(newTodos)
       })
     }
+  }
+
+  toggleTodo = (index) => {
+    const todos = this.state.todos;
+    const toggledTodo = {
+      ...todos[index],
+      completed: !todos[index].completed
+    }
+    const newTodos = [
+      ...todos.slice(0, index),
+      toggledTodo,
+      ...todos.slice(index + 1)
+    ];
+    console.log('newTodos', newTodos);
+    this.setState({
+      todos: newTodos,
+      dataSource: this.ds.cloneWithRows(newTodos)
+    })
   }
 
   render() {
@@ -133,7 +163,10 @@ export default class Day20 extends Component {
               return (
                 <View>
                   <View style={styles.todoRow}>
-                    <TodoToggle themeColor={this.props.themeColor} completed={rowData.completed} />
+                    <TodoToggle
+                      themeColor={this.props.themeColor}
+                      completed={rowData.completed}
+                      onPress={this.toggleTodo.bind(null, parseInt(rowID), 10)} />
                     <TextInput
                       style={[styles.todoTextInput, rowData.completed && styles.todoTextCompleted]}
                       defaultValue={rowData.text} />
