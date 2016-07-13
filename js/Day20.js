@@ -10,6 +10,7 @@ import {
   StatusBar
 } from 'react-native';
 import Separator from './Separator';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const Header = ({themeColor, count = 0}) => {
   return (
@@ -87,17 +88,42 @@ export default class Day20 extends Component {
             automaticallyAdjustContentInsets={false}
             dataSource={this.state.dataSource}
             enableEmptySections
-            renderRow={(rowData, sectionID, rowID) => (
-              <View style={styles.todoRow}>
-                <TodoToggle themeColor={this.props.themeColor} completed={rowData.completed} />
-                <TextInput
-                  style={styles.todoText}
-                  defaultValue={rowData.text} />
+            renderFooter={() => (
+              <View>
+                <View style={styles.todoRow}>
+                  <View style={{
+                      width: 23,
+                      height: 23,
+                      marginRight: 15,
+                      alignItems: 'center',
+                      justifyContent: 'center'
+                    }}>
+                    <Icon name="ios-add" color="#bbb" size={35}/>
+                  </View>
+                  <TextInput
+                    style={styles.todoTextInput} />
+                </View>
+                <View style={styles.separator}>
+                  <Separator />
+                </View>
               </View>
             )}
-            renderSeparator={(sectionID, rowID, adjacentRowHighlighted) => (
-              <Separator key={`${sectionID}-${rowID}`} />
-            )}
+            renderRow={(rowData, sectionID, rowID) => {
+              console.log(rowID);
+              return (
+                <View>
+                  <View style={styles.todoRow}>
+                    <TodoToggle themeColor={this.props.themeColor} completed={rowData.completed} />
+                    <TextInput
+                      style={styles.todoTextInput}
+                      defaultValue={rowData.text} />
+                  </View>
+                  <View style={styles.separator}>
+                    <Separator />
+                  </View>
+                </View>
+              )
+            }}
           />
         </View>
       </View>
@@ -140,7 +166,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start'
   },
-  todoText: {
+  todoTextInput: {
     flex: 1,
     color: '#3F3F3F',
     fontSize: 17,
@@ -160,4 +186,7 @@ const styles = StyleSheet.create({
     height: 15,
     borderRadius: 15,
   },
+  separator: {
+    marginLeft: 38
+  }
 });
