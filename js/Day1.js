@@ -8,6 +8,7 @@ import {
   TouchableHighlight,
   Dimensions
 } from 'react-native';
+import Separator from './Separator';
 
 function convertLapTimingsToDataSource(timings = [], row = 6) {
   let newTimings = timings;
@@ -300,14 +301,7 @@ export default class Day1 extends Component {
                 </View>
               )}
               renderSeparator={(sectionID, rowID, adjacentRowHighlighted) => (
-                <View
-                  key={`${sectionID}-${rowID}`}
-                  style={{
-                    marginLeft: 15,
-                    height: StyleSheet.hairlineWidth,
-                    backgroundColor: colors.separator,
-                  }}
-                />
+                <Separator key={`${sectionID}-${rowID}`} />
               )}
             />
           </View>

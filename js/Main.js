@@ -6,7 +6,9 @@ import {
   View,
   ListView,
 } from 'react-native'
+import Separator from './Separator';
 import Day1 from './Day1';
+import Day20 from './Day20';
 import * as colors from './colors';
 
 // TODO: run on iOS device and debug
@@ -17,6 +19,12 @@ const days = [
     title: "Stopwatch",
     component: Day1,
     hideNav: false
+  },
+  {
+    day: 20,
+    title: "Reminders",
+    component: Day20,
+    hideNav: true
   }
 ];
 
@@ -71,14 +79,7 @@ export default class Main extends Component {
           </TouchableHighlight>
         )}
         renderSeparator={(sectionID, rowID, adjacentRowHighlighted) => (
-          <View
-            key={`${sectionID}-${rowID}`}
-            style={{
-              marginLeft: 15,
-              height: StyleSheet.hairlineWidth,
-              backgroundColor: colors.separator,
-            }}
-          />
+          <Separator key={`${sectionID}-${rowID}`} />
         )}
       />
     )
