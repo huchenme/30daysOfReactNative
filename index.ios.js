@@ -12,7 +12,7 @@ class AwesomeProject extends Component {
     return (
       <NavigatorIOS
         initialRoute={{
-          component: Main,
+          component: Day17,
           title: '30 Days of RN',
           navigationBarHidden: false
         }}
