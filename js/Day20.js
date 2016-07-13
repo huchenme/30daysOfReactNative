@@ -3,6 +3,7 @@ import * as colors from './colors';
 import {
   View,
   Text,
+  TextInput,
   StyleSheet,
   ListView,
   TouchableHighlight,
@@ -31,14 +32,13 @@ const TodoToggle = ({themeColor, completed = false}) => {
 }
 
 // TODO: show addTodo view
-// TODO: use textinput
 // TODO: addTodo function
 // TODO: toggleTodo function
-// TODO: show correct remain count
 // TODO: toggle animation
 // TODO: background
 // TODO: separator marginLeft
 // TODO: dynamic height
+// TODO: tap anywhere will focus on textinput
 
 // TODO: text shadow
 // TODO: toggle completed
@@ -76,10 +76,13 @@ export default class Day20 extends Component {
   }
 
   render() {
+    const remainCount = this.state.todos.filter(t => !t.completed).length;
     return (
       <View style={styles.container}>
         <View style={styles.reminderContainer}>
-          <Header themeColor={this.props.themeColor} />
+          <Header
+            themeColor={this.props.themeColor}
+            count={remainCount} />
           <ListView
             automaticallyAdjustContentInsets={false}
             dataSource={this.state.dataSource}
@@ -87,9 +90,9 @@ export default class Day20 extends Component {
             renderRow={(rowData, sectionID, rowID) => (
               <View style={styles.todoRow}>
                 <TodoToggle themeColor={this.props.themeColor} completed={rowData.completed} />
-                <Text style={styles.todoText}>
-                  {rowData.text}
-                </Text>
+                <TextInput
+                  style={styles.todoText}
+                  defaultValue={rowData.text} />
               </View>
             )}
             renderSeparator={(sectionID, rowID, adjacentRowHighlighted) => (
@@ -138,8 +141,9 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start'
   },
   todoText: {
+    flex: 1,
     color: '#3F3F3F',
-    fontSize: 17
+    fontSize: 17,
   },
   toggle: {
     width: 23,
