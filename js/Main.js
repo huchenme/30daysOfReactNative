@@ -40,10 +40,13 @@ export default class Main extends Component {
         }}
         dataSource={this.state.dataSource}
         enableEmptySections
-        renderRow={(rowData, sectionID, rowID) => (
+        renderRow={(rowData, sectionID, rowID, highlightRow) => (
           <TouchableHighlight
-            onPress={this.goToDay.bind(null, rowData.day)}
             underlayColor={colors.tableUnderlay}
+            onPress={() => {
+              this.goToDay(rowData.day);
+              highlightRow(sectionID, rowID);
+            }}
             style={{
               paddingLeft: 15,
               paddingRight: 15,
