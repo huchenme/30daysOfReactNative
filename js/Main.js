@@ -4,10 +4,12 @@ import {
   TouchableHighlight,
   Text,
   View,
+  StatusBar,
   ListView,
 } from 'react-native'
 import Separator from './Separator';
 import Day1 from './Day1';
+import Day17 from './Day17';
 import Day20 from './Day20';
 import * as colors from './colors';
 
@@ -18,6 +20,12 @@ const days = [
     day: 1,
     title: "Stopwatch",
     component: Day1,
+    hideNav: false
+  },
+  {
+    day: 17,
+    title: "Fuzzy search",
+    component: Day17,
     hideNav: false
   },
   {
@@ -33,6 +41,10 @@ export default class Main extends Component {
 
   state = {
     dataSource: this.ds.cloneWithRows(days)
+  }
+
+  componentDidMount() {
+    StatusBar.setBarStyle('default');
   }
 
   goToDay = (index) => {
