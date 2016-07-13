@@ -50,28 +50,6 @@ const animations = {
 // TODO: autofocus on next one
 // TODO: should able to toggle when keyboard open
 
-// TODO: toggle completed
-// TODO: edit
-
-const initialData = [
-  {
-    text: 'Day 1',
-    completed: false
-  },
-  {
-    text: 'Day 2',
-    completed: true
-  },
-  {
-    text: 'Day 3',
-    completed: false
-  },
-  {
-    text: 'Day 4',
-    completed: false
-  }
-];
-
 export default class Day20 extends Component {
   static propTypes = {
     themeColor: PropTypes.string.isRequired,
@@ -85,8 +63,8 @@ export default class Day20 extends Component {
 
   state = {
     newTodo: '',
-    todos: initialData,
-    dataSource: this.ds.cloneWithRows(initialData)
+    todos: [],
+    dataSource: this.ds.cloneWithRows([])
   }
 
   componentDidMount() {
