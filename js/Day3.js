@@ -66,7 +66,6 @@ export default class Day3 extends Component {
           onPress={() => {
             this.setState({
               selectedTab: 'redTab',
-              notifCount: this.state.notifCount + 1,
             });
           }}>
           <Content backgroundColor="#783E33" text="Red Tab" />
