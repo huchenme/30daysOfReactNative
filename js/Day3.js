@@ -8,6 +8,12 @@ import {
   TabBarIOS
 } from 'react-native';
 
+// TODO: tab bar
+// TODO: top bar
+// TODO: pull to refresh
+// TODO: down arrow
+// TODO: animation
+
 const Content = ({backgroundColor, text}) => (
   <View
     style={{
