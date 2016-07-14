@@ -9,6 +9,7 @@ import {
 } from 'react-native'
 import Separator from './Separator';
 import Day1 from './Day1';
+import Day3 from './Day3';
 import Day6 from './Day6';
 import Day17 from './Day17';
 import Day20 from './Day20';
@@ -22,6 +23,12 @@ const days = [
     title: "Stopwatch",
     component: Day1,
     hideNav: false
+  },
+  {
+    day: 3,
+    title: "Twitter",
+    component: Day3,
+    hideNav: true
   },
   {
     day: 6,
