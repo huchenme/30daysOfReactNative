@@ -7,6 +7,7 @@ import {
   Dimensions,
   TabBarIOS
 } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 // TODO: tab bar
 // TODO: top bar
@@ -41,13 +42,14 @@ export default class Day3 extends Component {
   render() {
     return (
       <TabBarIOS
-        unselectedTintColor="yellow"
-        tintColor="white"
+        unselectedTintColor={colors.textSecondary}
+        tintColor={colors.blue}
         translucent
-        barTintColor="darkslateblue">
-        <TabBarIOS.Item
-          title="Blue Tab"
-          systemIcon="downloads"
+        barTintColor="white">
+        <Icon.TabBarItem
+          title="Home"
+          iconName="ios-home-outline"
+          selectedIconName="ios-home"
           selected={this.state.selectedTab === 'blueTab'}
           onPress={() => {
             this.setState({
@@ -55,7 +57,7 @@ export default class Day3 extends Component {
             });
           }}>
           <Content backgroundColor="#414A8C" text="Blue Tab" />
-        </TabBarIOS.Item>
+        </Icon.TabBarItem>
         <TabBarIOS.Item
           title="Red Tab"
           systemIcon="history"
