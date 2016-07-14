@@ -13,6 +13,8 @@ import {
 import Video from 'react-native-video';
 import Swiper from 'react-native-swiper';
 
+// TODO: pause autoplay after touch
+
 const Logo = () => (
   <View style={styles.logo}>
     <Image source={require('./assets/spotify.png')} />
@@ -32,44 +34,48 @@ const Dot = ({active = false}) => (
   <View style={[styles.dot, active && styles.activeDot]}></View>
 )
 
-const HintSwiper = () => (
-  <View style={styles.sliders}>
-    <Swiper
-      height={Dimensions.get('window').height - 50}
-      dot={<Dot />}
-      autoplay={true}
-      autoplayTimeout={3}
-      activeDot={<Dot active />}
-      paginationStyle={styles.paginationStyle}
-      onTouchEnd={()=>{console.log('did scroll')}}>
-      <View style={styles.slide}>
-        <Text style={styles.slideTextTitle}>Welcome</Text>
-        <Text style={styles.slideText}>Sign up for free music on your phone,tablet</Text>
-        <Text style={styles.slideText}>and computer.</Text>
+class HintSwiper extends Component {
+  render() {
+    return (
+      <View style={styles.sliders}>
+        <Swiper
+          height={Dimensions.get('window').height - 50}
+          dot={<Dot />}
+          autoplay
+          autoplayTimeout={3}
+          activeDot={<Dot active />}
+          paginationStyle={styles.paginationStyle}
+          onTouchEnd={this.onTouch}>
+          <View style={styles.slide}>
+            <Text style={styles.slideTextTitle}>Welcome</Text>
+            <Text style={styles.slideText}>Sign up for free music on your phone,tablet</Text>
+            <Text style={styles.slideText}>and computer.</Text>
+          </View>
+          <View style={styles.slide}>
+            <Text style={styles.slideTextTitle}>Browse</Text>
+            <Text style={styles.slideText}>Explore top tracks, new releases and the right</Text>
+            <Text style={styles.slideText}>playlist for every moment</Text>
+          </View>
+          <View style={styles.slide}>
+            <Text style={styles.slideTextTitle}>Search</Text>
+            <Text style={styles.slideText}>Looking for that special album or artist? Just</Text>
+            <Text style={styles.slideText}>search and hit play!</Text>
+          </View>
+          <View style={styles.slide}>
+            <Text style={styles.slideTextTitle}>Running</Text>
+            <Text style={styles.slideText}>Music that perfectly matches</Text>
+            <Text style={styles.slideText}>your tempo.</Text>
+          </View>
+          <View style={styles.slide}>
+            <Text style={styles.slideTextTitle}>Your Library</Text>
+            <Text style={styles.slideText}>Save any song,album or artist to your own</Text>
+            <Text style={styles.slideText}>music collection.</Text>
+          </View>
+        </Swiper>
       </View>
-      <View style={styles.slide}>
-        <Text style={styles.slideTextTitle}>Browse</Text>
-        <Text style={styles.slideText}>Explore top tracks, new releases and the right</Text>
-        <Text style={styles.slideText}>playlist for every moment</Text>
-      </View>
-      <View style={styles.slide}>
-        <Text style={styles.slideTextTitle}>Search</Text>
-        <Text style={styles.slideText}>Looking for that special album or artist? Just</Text>
-        <Text style={styles.slideText}>search and hit play!</Text>
-      </View>
-      <View style={styles.slide}>
-        <Text style={styles.slideTextTitle}>Running</Text>
-        <Text style={styles.slideText}>Music that perfectly matches</Text>
-        <Text style={styles.slideText}>your tempo.</Text>
-      </View>
-      <View style={styles.slide}>
-        <Text style={styles.slideTextTitle}>Your Library</Text>
-        <Text style={styles.slideText}>Save any song,album or artist to your own</Text>
-        <Text style={styles.slideText}>music collection.</Text>
-      </View>
-    </Swiper>
-  </View>
-)
+    )
+  }
+}
 
 class Buttons extends Component {
   state = {
