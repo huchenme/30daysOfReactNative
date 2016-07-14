@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import fuzzy from 'fuzzy';
 import * as colors from './colors';
 import {
   View,
@@ -6,8 +7,11 @@ import {
   TextInput,
   StyleSheet,
   ListView,
+  ScrollView,
   TouchableHighlight,
 } from 'react-native';
+import SearchBar from 'react-native-search-bar';
+import Separator from './Separator';
 
 const data = {
   "AL": "Alabama",
@@ -71,31 +75,87 @@ const data = {
   "WY": "Wyoming"
 }
 
+const Row = ({children}) => {
+  let newString = [];
+  for (let i = 0; i < children.length; i++) {
+    if (children[i] === '>') {
+      i++;
+      newString.push(
+        <Text style={styles.highlight} key={i}>{children[i]}</Text>
+      );
+    } else {
+      newString.push(
+        <Text key={i}>{children[i]}</Text>
+      );
+    }
+  }
+  return (
+    <View>
+      <View style={styles.row}>
+        <Text style={styles.rowContent}>
+          {newString}
+        </Text>
+      </View>
+      <Separator />
+    </View>
+  )
+};
+
 export default class Day17 extends Component {
   constructor() {
     super()
-    let states = [];
+    this.states = [];
     for (let key in data) {
       if (data.hasOwnProperty(key)) {
-        states.push(data[key]);
+        this.states.push(data[key]);
       }
     }
     this.state = {
-      states
+      states: this.states
     }
   }
 
+  _onChangeText(text) {
+    const options = { pre: '>' };
+    const results = fuzzy.filter(text, this.states, options)
+    const matches = results.map(function(el) { return el.string; });
+    this.setState({
+      states: matches
+    })
+  }
+
   render() {
-    console.log(this.state.states);
     return (
-      <View style={{
-        marginTop: 64,
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center'
-      }}>
-        <Text>Day 17</Text>
-      </View>
+      <ScrollView style={styles.container} contentOffset={{y:44}}>
+        <SearchBar
+          placeholder='Search'
+          onChangeText={(text)=> this._onChangeText(text)}
+        />
+      {this.state.states.map((state, index) => (
+        <Row key={index}>{state}</Row>
+      ))}
+      </ScrollView>
     )
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+  },
+  row: {
+    height: 44,
+    alignItems: 'center',
+    flexDirection: 'row'
+  },
+  rowContent: {
+    paddingLeft: 15,
+    paddingRight: 15,
+    flex: 1,
+    color: '#3F3F3F',
+    fontSize: 17,
+  },
+  highlight: {
+    color: colors.blue,
+    fontWeight: '500'
+  }
+});
