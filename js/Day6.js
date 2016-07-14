@@ -6,12 +6,26 @@ import {
   Image,
   StyleSheet,
   StatusBar,
+  TouchableHighlight,
+  TouchableWithoutFeedback
 } from 'react-native';
 import Video from 'react-native-video';
 
 export default class Day6 extends Component {
+  state = {
+    signupButtonColor: '#1DB954'
+  }
+
   componentDidMount() {
     StatusBar.setBarStyle('light-content');
+  }
+
+  onPressIn = () => {
+    this.setState({signupButtonColor: '#1ED760'});
+  }
+
+  onPressOut = () => {
+    this.setState({signupButtonColor: '#1DB954'});
   }
 
   render() {
@@ -30,8 +44,21 @@ export default class Day6 extends Component {
           <View>
 
           </View>
-          <View>
-            
+          <View style={{
+            flexDirection: 'row',
+          }}>
+            <TouchableWithoutFeedback>
+              <View style={[styles.button, {backgroundColor: '#222326'}]}>
+                <Text style={styles.buttonText}>LOG IN</Text>
+              </View>
+            </TouchableWithoutFeedback>
+            <TouchableWithoutFeedback
+              onPressIn={this.onPressIn}
+              onPressOut={this.onPressOut}>
+              <View style={[styles.button, {backgroundColor: this.state.signupButtonColor}]}>
+                <Text style={styles.buttonText}>SIGN UP</Text>
+              </View>
+            </TouchableWithoutFeedback>
           </View>
         </View>
       </View>
@@ -42,10 +69,22 @@ export default class Day6 extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   logo: {
     marginTop: 60,
     alignItems: 'center',
+  },
+  button: {
+    flex: 1,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  buttonText: {
+    fontWeight: '600',
+    fontSize: 16,
+    color: 'white',
+    fontFamily: 'Avenir Next',
   }
 });
