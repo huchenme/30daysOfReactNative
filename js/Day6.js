@@ -3,6 +3,7 @@ import * as colors from './colors';
 import {
   View,
   Text,
+  Image,
   StyleSheet,
   StatusBar,
 } from 'react-native';
@@ -22,9 +23,17 @@ export default class Day6 extends Component {
           resizeMode="cover"
           repeat={true}
           muted />
-        <Text style={{color: 'white', backgroundColor: 'transparent'}}>
-          hello world
-        </Text>
+        <View style={styles.logo}>
+          <Image source={require('./assets/spotify.png')} />
+        </View>
+        <View>
+          <View>
+
+          </View>
+          <View>
+            
+          </View>
+        </View>
       </View>
     )
   }
@@ -33,7 +42,10 @@ export default class Day6 extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'space-between'
   },
+  logo: {
+    marginTop: 60,
+    alignItems: 'center',
+  }
 });
