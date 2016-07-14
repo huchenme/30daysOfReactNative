@@ -7,7 +7,8 @@ import {
   StyleSheet,
   StatusBar,
   TouchableHighlight,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
+  Dimensions,
 } from 'react-native';
 import Video from 'react-native-video';
 import Swiper from 'react-native-swiper';
@@ -27,34 +28,47 @@ const FullVideo = () => (
     muted />
 )
 
+const Dot = ({active = false}) => (
+  <View style={[styles.dot, active && styles.activeDot]}></View>
+)
+
 const HintSwiper = () => (
-  <Swiper>
-    <View style={styles.slide}>
-      <Text style={styles.slideTextTitle}>Welcome</Text>
-      <Text style={styles.slideText}>Sign up for free music on your phone,tablet</Text>
-      <Text style={styles.slideText}>and computer.</Text>
-    </View>
-    <View style={styles.slide}>
-      <Text style={styles.slideTextTitle}>Browse</Text>
-      <Text style={styles.slideText}>Explore top tracks, new releases and the right</Text>
-      <Text style={styles.slideText}>playlist for every moment</Text>
-    </View>
-    <View style={styles.slide}>
-      <Text style={styles.slideTextTitle}>Search</Text>
-      <Text style={styles.slideText}>Looking for that special album or artist? Just</Text>
-      <Text style={styles.slideText}>search and hit play!</Text>
-    </View>
-    <View style={styles.slide}>
-      <Text style={styles.slideTextTitle}>Running</Text>
-      <Text style={styles.slideText}>Music that perfectly matches</Text>
-      <Text style={styles.slideText}>your tempo.</Text>
-    </View>
-    <View style={styles.slide}>
-      <Text style={styles.slideTextTitle}>Your Library</Text>
-      <Text style={styles.slideText}>Save any song,album or artist to your own</Text>
-      <Text style={styles.slideText}>music collection.</Text>
-    </View>
-  </Swiper>
+  <View style={styles.sliders}>
+    <Swiper
+      height={Dimensions.get('window').height - 50}
+      dot={<Dot />}
+      autoplay={true}
+      autoplayTimeout={3}
+      activeDot={<Dot active />}
+      paginationStyle={styles.paginationStyle}
+      onTouchEnd={()=>{console.log('did scroll')}}>
+      <View style={styles.slide}>
+        <Text style={styles.slideTextTitle}>Welcome</Text>
+        <Text style={styles.slideText}>Sign up for free music on your phone,tablet</Text>
+        <Text style={styles.slideText}>and computer.</Text>
+      </View>
+      <View style={styles.slide}>
+        <Text style={styles.slideTextTitle}>Browse</Text>
+        <Text style={styles.slideText}>Explore top tracks, new releases and the right</Text>
+        <Text style={styles.slideText}>playlist for every moment</Text>
+      </View>
+      <View style={styles.slide}>
+        <Text style={styles.slideTextTitle}>Search</Text>
+        <Text style={styles.slideText}>Looking for that special album or artist? Just</Text>
+        <Text style={styles.slideText}>search and hit play!</Text>
+      </View>
+      <View style={styles.slide}>
+        <Text style={styles.slideTextTitle}>Running</Text>
+        <Text style={styles.slideText}>Music that perfectly matches</Text>
+        <Text style={styles.slideText}>your tempo.</Text>
+      </View>
+      <View style={styles.slide}>
+        <Text style={styles.slideTextTitle}>Your Library</Text>
+        <Text style={styles.slideText}>Save any song,album or artist to your own</Text>
+        <Text style={styles.slideText}>music collection.</Text>
+      </View>
+    </Swiper>
+  </View>
 )
 
 class Buttons extends Component {
@@ -72,7 +86,7 @@ class Buttons extends Component {
 
   render() {
     return (
-      <View style={styles.buttonRow}>
+      <View style={styles.buttons}>
         <TouchableWithoutFeedback>
           <View style={[styles.button, {backgroundColor: '#222326'}]}>
             <Text style={styles.buttonText}>LOG IN</Text>
@@ -97,10 +111,11 @@ export default class Day6 extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <View style={StyleSheet.absoluteFill}>
         <FullVideo />
-        <View style={styles.container}>
+        <View style={StyleSheet.absoluteFill}>
           <Logo />
+          <HintSwiper />
           <Buttons />
         </View>
       </View>
@@ -111,13 +126,26 @@ export default class Day6 extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'space-between',
   },
   logo: {
-    marginTop: 60,
+    position: 'absolute',
+    top: 60,
+    left: 0,
+    right: 0,
     alignItems: 'center',
   },
-  buttonRow: {
+  sliders: {
+    position: 'absolute',
+    bottom: 50,
+    left: 0,
+    right: 0,
+    top: 0
+  },
+  buttons: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
     flexDirection: 'row',
   },
   button: {
@@ -134,14 +162,35 @@ const styles = StyleSheet.create({
   },
   slide: {
     flex: 1,
-    backgroundColor: 'transparent'
+    justifyContent: 'flex-end',
+    paddingBottom: 84
   },
   slideTextTitle: {
     color: 'white',
     fontFamily: 'Avenir Next',
+    textAlign: 'center',
+    fontSize: 22,
+    fontWeight: '600'
   },
   slideText: {
-    color: 'white',
+    color: 'rgba(255,255,255,0.8)',
     fontFamily: 'Avenir Next',
+    textAlign: 'center',
+    fontSize: 16,
+    fontWeight: '500'
+  },
+  paginationStyle: {
+    bottom: 45
+  },
+  dot: {
+    backgroundColor: '#333',
+    width: 7,
+    height: 7,
+    borderRadius: 7,
+    marginLeft: 4,
+    marginRight: 4
+  },
+  activeDot: {
+    backgroundColor: 'white'
   }
 });
