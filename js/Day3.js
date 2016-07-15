@@ -8,6 +8,7 @@ import {
   Dimensions,
   TabBarIOS,
   ScrollView,
+  RefreshControl,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -39,11 +40,38 @@ const TopBar = () => (
   </View>
 )
 
-const TwitterPost = () => (
-  <ScrollView style={styles.twitterPost}>
-    <Image source={require('./assets/day3.png')} />
-  </ScrollView>
-)
+class TwitterPost extends Component {
+  state = {
+    isRefreshing: false,
+  }
+
+  _onRefresh() {
+    this.setState({
+      isRefreshing: true,
+    });
+    setTimeout(() => {
+      this.setState({
+        isRefreshing: false,
+      });
+    }, 1000);
+  }
+
+  render() {
+    return (
+      <ScrollView
+        style={styles.twitterPost}
+        refreshControl={
+          <RefreshControl
+            refreshing={this.state.isRefreshing}
+            onRefresh={()=>this._onRefresh()}
+            tintColor="#ddd"
+          />
+        }>
+        <Image source={require('./assets/day3.png')} />
+      </ScrollView>
+    )
+  }
+}
 
 const TwitterFlow = () => (
   <View style={styles.twitterFlow}>
@@ -110,7 +138,8 @@ export default class Day3 extends Component {
 
 const styles = StyleSheet.create({
   twitterFlow: {
-    flex: 1
+    flex: 1,
+    backgroundColor: '#F5F8FA',
   },
   topBar: {
     height: 64,
@@ -118,6 +147,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
     flexDirection: 'row',
     paddingTop: 20,
+    backgroundColor: 'white'
   },
   nav: {
     flex:1,
@@ -141,5 +171,7 @@ const styles = StyleSheet.create({
   },
   twitterPost: {
     flex: 1,
+    position: 'relative',
+    top: -20
   },
 });
