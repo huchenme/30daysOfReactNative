@@ -10,12 +10,14 @@ import {
 import Separator from './Separator';
 import Day1 from './Day1';
 import Day3 from './Day3';
+import Day4 from './Day4';
 import Day6 from './Day6';
 import Day17 from './Day17';
 import Day20 from './Day20';
 import * as colors from './colors';
 
 // TODO: run on iOS device and debug
+// TODO: nav styles
 
 const days = [
   {
@@ -29,6 +31,12 @@ const days = [
     title: "Twitter",
     component: Day3,
     hideNav: true
+  },
+  {
+    day: 4,
+    title: "Cocoapods",
+    component: Day4,
+    hideNav: false
   },
   {
     day: 6,
@@ -82,17 +90,8 @@ export default class Main extends Component {
               this.goToDay(rowID);
               highlightRow(sectionID, rowID);
             }}
-            style={{
-              paddingLeft: 15,
-              paddingRight: 15,
-              height: 44,
-              justifyContent: 'center',
-            }}>
-            <View style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-            }}>
+            style={styles.rowContainer}>
+            <View style={styles.row}>
               <Text style={{
                   color: colors.textSecondary,
                   fontSize: 17
@@ -113,4 +112,15 @@ export default class Main extends Component {
 }
 
 const styles = StyleSheet.create({
+  rowContainer: {
+    paddingLeft: 15,
+    paddingRight: 15,
+    height: 44,
+    justifyContent: 'center',
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  }
 });
