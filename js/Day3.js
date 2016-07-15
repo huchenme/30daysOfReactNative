@@ -17,21 +17,36 @@ const twitterGray = "#8899A6";
 // TODO: down arrow
 // TODO: animation
 
-const Content = ({backgroundColor, text}) => (
-  <View
-    style={{
-      backgroundColor,
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center'
-    }}>
-    <Text
-      style={{
-        color: 'white',
-        fontSize: 20
-      }}>
-      {text}
-    </Text>
+const TwitterIcon = ({name, size = 28, style = {}}) => (
+  <View style={[styles.icon, style]}>
+    <Icon name={name} size={size} color={twitterBlue} />
+  </View>
+)
+
+const TopBar = () => (
+  <View style={styles.topBar}>
+    <View style={[styles.nav, styles.navLeft]}>
+      <TwitterIcon name="ios-person-add" size={30} style={{marginLeft: 6}} />
+    </View>
+    <View style={[styles.nav, styles.navMid]}>
+      <TwitterIcon name="logo-twitter" />
+    </View>
+    <View style={[styles.nav, styles.navRight]}>
+      <TwitterIcon name="ios-search-outline" />
+      <TwitterIcon name="ios-create-outline" style={{marginRight: 6}} />
+    </View>
+  </View>
+)
+
+const TwitterPost = () => (
+  <View style={styles.twitterPost}>
+  </View>
+)
+
+const TwitterFlow = () => (
+  <View style={styles.twitterFlow}>
+    <TopBar />
+    <TwitterPost />
   </View>
 )
 
@@ -39,6 +54,12 @@ export default class Day3 extends Component {
   state = {
     notifCount: 1,
     selectedTab: 'home'
+  }
+
+  selectTab = (tab) => {
+    this.setState({
+      selectedTab: tab,
+    });
   }
 
   render() {
@@ -52,12 +73,8 @@ export default class Day3 extends Component {
           iconName="ios-home-outline"
           selectedIconName="ios-home"
           selected={this.state.selectedTab === 'home'}
-          onPress={() => {
-            this.setState({
-              selectedTab: 'home',
-            });
-          }}>
-          <Content backgroundColor="#414A8C" text="Home" />
+          onPress={this.selectTab.bind(this, 'home')}>
+          <TwitterFlow />
         </Icon.TabBarItem>
         <Icon.TabBarItem
           title="Notification"
@@ -65,38 +82,62 @@ export default class Day3 extends Component {
           selectedIconName="ios-notifications"
           badge={this.state.notifCount}
           selected={this.state.selectedTab === 'notifications'}
-          onPress={() => {
-            this.setState({
-              selectedTab: 'notifications',
-            });
-          }}>
-          <Content backgroundColor="#783E33" text="Notifications" />
+          onPress={this.selectTab.bind(this, 'notifications')}>
+          <TwitterFlow />
         </Icon.TabBarItem>
         <Icon.TabBarItem
           title="Messages"
           iconName="ios-mail-outline"
           selectedIconName="ios-mail"
           selected={this.state.selectedTab === 'messages'}
-          onPress={() => {
-            this.setState({
-              selectedTab: 'messages',
-            });
-          }}>
-          <Content backgroundColor="#414A8C" text="Messages" />
+          onPress={this.selectTab.bind(this, 'messages')}>
+          <TwitterFlow />
         </Icon.TabBarItem>
         <Icon.TabBarItem
           title="Me"
           iconName="ios-person-outline"
           selectedIconName="ios-person"
           selected={this.state.selectedTab === 'me'}
-          onPress={() => {
-            this.setState({
-              selectedTab: 'me',
-            });
-          }}>
-          <Content backgroundColor="#414A8C" text="Me" />
+          onPress={this.selectTab.bind(this, 'me')}>
+          <TwitterFlow />
         </Icon.TabBarItem>
       </TabBarIOS>
     )
   }
 }
+
+const styles = StyleSheet.create({
+  twitterFlow: {
+    flex: 1
+  },
+  topBar: {
+    height: 64,
+    borderBottomColor: '#C8CFD6',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    flexDirection: 'row',
+    paddingTop: 20,
+  },
+  nav: {
+    flex:1,
+    alignItems:"center",
+    flexDirection:"row"
+  },
+  navLeft: {
+    justifyContent:"flex-start",
+  },
+  navMid: {
+    justifyContent:"center",
+  },
+  navRight: {
+    justifyContent:"flex-end",
+  },
+  icon: {
+    height: 38,
+    width: 38,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  twitterPost: {
+    flex: 1,
+  },
+});
