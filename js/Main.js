@@ -11,6 +11,7 @@ import Separator from './Separator';
 import Day1 from './Day1';
 import Day3 from './Day3';
 import Day4 from './Day4';
+import Day5 from './Day5';
 import Day6 from './Day6';
 import Day17 from './Day17';
 import Day20 from './Day20';
@@ -18,6 +19,7 @@ import * as colors from './colors';
 
 // TODO: run on iOS device and debug
 // TODO: nav styles
+// TODO: app icon
 
 const days = [
   {
@@ -36,6 +38,12 @@ const days = [
     day: 4,
     title: "Cocoapods",
     component: Day4,
+    hideNav: false
+  },
+  {
+    day: 5,
+    title: "Find my location",
+    component: Day5,
     hideNav: false
   },
   {
