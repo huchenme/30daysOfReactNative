@@ -3,16 +3,17 @@ import * as colors from './colors';
 import {
   View,
   Text,
+  Image,
   StyleSheet,
   Dimensions,
-  TabBarIOS
+  TabBarIOS,
+  ScrollView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const twitterBlue = "#1DA1F2";
 const twitterGray = "#8899A6";
 
-// TODO: top bar
 // TODO: pull to refresh
 // TODO: down arrow
 // TODO: animation
@@ -39,8 +40,9 @@ const TopBar = () => (
 )
 
 const TwitterPost = () => (
-  <View style={styles.twitterPost}>
-  </View>
+  <ScrollView style={styles.twitterPost}>
+    <Image source={require('./assets/day3.png')} />
+  </ScrollView>
 )
 
 const TwitterFlow = () => (
