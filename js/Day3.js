@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import * as colors from './colors';
 import {
   View,
@@ -9,15 +9,91 @@ import {
   TabBarIOS,
   ScrollView,
   RefreshControl,
+  Animated,
+  Easing
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+const AnimatedIcon = Animated.createAnimatedComponent(Icon);
 
 const twitterBlue = "#1DA1F2";
+const twitterBrandColor = "#3BA2F3";
 const twitterGray = "#8899A6";
 
-// TODO: pull to refresh
-// TODO: down arrow
-// TODO: animation
+// TODO: pull to refresh down arrow
+
+class Entrance extends Component {
+  static PropTypes = {
+    hideEntrance: PropTypes.func.isRequired
+  }
+
+  state = {
+    scaleAnim: new Animated.Value(1),
+    opacityAnim: new Animated.Value(1),
+  }
+
+  componentDidMount() {
+    Animated.parallel([
+      Animated.sequence([
+        Animated.timing(
+          this.state.scaleAnim,
+          {
+            toValue: 0.9,
+            duration: 200,
+            delay: 2000,
+            easing: Easing.out(Easing.ease),
+          }
+        ),
+        Animated.timing(
+          this.state.scaleAnim,
+          {
+            toValue: 50,
+            duration: 700,
+            delay: 100,
+            easing: Easing.in(Easing.ease),
+          }
+        ),
+      ]),
+      Animated.timing(
+        this.state.opacityAnim,
+        {
+          toValue: 0,
+          duration: 700,
+          easing: Easing.in(Easing.ease),
+          delay:2300,
+        },
+      )
+    ]).start();
+
+    setTimeout(() => {
+      this.props.hideEntrance();
+    }, 3000);
+  }
+
+  render() {
+    return (
+      <Animated.View
+        style={[
+          styles.entrance,
+          {
+            opacity: this.state.opacityAnim,
+          }
+        ]}
+      >
+        <AnimatedIcon
+          name="logo-twitter"
+          size={70}
+          color="white"
+          style={{
+            transform: [
+              {
+                scale: this.state.scaleAnim
+              }
+            ]
+          }} />
+      </Animated.View>
+    )
+  }
+}
 
 const TwitterIcon = ({name, size = 28, style = {}}) => (
   <View style={[styles.icon, style]}>
@@ -80,7 +156,7 @@ const TwitterFlow = () => (
   </View>
 )
 
-export default class Day3 extends Component {
+class TwitterTabs extends Component {
   state = {
     notifCount: 1,
     selectedTab: 'home'
@@ -136,7 +212,33 @@ export default class Day3 extends Component {
   }
 }
 
+export default class Day3 extends Component {
+  state = {
+    hideEntrance: true
+  }
+
+  hideEntrance = () => {
+    this.setState({
+      hideEntrance: true
+    })
+  }
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <TwitterTabs />
+        {!this.state.hideEntrance && (
+          <Entrance hideEntrance={this.hideEntrance} />
+        )}
+      </View>
+    )
+  }
+}
+
 const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  },
   twitterFlow: {
     flex: 1,
     backgroundColor: '#F5F8FA',
@@ -147,7 +249,8 @@ const styles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
     flexDirection: 'row',
     paddingTop: 20,
-    backgroundColor: 'white'
+    backgroundColor: 'white',
+    zIndex: 1
   },
   nav: {
     flex:1,
@@ -171,7 +274,12 @@ const styles = StyleSheet.create({
   },
   twitterPost: {
     flex: 1,
-    position: 'relative',
-    top: -20
+    marginTop: -20
   },
+  entrance: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: twitterBrandColor,
+    alignItems: 'center',
+    justifyContent: 'center'
+  }
 });
