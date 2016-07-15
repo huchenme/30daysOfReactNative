@@ -37,7 +37,6 @@
 		77CE46671D38D35D00333F04 /* libJTSImageViewController.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77CE46661D38D35D00333F04 /* libJTSImageViewController.a */; };
 		77CE46771D38D38000333F04 /* JTSImagePreview.m in Sources */ = {isa = PBXBuildFile; fileRef = 77CE46761D38D38000333F04 /* JTSImagePreview.m */; };
 		77CE46861D38D62500333F04 /* libPods-AwesomeProjectTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77CE46851D38D62500333F04 /* libPods-AwesomeProjectTests.a */; };
-		77CE46C91D38E46D00333F04 /* day4.png in Resources */ = {isa = PBXBuildFile; fileRef = 77CE46C81D38E46D00333F04 /* day4.png */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		BCD9001FFC87404984E231CD /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C73368EAC0FD416E901EFD04 /* Foundation.ttf */; };
 		F3DFE8D7DED84052A6A1D84C /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D40D0ABE7FB6487E912421CA /* Zocial.ttf */; };
@@ -692,7 +691,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				77CE46C91D38E46D00333F04 /* day4.png in Resources */,
 				77CE464B1D37460E00333F04 /* moments.mp4 in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
