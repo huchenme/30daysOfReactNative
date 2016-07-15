@@ -6,13 +6,44 @@ import {
   Image,
   StyleSheet,
   Dimensions,
+  NativeModules,
+  TouchableHighlight
 } from 'react-native';
 
+class ShowImg extends Component{
+  componentDidMount() {
+    React.NativeModules.JTSImagePreview.showImage('day4');
+  }
+
+  render() {
+    return(
+      <View></View>
+    )
+  }
+}
+
 export default class Day4 extends Component {
+  state = {
+    show: false
+  };
+
+  _onImgPress = () => {
+    this.setState({
+      show:false
+    })
+    this.setState({
+      show:true
+    })
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <Text>Day4</Text>
+        <Text>asd</Text>
+        <TouchableHighlight onPress={this._onImgPress}>
+          <Image source={{uri: 'day4'}} style={styles.img} />
+        </TouchableHighlight>
+        {this.state.show && <ShowImg />}
       </View>
     )
   }
@@ -25,4 +56,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  image: {
+    height: 200,
+    width: 300
+  }
 })
