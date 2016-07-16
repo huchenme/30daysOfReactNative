@@ -99,7 +99,6 @@ export default class Day20 extends Component {
       toggledTodo,
       ...todos.slice(index + 1)
     ];
-    console.log('newTodos', newTodos);
     this.setState({
       todos: newTodos,
       dataSource: this.ds.cloneWithRows(newTodos)

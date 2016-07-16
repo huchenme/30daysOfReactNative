@@ -13,6 +13,7 @@ import Day3 from './Day3';
 import Day4 from './Day4';
 import Day5 from './Day5';
 import Day6 from './Day6';
+import Day8 from './Day8';
 import Day17 from './Day17';
 import Day20 from './Day20';
 import * as colors from './colors';
@@ -50,6 +51,12 @@ const days = [
     day: 6,
     title: "Spotify",
     component: Day6,
+    hideNav: true
+  },
+  {
+    day: 8,
+    title: "Swipe Menu",
+    component: Day8,
     hideNav: true
   },
   {
