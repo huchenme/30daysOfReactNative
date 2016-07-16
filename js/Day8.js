@@ -10,10 +10,23 @@ import {
   Text,
   TouchableWithoutFeedback,
   View,
+  PanResponder,
+  LayoutAnimation,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const menuWidth = dimensions.width * 0.7;
+const minLeft = -menuWidth-10;
+const customLayoutLinear = {
+  duration: 200,
+  create: {
+    type: LayoutAnimation.Types.linear,
+    property: LayoutAnimation.Properties.left,
+  },
+  update: {
+    type: LayoutAnimation.Types.easeInEaseOut,
+  },
+};
 
 const Section = ({children}) => (
   <View style={styles.section}>
@@ -111,6 +124,78 @@ const Menu = () => (
 )
 
 export default class Day8 extends Component {
+  state = {
+    showDrop: false,
+    dropOpacity: 0,
+    menuLeft: minLeft,
+  }
+
+  previousMenuLeft = minLeft;
+  previousDropOpacity = 0;
+
+  componentWillMount() {
+    this._panResponder = PanResponder.create({
+      onStartShouldSetPanResponder: (evt, gestureState) => true,
+      onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
+      onMoveShouldSetPanResponder: (evt, gestureState) => true,
+      onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
+      onPanResponderGrant: (evt, gestureState) => {
+        this.setState({showDrop: true})
+      },
+      onPanResponderMove: this.onPanResponderMove,
+      onPanResponderTerminationRequest: (evt, gestureState) => true,
+      onPanResponderRelease: this.onPanResponderEnd,
+      onPanResponderTerminate: this.onPanResponderEnd,
+      onShouldBlockNativeResponder: (evt, gestureState) => true,
+    });
+  }
+
+  onPanResponderMove = (evt, gestureState) => {
+    let newMenuLeft = this.previousMenuLeft + gestureState.dx
+    let newDropOpacity = this.previousDropOpacity + Math.pow((gestureState.dx / -minLeft), 0.5)
+    if (newMenuLeft > 0) {
+      newMenuLeft = 0
+      newDropOpacity = 1
+    }
+    if (newMenuLeft < minLeft) {
+      newMenuLeft = minLeft
+      newDropOpacity = 0
+    }
+    this.setState({
+      menuLeft: newMenuLeft,
+      dropOpacity: newDropOpacity
+    })
+  }
+
+  closeMenu = () => {
+    this.previousMenuLeft = minLeft
+    this.newDropOpacity = 0
+    this.setState({
+      dropOpacity: 0,
+      menuLeft: minLeft,
+      showDrop: false
+    })
+    LayoutAnimation.configureNext(customLayoutLinear);
+  }
+
+  openMenu = () => {
+    this.previousMenuLeft = 0
+    this.newDropOpacity = 1
+    this.setState({
+      dropOpacity: 1,
+      menuLeft: 0,
+    })
+    LayoutAnimation.configureNext(customLayoutLinear);
+  }
+
+  onPanResponderEnd = (evt, gestureState) => {
+    if (gestureState.vx < 0 || gestureState.dx < 0) {
+      this.closeMenu()
+    } else if (gestureState.vx > 0 || gestureState.dx > 0) {
+      this.openMenu()
+    }
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -118,8 +203,14 @@ export default class Day8 extends Component {
         <MapView
           style={StyleSheet.absoluteFill}
         />
-        <View style={styles.drop}></View>
-        <View style={styles.menuContainer}>
+        {this.state.showDrop && (
+          <TouchableWithoutFeedback onPress={() => {this.closeMenu()}}>
+            <View style={[styles.drop, {opacity: this.state.dropOpacity}]}></View>
+          </TouchableWithoutFeedback>
+        )}
+        <View
+          {...this._panResponder.panHandlers}
+          style={[styles.menuContainer, {left: this.state.menuLeft}]}>
           <Menu />
         </View>
       </View>
@@ -137,7 +228,7 @@ const styles = StyleSheet.create({
   mapView: StyleSheet.absoluteFill,
   drop: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0 , 0, 0, 0.6)'
+    backgroundColor: 'rgba(0, 0, 0, 0.6)'
   },
   section: {
     borderTopWidth: 1,
@@ -166,7 +257,7 @@ const styles = StyleSheet.create({
     top: 0,
     bottom: 0,
     left: 0,
-    width: menuWidth + 10,
+    width: menuWidth + 20,
   },
   menu: {
     backgroundColor: 'white',
