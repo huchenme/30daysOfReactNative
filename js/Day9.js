@@ -109,7 +109,22 @@ class TwitterTabs extends Component {
 
 class TwitterFlow extends Component {
   state = {
-    scrollY: new Animated.Value(0)
+    scrollY: new Animated.Value(0),
+    headerZIndex: 0,
+  }
+
+  componentDidMount() {
+    this.state.scrollY.addListener(({value}) => {
+      if (value >= INITIAL_SCROLLY + HEADER_SCROLL_DISTANCE) {
+        this.setState({
+          headerZIndex: 1
+        })
+      } else {
+        this.setState({
+          headerZIndex: 0
+        })
+      }
+    })
   }
 
   onScroll = (event) => {
@@ -137,10 +152,26 @@ class TwitterFlow extends Component {
       extrapolate: 'clamp',
     });
 
+    const avatarScale = this.state.scrollY.interpolate({
+      inputRange: [INITIAL_SCROLLY, INITIAL_SCROLLY + HEADER_SCROLL_DISTANCE],
+      outputRange: [1, 43/68],
+      extrapolate: 'clamp',
+    });
+
+    const avatarTop = this.state.scrollY.interpolate({
+      inputRange: [INITIAL_SCROLLY, INITIAL_SCROLLY + HEADER_SCROLL_DISTANCE],
+      outputRange: [-28, -12],
+      extrapolate: 'clamp',
+    });
+
     return (
       <View style={styles.twitterFlow}>
         <Animated.View
-          style={[styles.header, {height: headerHeight}]}>
+          style={[
+            styles.header,
+            {height: headerHeight},
+            {zIndex: this.state.headerZIndex}
+          ]}>
           <Animated.Image
             style={[styles.bg, {height: headerHeight}]}
             resizeMode="cover"
@@ -161,10 +192,27 @@ class TwitterFlow extends Component {
           )}
           contentOffset={{y: -125}}
           contentInset={{top: 125, bottom: 50}}
-          style={styles.twitterPost}>
+          style={[styles.twitterPost]}>
           <Image
             style={styles.profile}
-            source={require('./assets/day9/profile.png')} />
+            source={require('./assets/day9/profile.png')}>
+            <Animated.View style={{
+              width: 75,
+              height: 75,
+              backgroundColor: 'white',
+              borderRadius: 10,
+              alignItems: 'center',
+              justifyContent: 'center',
+              position: 'absolute',
+              left: 8,
+              top: avatarTop,
+              transform: [{
+                scale: avatarScale
+              }],
+            }}>
+              <Image style={{width: 68, height: 68, borderRadius: 8}} resizeMode="contain" source={require('./assets/day9/avatar.png')} />
+            </Animated.View>
+          </Image>
           <View
             style={{
               paddingVertical: 8,
@@ -246,8 +294,8 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    zIndex: 1
   },
   profile: {
+    overflow: 'visible'
   },
 });
