@@ -9,13 +9,27 @@ import {
   TouchableHighlight
 } from 'react-native';
 
+import TouchID from 'react-native-touch-id';
+
 export default class Day19 extends Component {
+  state = {
+    authenticated: false
+  }
+
+  componentDidMount() {
+    TouchID.authenticate('Authenticate Day 19')
+    .then(success => {
+      this.setState({authenticated: true})
+    })
+    .catch(error => {
+      // Failure code
+    });
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <TouchableHighlight onPress={this.onImgPress}>
-          <Text>Day 19</Text>
-        </TouchableHighlight>
+        {this.state.authenticated ? <Text>Day 19</Text> : <Text>You are not authenticated</Text>}
       </View>
     )
   }
