@@ -15,7 +15,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-const menuWidth = dimensions.width * 0.7;
+const menuWidth = dimensions.screenWidth * 0.7;
 const minLeft = -menuWidth-10;
 const customLayoutLinear = {
   duration: 200,

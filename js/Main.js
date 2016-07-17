@@ -14,6 +14,7 @@ import Day4 from './Day4';
 import Day5 from './Day5';
 import Day6 from './Day6';
 import Day8 from './Day8';
+import Day9 from './Day9';
 import Day17 from './Day17';
 import Day20 from './Day20';
 import * as colors from './colors';
@@ -57,6 +58,12 @@ const days = [
     day: 8,
     title: "Swipe Menu",
     component: Day8,
+    hideNav: true
+  },
+  {
+    day: 9,
+    title: "Twitter Profile",
+    component: Day9,
     hideNav: true
   },
   {

@@ -10,141 +10,43 @@ import {
   ScrollView,
   RefreshControl,
   Animated,
-  Easing
+  Easing,
+  StatusBar,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-const AnimatedIcon = Animated.createAnimatedComponent(Icon);
+import {screenWidth} from './dimensions';
 
 const twitterBlue = "#1DA1F2";
 const twitterBrandColor = "#3BA2F3";
 const twitterGray = "#8899A6";
 
-// TODO: pull to refresh down arrow
+// TODO: pull to blur
 
-class Entrance extends Component {
-  static PropTypes = {
-    hideEntrance: PropTypes.func.isRequired
-  }
-
-  state = {
-    scaleAnim: new Animated.Value(1),
-    opacityAnim: new Animated.Value(1),
-  }
-
-  componentDidMount() {
-    Animated.parallel([
-      Animated.sequence([
-        Animated.timing(
-          this.state.scaleAnim,
-          {
-            toValue: 0.9,
-            duration: 200,
-            delay: 2000,
-            easing: Easing.out(Easing.ease),
-          }
-        ),
-        Animated.timing(
-          this.state.scaleAnim,
-          {
-            toValue: 50,
-            duration: 700,
-            delay: 100,
-            easing: Easing.in(Easing.ease),
-          }
-        ),
-      ]),
-      Animated.timing(
-        this.state.opacityAnim,
-        {
-          toValue: 0,
-          duration: 700,
-          easing: Easing.in(Easing.ease),
-          delay:2300,
-        },
-      )
-    ]).start();
-
-    setTimeout(() => {
-      this.props.hideEntrance();
-    }, 3000);
-  }
-
-  render() {
-    return (
-      <Animated.View
-        style={[
-          styles.entrance,
-          {
-            opacity: this.state.opacityAnim,
-          }
-        ]}
-      >
-        <AnimatedIcon
-          name="logo-twitter"
-          size={70}
-          color="white"
-          style={{
-            transform: [
-              {
-                scale: this.state.scaleAnim
-              }
-            ]
-          }} />
-      </Animated.View>
-    )
-  }
-}
-
-const TwitterIcon = ({name, size = 28, style = {}}) => (
+const TwitterIcon = ({name, size = 24, style = {}}) => (
   <View style={[styles.icon, style]}>
-    <Icon name={name} size={size} color={twitterBlue} />
+    <Icon name={name} size={size} color="white" />
   </View>
 )
 
 const TopBar = () => (
   <View style={styles.topBar}>
     <View style={[styles.nav, styles.navLeft]}>
-      <TwitterIcon name="ios-person-add" size={30} style={{marginLeft: 6}} />
-    </View>
-    <View style={[styles.nav, styles.navMid]}>
-      <TwitterIcon name="logo-twitter" />
+      <TwitterIcon name="ios-arrow-back" style={{marginLeft: 6}} />
     </View>
     <View style={[styles.nav, styles.navRight]}>
-      <TwitterIcon name="ios-search-outline" />
-      <TwitterIcon name="ios-create-outline" style={{marginRight: 6}} />
+      <TwitterIcon name="md-search" />
+      <TwitterIcon name="md-create" style={{marginRight: 6}} />
     </View>
   </View>
 )
 
 class TwitterPost extends Component {
-  state = {
-    isRefreshing: false,
-  }
-
-  _onRefresh() {
-    this.setState({
-      isRefreshing: true,
-    });
-    setTimeout(() => {
-      this.setState({
-        isRefreshing: false,
-      });
-    }, 1000);
-  }
-
   render() {
     return (
       <ScrollView
-        style={styles.twitterPost}
         automaticallyAdjustContentInsets={false}
-        refreshControl={
-          <RefreshControl
-            refreshing={this.state.isRefreshing}
-            onRefresh={()=>this._onRefresh()}
-            tintColor="#ddd"
-          />
-        }>
-        <Image source={require('./assets/day3.png')} />
+        style={styles.twitterPost}>
+        <Image source={require('./assets/day9/flow.png')} />
       </ScrollView>
     )
   }
@@ -213,24 +115,15 @@ class TwitterTabs extends Component {
   }
 }
 
-export default class Day3 extends Component {
-  state = {
-    hideEntrance: true
-  }
-
-  hideEntrance = () => {
-    this.setState({
-      hideEntrance: true
-    })
+export default class Day9 extends Component {
+  componentWillMount() {
+    StatusBar.setBarStyle('light-content');
   }
 
   render() {
     return (
       <View style={styles.container}>
         <TwitterTabs />
-        {!this.state.hideEntrance && (
-          <Entrance hideEntrance={this.hideEntrance} />
-        )}
       </View>
     )
   }
@@ -250,7 +143,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
     flexDirection: 'row',
     paddingTop: 20,
-    backgroundColor: 'white',
+    backgroundColor: '#777',
     zIndex: 1
   },
   nav: {
@@ -276,10 +169,4 @@ const styles = StyleSheet.create({
   twitterPost: {
     flex: 1,
   },
-  entrance: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: twitterBrandColor,
-    alignItems: 'center',
-    justifyContent: 'center'
-  }
 });
