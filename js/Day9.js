@@ -39,10 +39,20 @@ const TwitterIcon = ({name, size = 24, style = {}}) => (
   </View>
 )
 
-const TopBar = () => (
+const TopBar = ({top}) => (
   <View style={styles.topBar}>
     <View style={[styles.nav, styles.navLeft]}>
       <TwitterIcon name="ios-arrow-back" style={{marginLeft: 6}} />
+    </View>
+    <View style={[styles.nav, styles.navMid]}>
+      <Animated.View style={{alignItems: 'center', position: 'relative', top}}>
+        <Text style={[styles.text, {fontWeight: '500', fontSize: 14}]}>
+          Hired
+        </Text>
+        <Text style={[styles.text, {fontWeight: '400', fontSize: 10}]}>
+          2,917 Tweets
+        </Text>
+      </Animated.View>
     </View>
     <View style={[styles.nav, styles.navRight]}>
       <TwitterIcon name="md-search" />
@@ -127,13 +137,7 @@ class TwitterFlow extends Component {
     })
   }
 
-  onScroll = (event) => {
-    const offsetY = event.nativeEvent.contentOffset.y;
-    console.log('offsetY', offsetY)
-  }
-
   render() {
-    console.log(this.state.scrollY)
     const headerHeight = this.state.scrollY.interpolate({
       inputRange: [INITIAL_SCROLLY, INITIAL_SCROLLY + HEADER_SCROLL_DISTANCE],
       outputRange: [HEADER_MAX_HEIGHT, HEADER_MIN_HEIGHT],
@@ -164,6 +168,12 @@ class TwitterFlow extends Component {
       extrapolate: 'clamp',
     });
 
+    const textTop = this.state.scrollY.interpolate({
+      inputRange: [INITIAL_SCROLLY, INITIAL_SCROLLY + 155],
+      outputRange: [155, 0],
+      extrapolate: 'clamp',
+    });
+
     return (
       <View style={styles.twitterFlow}>
         <Animated.View
@@ -182,7 +192,7 @@ class TwitterFlow extends Component {
             resizeMode="cover"
             source={require('./assets/day9/backgroundBlur.png')}>
           </Animated.Image>
-          <TopBar />
+          <TopBar top={textTop} />
         </Animated.View>
         <ScrollView
           automaticallyAdjustContentInsets={false}
@@ -267,10 +277,14 @@ const styles = StyleSheet.create({
   nav: {
     flex:1,
     alignItems:"center",
-    flexDirection:"row"
+    flexDirection:"row",
+    overflow: 'hidden'
   },
   navLeft: {
     justifyContent:"flex-start",
+  },
+  navMid: {
+    justifyContent:"center",
   },
   navRight: {
     justifyContent:"flex-end",
@@ -298,4 +312,11 @@ const styles = StyleSheet.create({
   profile: {
     overflow: 'visible'
   },
+  text: {
+    color: 'white',
+    backgroundColor: 'transparent',
+    textShadowColor:"rgba(0, 0, 0, 0.3)",
+    textShadowOffset:{width:0, height:1},
+    textShadowRadius:1,
+  }
 });
