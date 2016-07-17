@@ -5,16 +5,15 @@ import {
   NavigatorIOS
 } from 'react-native';
 import Main from './js/Main';
-import Day9 from './js/Day9';
 
 class AwesomeProject extends Component {
   render() {
     return (
       <NavigatorIOS
         initialRoute={{
-          component: Day9,
+          component: Main,
           title: '30 Days of RN',
-          navigationBarHidden: true
+          navigationBarHidden: false
         }}
         style={{flex: 1}}
       />

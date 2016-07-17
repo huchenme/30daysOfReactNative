@@ -16,6 +16,7 @@ import Day6 from './Day6';
 import Day8 from './Day8';
 import Day9 from './Day9';
 import Day17 from './Day17';
+import Day19 from './Day19';
 import Day20 from './Day20';
 import * as colors from './colors';
 
@@ -70,6 +71,12 @@ const days = [
     day: 17,
     title: "Fuzzy search",
     component: Day17,
+    hideNav: false
+  },
+  {
+    day: 19,
+    title: "Touch ID",
+    component: Day19,
     hideNav: false
   },
   {
