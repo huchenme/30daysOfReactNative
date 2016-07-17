@@ -29,7 +29,6 @@ const INITIAL_SCROLLY = -HEADER_MAX_HEIGHT;
 const START_BLUR = 100 + INITIAL_SCROLLY;
 const FINISH_BLUR = 132 + INITIAL_SCROLLY;
 
-// TODO: avatar
 // TODO: indicator inset
 // TODO: sticky segment
 
@@ -45,11 +44,11 @@ const TopBar = ({top}) => (
       <TwitterIcon name="ios-arrow-back" style={{marginLeft: 6}} />
     </View>
     <View style={[styles.nav, styles.navMid]}>
-      <Animated.View style={{alignItems: 'center', position: 'relative', top}}>
-        <Text style={[styles.text, {fontWeight: '500', fontSize: 14}]}>
+      <Animated.View style={[styles.headTextContainer, {top}]}>
+        <Text style={[styles.text, styles.textHead]}>
           Hired
         </Text>
-        <Text style={[styles.text, {fontWeight: '400', fontSize: 10}]}>
+        <Text style={[styles.text, styles.textCount]}>
           2,917 Tweets
         </Text>
       </Animated.View>
@@ -125,15 +124,9 @@ class TwitterFlow extends Component {
 
   componentDidMount() {
     this.state.scrollY.addListener(({value}) => {
-      if (value >= INITIAL_SCROLLY + HEADER_SCROLL_DISTANCE) {
-        this.setState({
-          headerZIndex: 1
-        })
-      } else {
-        this.setState({
-          headerZIndex: 0
-        })
-      }
+      this.setState({
+        headerZIndex: value >= INITIAL_SCROLLY + HEADER_SCROLL_DISTANCE ? 1 : 0
+      })
     })
   }
 
@@ -200,37 +193,26 @@ class TwitterFlow extends Component {
           onScroll={Animated.event(
             [{nativeEvent: {contentOffset: {y: this.state.scrollY}}}]
           )}
-          contentOffset={{y: -125}}
-          contentInset={{top: 125, bottom: 50}}
+          contentOffset={{y: -HEADER_MAX_HEIGHT}}
+          contentInset={{top: HEADER_MAX_HEIGHT, bottom: 50}}
+          scrollIndicatorInsets={{top: 359}}
           style={[styles.twitterPost]}>
           <Image
             style={styles.profile}
             source={require('./assets/day9/profile.png')}>
-            <Animated.View style={{
-              width: 75,
-              height: 75,
-              backgroundColor: 'white',
-              borderRadius: 10,
-              alignItems: 'center',
-              justifyContent: 'center',
-              position: 'absolute',
-              left: 8,
+            <Animated.View style={[styles.avatarContainer, {
               top: avatarTop,
               transform: [{
                 scale: avatarScale
               }],
-            }}>
-              <Image style={{width: 68, height: 68, borderRadius: 8}} resizeMode="contain" source={require('./assets/day9/avatar.png')} />
+            }]}>
+              <Image
+                style={styles.avatar}
+                resizeMode="contain"
+                source={require('./assets/day9/avatar.png')} />
             </Animated.View>
           </Image>
-          <View
-            style={{
-              paddingVertical: 8,
-              paddingHorizontal: 12,
-              borderBottomColor: '#059FF5',
-              borderBottomWidth: StyleSheet.hairlineWidth,
-              backgroundColor: 'white'
-            }}>
+          <View style={styles.segmentedControl}>
             <SegmentedControlIOS
               values={['Tweets', 'Media', 'Likes']}
               selectedIndex={0}
@@ -318,5 +300,39 @@ const styles = StyleSheet.create({
     textShadowColor:"rgba(0, 0, 0, 0.3)",
     textShadowOffset:{width:0, height:1},
     textShadowRadius:1,
+  },
+  textHead: {
+    fontWeight: '500',
+    fontSize: 14
+  },
+  textCount: {
+    fontWeight: '400',
+    fontSize: 10
+  },
+  headTextContainer: {
+    alignItems: 'center',
+    position: 'relative'
+  },
+  segmentedControl: {
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderBottomColor: '#059FF5',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    backgroundColor: 'white',
+  },
+  avatar: {
+    width: 68,
+    height: 68,
+    borderRadius: 8
+  },
+  avatarContainer: {
+    width: 75,
+    height: 75,
+    backgroundColor: 'white',
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'absolute',
+    left: 8,
   }
 });
