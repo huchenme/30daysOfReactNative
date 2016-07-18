@@ -9,6 +9,7 @@ import Day17 from './Day17';
 import Day19 from './Day19';
 import Day20 from './Day20';
 import Day24 from './Day24';
+import Day29 from './Day29';
 
 const days = [
   {
@@ -76,6 +77,12 @@ const days = [
     title: "Youtube",
     component: Day24,
     hideNav: true
+  },
+  {
+    day: 29,
+    title: "3D Touch",
+    component: Day29,
+    hideNav: false
   },
 ];
 
