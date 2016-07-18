@@ -5,6 +5,7 @@ import {
   View,
   Text,
   Image,
+  Easing,
   StyleSheet,
   Dimensions,
   StatusBar,
@@ -38,8 +39,6 @@ const tabs = [
     title: "Account",
   },
 ]
-
-// TODO: cam ion show and leave animation
 
 class TabBar extends Component {
   tabIcons = []
@@ -98,8 +97,72 @@ class TabBar extends Component {
 }
 
 export default class Day24 extends Component {
+  state = {
+    currentTab: 0,
+    camIconBottom: new Animated.Value(16),
+    camIconOpacity: new Animated.Value(1),
+  }
+
   componentWillMount() {
     StatusBar.setBarStyle('light-content')
+  }
+
+  onChangeTab = ({i}) => {
+    if (i === 0 && this.state.currentTab != 0) {
+      this.showCamIcon()
+    } else if (i != 0 && this.state.currentTab === 0) {
+      this.hideCamIcon()
+    }
+
+    this.setState({
+      currentTab: i
+    })
+  }
+
+  showCamIcon = () => {
+    Animated.sequence([
+      Animated.delay(300),
+      Animated.parallel([
+        Animated.timing(
+          this.state.camIconBottom,
+          {
+            toValue: 16,
+            duration: 375,
+            easing: Easing.bezier(0.4, 0.0, 0.2, 1)
+          }
+        ),
+        Animated.timing(
+          this.state.camIconOpacity,
+          {
+            toValue: 1,
+            duration: 200
+          }
+        )
+      ])
+    ]).start();
+  }
+
+  hideCamIcon = () => {
+    Animated.sequence([
+      Animated.delay(300),
+      Animated.parallel([
+        Animated.timing(
+          this.state.camIconBottom,
+          {
+            toValue: -56,
+            duration: 375,
+            easing: Easing.bezier(0.4, 0.0, 0.2, 1)
+          }
+        ),
+        Animated.timing(
+          this.state.camIconOpacity,
+          {
+            toValue: 0,
+            duration: 375
+          }
+        )
+      ])
+    ]).start();
   }
 
   render() {
@@ -107,6 +170,7 @@ export default class Day24 extends Component {
       <View style={styles.container}>
         <View style={styles.statusBar} />
         <ScrollableTabView
+          onChangeTab={this.onChangeTab}
           renderTabBar={() => <TabBar />}>
           <ScrollView tabLabel="home" style={styles.tabView}>
             <Image source={require('./assets/day24/screen1.png')} />
@@ -121,6 +185,16 @@ export default class Day24 extends Component {
             <Image source={require('./assets/day24/screen4.png')} />
           </ScrollView>
         </ScrollableTabView>
+        <Animated.View
+          style={[
+            styles.camIcon,
+            {
+              bottom: this.state.camIconBottom,
+              opacity: this.state.camIconOpacity
+            }
+          ]}>
+          <Icon name="videocam" size={24} color='white' />
+        </Animated.View>
       </View>
     )
   }
@@ -141,7 +215,7 @@ const styles = StyleSheet.create({
     zIndex: 1,
     backgroundColor: '#E62117',
     shadowColor: "#000",
-    shadowOpacity: 0.2,
+    shadowOpacity: 0.24,
     shadowRadius: 5,
     shadowOffset: {
       height: 2,
@@ -180,4 +254,21 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     bottom: 0,
   },
+  camIcon: {
+    position: 'absolute',
+    right: 16,
+    width: 56,
+    height: 56,
+    borderRadius: 56,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#E62117',
+    shadowColor: "#000",
+    shadowOpacity: 0.24,
+    shadowRadius: 6,
+    shadowOffset: {
+      height: 6,
+      width: 0
+    }
+  }
 })
