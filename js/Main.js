@@ -18,6 +18,7 @@ import Day9 from './Day9';
 import Day17 from './Day17';
 import Day19 from './Day19';
 import Day20 from './Day20';
+import Day24 from './Day24';
 import * as colors from './colors';
 
 // TODO: run on iOS device and debug
@@ -84,7 +85,13 @@ const days = [
     title: "Reminders",
     component: Day20,
     hideNav: true
-  }
+  },
+  {
+    day: 24,
+    title: "Youtube",
+    component: Day24,
+    hideNav: true
+  },
 ];
 
 export default class Main extends Component {
