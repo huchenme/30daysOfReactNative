@@ -5,7 +5,6 @@ import {
   NavigatorIOS
 } from 'react-native';
 import Main from './js/Main';
-import Day24 from './js/Day24';
 
 class AwesomeProject extends Component {
   render() {

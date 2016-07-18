@@ -138,6 +138,13 @@ export default class Day1 extends Component {
       lapTimings: [],
       dataSource: this.ds.cloneWithRows(convertLapTimingsToDataSource([], this.state.rowCount))
     })
+    clearInterval(this._interval)
+    this._interval = null;
+  }
+
+  componentWillUnmount() {
+    clearInterval(this._interval)
+    this._interval = null;
   }
 
   startButton = () => (

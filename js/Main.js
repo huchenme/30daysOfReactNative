@@ -6,93 +6,14 @@ import {
   View,
   StatusBar,
   ListView,
+  DeviceEventEmitter,
 } from 'react-native'
 import Separator from './Separator';
-import Day1 from './Day1';
-import Day3 from './Day3';
-import Day4 from './Day4';
-import Day5 from './Day5';
-import Day6 from './Day6';
-import Day8 from './Day8';
-import Day9 from './Day9';
-import Day17 from './Day17';
-import Day19 from './Day19';
-import Day20 from './Day20';
-import Day24 from './Day24';
 import * as colors from './colors';
-
+import days from './days';
 // TODO: run on iOS device and debug
 // TODO: nav styles
 // TODO: app icon
-
-const days = [
-  {
-    day: 1,
-    title: "Stopwatch",
-    component: Day1,
-    hideNav: false
-  },
-  {
-    day: 3,
-    title: "Twitter",
-    component: Day3,
-    hideNav: true
-  },
-  {
-    day: 4,
-    title: "Cocoapods",
-    component: Day4,
-    hideNav: false
-  },
-  {
-    day: 5,
-    title: "Find my location",
-    component: Day5,
-    hideNav: false
-  },
-  {
-    day: 6,
-    title: "Spotify",
-    component: Day6,
-    hideNav: true
-  },
-  {
-    day: 8,
-    title: "Swipe Menu",
-    component: Day8,
-    hideNav: true
-  },
-  {
-    day: 9,
-    title: "Twitter Profile",
-    component: Day9,
-    hideNav: true
-  },
-  {
-    day: 17,
-    title: "Fuzzy search",
-    component: Day17,
-    hideNav: false
-  },
-  {
-    day: 19,
-    title: "Touch ID",
-    component: Day19,
-    hideNav: false
-  },
-  {
-    day: 20,
-    title: "Reminders",
-    component: Day20,
-    hideNav: true
-  },
-  {
-    day: 24,
-    title: "Youtube",
-    component: Day24,
-    hideNav: true
-  },
-];
 
 export default class Main extends Component {
   ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -101,13 +22,30 @@ export default class Main extends Component {
     dataSource: this.ds.cloneWithRows(days)
   }
 
-  componentDidMount() {
+  componentWillMount() {
     StatusBar.setBarStyle('default');
+    DeviceEventEmitter.addListener(
+    'quickActionShortcut', (data) => {
+      switch(data.type){
+        case "day1":
+          this.goToDay(0);
+          break;
+        case "day3":
+          this.goToDay(1);
+          break;
+        case "day4":
+          this.goToDay(2);
+          break;
+        case "day5":
+          this.goToDay(3);
+          break;
+      }
+    });
   }
 
   goToDay = (index) => {
     const day = days[index];
-    this.props.navigator.push({
+    this.props.navigator.resetTo({
       title: day.title,
       component: day.component,
       navigationBarHidden: day.hideNav
