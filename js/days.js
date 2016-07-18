@@ -10,6 +10,7 @@ import Day19 from './Day19';
 import Day20 from './Day20';
 import Day21 from './Day21';
 import Day24 from './Day24';
+import Day25 from './Day25';
 import Day29 from './Day29';
 
 const days = [
@@ -83,6 +84,12 @@ const days = [
     day: 24,
     title: "Youtube",
     component: Day24,
+    hideNav: true
+  },
+  {
+    day: 25,
+    title: "WebView",
+    component: Day25,
     hideNav: true
   },
   {

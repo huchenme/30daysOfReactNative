@@ -11,7 +11,6 @@ import {
 import Separator from './Separator';
 import * as colors from './colors';
 import days from './days';
-
 // TODO: nav styles
 // TODO: app icon
 
@@ -54,7 +53,7 @@ export default class Main extends Component {
 
   goToDay = (index) => {
     const day = days[index];
-    this.props.navigator.push({
+    this.props.navigator.resetTo({
       title: day.title,
       component: day.component,
       navigationBarHidden: day.hideNav
