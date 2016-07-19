@@ -11,7 +11,7 @@ import {
 import Separator from './Separator';
 import * as colors from './colors';
 import days from './days';
-// TODO: run on iOS device and debug
+
 // TODO: nav styles
 // TODO: app icon
 

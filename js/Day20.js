@@ -6,6 +6,7 @@ import {
   TextInput,
   StyleSheet,
   ListView,
+  Image,
   TouchableHighlight,
   StatusBar,
   TouchableWithoutFeedback,
@@ -13,12 +14,13 @@ import {
 } from 'react-native';
 import Separator from './Separator';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {screenWidth, screenHeight} from './dimensions';
 
-const Header = ({themeColor, count = 0}) => {
+const Header = ({title, themeColor, count = 0}) => {
   return (
     <View>
       <View style={styles.header}>
-        <Text style={[styles.headerText, {color: themeColor}]}>Reminders</Text>
+        <Text style={[styles.headerText, {color: themeColor}]}>{title}</Text>
         <Text style={[styles.headerText, {color: themeColor}]}>{count}</Text>
       </View>
       <Separator />
@@ -45,30 +47,28 @@ const animations = {
   },
 };
 
-// TODO: dynamic height
+// TODO: row dynamic height
 // TODO: tap anywhere will focus on textinput
 // TODO: autofocus on next one
 // TODO: should able to toggle when keyboard open
 
-export default class Day20 extends Component {
+export class Reminder extends Component {
   static propTypes = {
     themeColor: PropTypes.string.isRequired,
+    todos: PropTypes.array.isRequired,
+    title: PropTypes.string.isRequired,
   }
 
   static defaultProps = {
-    themeColor: colors.purple
+    todos: []
   }
 
   ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
   state = {
     newTodo: '',
-    todos: [],
-    dataSource: this.ds.cloneWithRows([])
-  }
-
-  componentDidMount() {
-    StatusBar.setBarStyle('light-content');
+    todos: this.props.todos,
+    dataSource: this.ds.cloneWithRows(this.props.todos)
   }
 
   addTodo = () => {
@@ -109,60 +109,80 @@ export default class Day20 extends Component {
   render() {
     const remainCount = this.state.todos.filter(t => !t.completed).length;
     return (
-      <View style={styles.container}>
-        <View style={styles.reminderContainer}>
-          <Header
-            themeColor={this.props.themeColor}
-            count={remainCount} />
-          <ListView
-            automaticallyAdjustContentInsets={false}
-            dataSource={this.state.dataSource}
-            enableEmptySections
-            renderFooter={() => (
+      <View style={styles.reminderContainer}>
+        <Image
+          style={styles.reminderBg}
+          source={require('./assets/packed.png')}
+        />
+        <Header
+          title={this.props.title}
+          themeColor={this.props.themeColor}
+          count={remainCount} />
+        <ListView
+          automaticallyAdjustContentInsets={false}
+          dataSource={this.state.dataSource}
+          enableEmptySections
+          renderFooter={() => (
+            <View>
+              <View style={styles.todoRow}>
+                <View style={styles.addIcon}>
+                  <Icon name="ios-add" color="#C6C6C6" size={35}/>
+                </View>
+                <TextInput
+                  autoFocus
+                  enablesReturnKeyAutomatically
+                  value={this.state.newTodo}
+                  onChangeText={(text) => this.setState({newTodo: text})}
+                  onEndEditing={this.addTodo}
+                  style={styles.todoTextInput} />
+              </View>
+              <View style={styles.separator}>
+                <Separator />
+              </View>
+            </View>
+          )}
+          renderRow={(rowData, sectionID, rowID) => {
+            return (
               <View>
                 <View style={styles.todoRow}>
-                  <View style={{
-                      width: 23,
-                      height: 23,
-                      marginRight: 15,
-                      alignItems: 'center',
-                      justifyContent: 'center'
-                    }}>
-                    <Icon name="ios-add" color="#C6C6C6" size={35}/>
-                  </View>
+                  <TodoToggle
+                    themeColor={this.props.themeColor}
+                    completed={rowData.completed}
+                    onPress={this.toggleTodo.bind(null, parseInt(rowID), 10)} />
                   <TextInput
-                    autoFocus
-                    enablesReturnKeyAutomatically
-                    value={this.state.newTodo}
-                    onChangeText={(text) => this.setState({newTodo: text})}
-                    onEndEditing={this.addTodo}
-                    style={styles.todoTextInput} />
+                    style={[styles.todoTextInput, rowData.completed && styles.todoTextCompleted]}
+                    defaultValue={rowData.text} />
                 </View>
                 <View style={styles.separator}>
                   <Separator />
                 </View>
               </View>
-            )}
-            renderRow={(rowData, sectionID, rowID) => {
-              return (
-                <View>
-                  <View style={styles.todoRow}>
-                    <TodoToggle
-                      themeColor={this.props.themeColor}
-                      completed={rowData.completed}
-                      onPress={this.toggleTodo.bind(null, parseInt(rowID), 10)} />
-                    <TextInput
-                      style={[styles.todoTextInput, rowData.completed && styles.todoTextCompleted]}
-                      defaultValue={rowData.text} />
-                  </View>
-                  <View style={styles.separator}>
-                    <Separator />
-                  </View>
-                </View>
-              )
-            }}
-          />
-        </View>
+            )
+          }}
+        />
+      </View>
+    )
+  }
+}
+
+const listData = {
+  title: "Reminders",
+  theme: colors.purple,
+  list: [],
+}
+
+export default class Day20 extends Component {
+  componentWillMount() {
+    StatusBar.setBarStyle('light-content');
+  }
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <Reminder
+          title={listData.title}
+          themeColor={listData.theme}
+          todos={listData.list} />
       </View>
     )
   }
@@ -174,12 +194,21 @@ const styles = StyleSheet.create({
     backgroundColor: '#1E1F3C'
   },
   reminderContainer: {
-    flex: 1,
-    marginTop: 20,
-    marginBottom: 43,
+    position: 'absolute',
+    top: 20,
+    left: 0,
+    width: screenWidth,
+    height: screenHeight - 63,
     borderRadius: 10,
     backgroundColor: '#F9F9F9',
     overflow: 'hidden'
+  },
+  reminderBg: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: screenWidth,
+    height: screenHeight - 63
   },
   header: {
     flexDirection: 'row',
@@ -193,6 +222,7 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: 30,
     fontWeight: '500',
+    backgroundColor: 'transparent',
     textShadowColor:"rgba(0, 0, 0, 0.3)",
     textShadowOffset:{width:0, height:1},
     textShadowRadius:1,
@@ -212,6 +242,14 @@ const styles = StyleSheet.create({
   },
   todoTextCompleted: {
     color: colors.textSecondary
+  },
+  addIcon: {
+    width: 23,
+    height: 23,
+    marginRight: 15,
+    backgroundColor: 'transparent',
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   toggle: {
     width: 23,

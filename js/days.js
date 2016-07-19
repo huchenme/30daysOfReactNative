@@ -8,6 +8,7 @@ import Day9 from './Day9';
 import Day17 from './Day17';
 import Day19 from './Day19';
 import Day20 from './Day20';
+import Day21 from './Day21';
 import Day24 from './Day24';
 import Day29 from './Day29';
 
@@ -70,6 +71,12 @@ const days = [
     day: 20,
     title: "Reminders",
     component: Day20,
+    hideNav: true
+  },
+  {
+    day: 21,
+    title: "Multi Reminders",
+    component: Day21,
     hideNav: true
   },
   {
