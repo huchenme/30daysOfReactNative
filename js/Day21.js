@@ -12,6 +12,18 @@ import {
   LayoutAnimation
 } from 'react-native';
 import {Reminder} from './Day20'
+import {screenHeight, screenWidth} from './dimensions'
+
+const animations = {
+  duration: 200,
+  create: {
+    type: LayoutAnimation.Types.linear,
+  },
+  update: {
+    type: LayoutAnimation.Types.linear,
+    springDamping: 0.5,
+  },
+};
 
 const listsData = [
   {
@@ -66,9 +78,66 @@ const listsData = [
   }
 ];
 
-const listData = listsData[5]
+function reminderTopPosition(index, state, totalCount) {
+  if (state.init) {
+    return 20 + 76*index
+  } else {
+    const {activeIndex} = state;
+    if (activeIndex === index) {
+      return 20
+    } else {
+      if (index < activeIndex) {
+        return screenHeight - 7 * (totalCount - index - 1)
+      } else {
+        return screenHeight - 7 * (totalCount - index)
+      }
+    }
+  }
+}
+
+function reminderScale(index, state, totalCount) {
+  if (state.init) {
+    return 1
+  } else {
+    const {activeIndex} = state;
+    if (activeIndex === index) {
+      return 1
+    } else {
+      if (index < activeIndex) {
+        return 1 - 0.01 * (totalCount - index - 1)
+      } else {
+        return 1 - 0.01 * (totalCount - index)
+      }
+    }
+  }
+}
 
 export default class Day21 extends Component {
+  state = {
+    init: true,
+    activeIndex: null
+  }
+
+  toggleTab = (index) => {
+    if (this.state.activeIndex === index) {
+      this.reset()
+    } else {
+      this.setState({
+        activeIndex: index,
+        init: false
+      })
+      LayoutAnimation.configureNext(animations);
+    }
+  }
+
+  reset = () => {
+    this.setState({
+      activeIndex: null,
+      init: true
+    })
+    LayoutAnimation.configureNext(animations);
+  }
+
   componentWillMount() {
     StatusBar.setBarStyle('light-content');
   }
@@ -76,10 +145,28 @@ export default class Day21 extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Reminder
-          title={listData.title}
-          themeColor={listData.theme}
-          todos={listData.list} />
+        {listsData.map((listData, index) => (
+          <Reminder
+            key={index}
+            style={{
+              top: reminderTopPosition(index, this.state, listsData.length),
+              transform: [
+                {
+                  scale: reminderScale(index, this.state, listsData.length)
+                }
+              ]
+            }}
+            toggleTab={()=>this.toggleTab(index)}
+            title={listData.title}
+            themeColor={listData.theme}
+            todos={listData.list} />
+        ))}
+        <TouchableHighlight
+          underlayColor="transparent"
+          style={styles.reset}
+          onPress={this.reset}>
+          <View></View>
+        </TouchableHighlight>
       </View>
     )
   }
@@ -90,62 +177,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#1E1F3C'
   },
-  reminderContainer: {
-    flex: 1,
-    marginTop: 20,
-    marginBottom: 43,
-    borderRadius: 10,
-    backgroundColor: '#F9F9F9',
-    overflow: 'hidden'
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingTop: 20,
-    paddingBottom: 20,
-    paddingLeft: 15,
-    paddingRight: 15
-  },
-  headerText: {
-    fontSize: 30,
-    fontWeight: '500',
-    textShadowColor:"rgba(0, 0, 0, 0.3)",
-    textShadowOffset:{width:0, height:1},
-    textShadowRadius:1,
-  },
-  todoRow: {
-    paddingLeft: 15,
-    paddingRight: 15,
-    height: 44,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-start'
-  },
-  todoTextInput: {
-    flex: 1,
-    color: '#3F3F3F',
-    fontSize: 17,
-  },
-  todoTextCompleted: {
-    color: colors.textSecondary
-  },
-  toggle: {
-    width: 23,
-    height: 23,
-    borderRadius: 23,
-    marginRight: 15,
-    borderWidth: 1,
-    borderColor: '#C6C6C6',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  fill: {
-    width: 15,
-    height: 15,
-    borderRadius: 15,
-  },
-  separator: {
-    marginLeft: 38
+  reset: {
+    height: 30,
+    width: screenWidth,
+    position: "absolute",
+    bottom: 0,
+    left: 0,
   }
 });

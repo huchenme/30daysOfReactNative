@@ -16,15 +16,17 @@ import Separator from './Separator';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {screenWidth, screenHeight} from './dimensions';
 
-const Header = ({title, themeColor, count = 0}) => {
+const Header = ({title, themeColor, count = 0, toggleTab}) => {
   return (
-    <View>
-      <View style={styles.header}>
-        <Text style={[styles.headerText, {color: themeColor}]}>{title}</Text>
-        <Text style={[styles.headerText, {color: themeColor}]}>{count}</Text>
+    <TouchableWithoutFeedback onPress={toggleTab}>
+      <View>
+        <View style={styles.header}>
+          <Text style={[styles.headerText, {color: themeColor}]}>{title}</Text>
+          <Text style={[styles.headerText, {color: themeColor}]}>{count}</Text>
+        </View>
+        <Separator />
       </View>
-      <Separator />
-    </View>
+    </TouchableWithoutFeedback>
   )
 };
 
@@ -57,6 +59,7 @@ export class Reminder extends Component {
     themeColor: PropTypes.string.isRequired,
     todos: PropTypes.array.isRequired,
     title: PropTypes.string.isRequired,
+    toggleTab: PropTypes.func,
   }
 
   static defaultProps = {
@@ -109,12 +112,13 @@ export class Reminder extends Component {
   render() {
     const remainCount = this.state.todos.filter(t => !t.completed).length;
     return (
-      <View style={styles.reminderContainer}>
+      <View style={[styles.reminderContainer, this.props.style]}>
         <Image
           style={styles.reminderBg}
           source={require('./assets/packed.png')}
         />
         <Header
+          toggleTab={this.props.toggleTab}
           title={this.props.title}
           themeColor={this.props.themeColor}
           count={remainCount} />
@@ -201,14 +205,21 @@ const styles = StyleSheet.create({
     height: screenHeight - 63,
     borderRadius: 10,
     backgroundColor: '#F9F9F9',
-    overflow: 'hidden'
+    shadowColor: "#000",
+    shadowOpacity: 0.3,
+    shadowRadius: 2,
+    shadowOffset: {
+      height: -1,
+      width: 0,
+    }
   },
   reminderBg: {
     position: 'absolute',
     top: 0,
     left: 0,
     width: screenWidth,
-    height: screenHeight - 63
+    height: screenHeight - 63,
+    borderRadius: 10,
   },
   header: {
     flexDirection: 'row',
