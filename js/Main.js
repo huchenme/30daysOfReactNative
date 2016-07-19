@@ -53,7 +53,7 @@ export default class Main extends Component {
 
   goToDay = (index) => {
     const day = days[index];
-    this.props.navigator.resetTo({
+    this.props.navigator.push({
       title: day.title,
       component: day.component,
       navigationBarHidden: day.hideNav
