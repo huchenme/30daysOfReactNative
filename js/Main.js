@@ -28,24 +28,33 @@ export default class Main extends Component {
     'quickActionShortcut', (data) => {
       switch(data.type){
         case "day1":
-          this.goToDay(0);
+          this.jumpToDay(0);
           break;
         case "day3":
-          this.goToDay(1);
+          this.jumpToDay(1);
           break;
         case "day4":
-          this.goToDay(2);
+          this.jumpToDay(2);
           break;
         case "day5":
-          this.goToDay(3);
+          this.jumpToDay(3);
           break;
       }
     });
   }
 
-  goToDay = (index) => {
+  jumpToDay = (index) => {
     const day = days[index];
     this.props.navigator.resetTo({
+      title: day.title,
+      component: day.component,
+      navigationBarHidden: day.hideNav
+    });
+  }
+
+  goToDay = (index) => {
+    const day = days[index];
+    this.props.navigator.push({
       title: day.title,
       component: day.component,
       navigationBarHidden: day.hideNav
