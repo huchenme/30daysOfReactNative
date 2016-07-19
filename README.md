@@ -35,7 +35,7 @@ Inspired by https://github.com/fangwei716/30-days-of-react-native, this repo is 
 - [ ] Day 30
 - [ ] Realm React Native Todo
 - [ ] Day 21 use Realm
-- [ ] Main Navigation
+- [x] Main Navigation
 - [x] Icon
 
 ## Main Navigation
