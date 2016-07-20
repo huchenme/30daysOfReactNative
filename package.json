@@ -10,7 +10,6 @@
     "fuzzy": "^0.1.1",
     "react": "15.2.1",
     "react-native": "0.29.0",
-    "react-native-quick-actions": "^0.1.4",
     "react-native-loading-spinner-overlay": "^0.2.0",
     "react-native-quick-actions": "^0.1.4",
     "react-native-scrollable-tab-view": "^0.5.3",
@@ -18,7 +17,8 @@
     "react-native-swiper": "^1.4.6",
     "react-native-touch-id": "^2.0.2",
     "react-native-vector-icons": "^2.0.3",
-    "react-native-video": "^0.8.0"
+    "react-native-video": "^0.8.0",
+    "realm": "^0.14.1"
   },
   "devDependencies": {
     "babel-preset-stage-0": "^6.5.0"
