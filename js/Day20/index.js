@@ -15,6 +15,10 @@ import { ListView } from 'realm/react-native';
 import Separator from '../Separator';
 import Icon from 'react-native-vector-icons/Ionicons';
 
+// FIXME: known issue that if user type too fast on existing item, console will complain
+// "Native TextInput(xxx) is x events ahead of JS - try to make your JS faster."
+// it is fixed for new todo item by not call setState directly
+
 const Header = ({title, themeColor, count = 0, toggleTab}) => {
   return (
     <TouchableWithoutFeedback onPress={toggleTab}>
