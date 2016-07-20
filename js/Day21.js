@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import Realm from 'realm';
 import * as colors from './colors';
 import {
   View,
@@ -13,6 +14,12 @@ import {
 } from 'react-native';
 import {Reminder} from './Day20'
 import {screenHeight, screenWidth} from './dimensions'
+import {Todo, TodoList} from './schema';
+
+const realm = new Realm({
+  path: 'day21.realm',
+  schema: [Todo, TodoList]
+});
 
 const animations = {
   duration: 200,
@@ -24,59 +31,6 @@ const animations = {
     springDamping: 0.5,
   },
 };
-
-const listsData = [
-  {
-    title: "Scheduled",
-    theme: "#979797",
-    list: [],
-  },
-  {
-    title: "Movie",
-    theme: "#cb7adf",
-    list: [],
-  },
-  {
-    title: "Work",
-    theme: "#f9005f",
-    list: [],
-  },
-  {
-    title: "Home",
-    theme: "#00a8f4",
-    list: [],
-  },
-  {
-    title: "Reminder",
-    theme: "#68d746",
-    list: [],
-  },
-  {
-    title: "Development",
-    theme: "#fe952b",
-    list: [
-      {
-        completed: false,
-        text: "day20",
-      },{
-        completed: false,
-        text: "day21",
-      },{
-        completed: false,
-        text: "day22",
-      },{
-        completed: false,
-        text: "day23",
-      },{
-        completed: false,
-        text: "day24",
-      },{
-        completed: false,
-        text: "day25",
-      }
-    ],
-  }
-];
 
 function reminderTopPosition(index, state, totalCount) {
   if (state.init) {
@@ -113,9 +67,32 @@ function reminderScale(index, state, totalCount) {
 }
 
 export default class Day21 extends Component {
-  state = {
-    init: true,
-    activeIndex: null
+  constructor(props) {
+    super(props);
+
+    console.log(realm.path)
+
+    this.listsData = realm.objects('TodoList');
+    if (this.listsData.length < 1) {
+      realm.write(() => {
+        realm.create('TodoList', {title: 'Scheduled', theme: '#979797'});
+        realm.create('TodoList', {title: 'Movie', theme: '#cb7adf'});
+        realm.create('TodoList', {title: 'Work', theme: '#f9005f'});
+        realm.create('TodoList', {title: 'Home', theme: '#00a8f4'});
+        realm.create('TodoList', {title: 'Reminder', theme: '#68d746'});
+        const development = realm.create('TodoList', {title: 'Development', theme: '#fe952b'});
+        development.list.push({text: 'day20'})
+        development.list.push({text: 'day21'})
+        development.list.push({text: 'day22'})
+        development.list.push({text: 'day23'})
+        development.list.push({text: 'day24'})
+        development.list.push({text: 'day25'})
+      });
+    }
+    this.state = {
+      init: true,
+      activeIndex: null
+    }
   }
 
   toggleTab = (index) => {
@@ -145,20 +122,22 @@ export default class Day21 extends Component {
   render() {
     return (
       <View style={styles.container}>
-        {listsData.map((listData, index) => (
+        {this.listsData.map((listData, index) => (
           <Reminder
             key={index}
+            realm={realm}
             style={{
-              top: reminderTopPosition(index, this.state, listsData.length),
+              top: reminderTopPosition(index, this.state, this.listsData.length),
               transform: [
                 {
-                  scale: reminderScale(index, this.state, listsData.length)
+                  scale: reminderScale(index, this.state, this.listsData.length)
                 }
               ]
             }}
             toggleTab={()=>this.toggleTab(index)}
             title={listData.title}
             themeColor={listData.theme}
+            remainCount={listData.list.filtered('completed = false').length}
             todos={listData.list} />
         ))}
         <TouchableHighlight

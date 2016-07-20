@@ -67,18 +67,17 @@ class TodoItem extends Component {
   }
 
   toggleTodo = () => {
-    realm.write(() => {
+    this.props.realm.write(() => {
       this.props.todo.completed = !this.props.todo.completed;
     });
-    LayoutAnimation.configureNext(animations)
-    this.forceUpdate();
+    this.props.resetDataSource()
   }
 
   onChangeText = (text) => {
-    realm.write(() => {
+    this.props.realm.write(() => {
       this.props.todo.text = text;
     });
-    this.forceUpdate();
+    this.props.resetDataSource()
   }
 
   render() {
@@ -113,7 +112,7 @@ export class Reminder extends Component {
     todos: PropTypes.object.isRequired,
     title: PropTypes.string.isRequired,
     toggleTab: PropTypes.func,
-    remainCount: PropTypes.number.isRequired,
+    realm: PropTypes.any
   }
 
   static defaultProps = {
@@ -121,6 +120,7 @@ export class Reminder extends Component {
   }
 
   state = {
+    remainCount: this.props.todos.filtered('completed = false').length,
     newTodo: '',
     dataSource: new ListView.DataSource({rowHasChanged: (row1, row2) => {
       return row1 !== row2
@@ -133,7 +133,8 @@ export class Reminder extends Component {
 
   resetDataSource = () => {
     this.setState({
-      dataSource: this.state.dataSource.cloneWithRows(this.props.todos)
+      dataSource: this.state.dataSource.cloneWithRows(this.props.todos),
+      remainCount: this.props.todos.filtered('completed = false').length
     })
     LayoutAnimation.configureNext(animations)
   }
@@ -141,8 +142,8 @@ export class Reminder extends Component {
   addTodo = (event) => {
     const text = event.nativeEvent.text.trim();
     if (text !== '') {
-      realm.write(() => {
-        realm.create('Todo', {text});
+      this.props.realm.write(() => {
+        this.props.todos.push({text});
       });
       this.resetDataSource()
     }
@@ -155,6 +156,8 @@ export class Reminder extends Component {
     return (
       <TodoItem
         todo={rowData}
+        resetDataSource={this.resetDataSource}
+        realm={this.props.realm}
         themeColor={this.props.themeColor}
       />
     )
@@ -182,7 +185,7 @@ export class Reminder extends Component {
   }
 
   render() {
-    const remainCount = this.props.remainCount;
+    const remainCount = this.state.remainCount;
     return (
       <View style={[styles.reminderContainer, this.props.style]}>
         <Image
@@ -210,19 +213,16 @@ export default class Day20 extends Component {
   constructor(props) {
     super(props);
     console.log(realm.path)
-    this.todos = realm.objects('Todo');
-    if (this.todos.length < 1) {
+    this.listsData = realm.objects('TodoList');
+    if (this.listsData.length < 1) {
       realm.write(() => {
-        realm.create('Todo', {text: 'Todo 1'});
-        realm.create('Todo', {text: 'Todo 2'});
-        realm.create('Todo', {text: 'Todo 3', completed: true});
+        const reminder = realm.create('TodoList', {title: 'Reminders', theme: colors.purple});
+        reminder.list.push({text: 'Todo 1'})
+        reminder.list.push({text: 'Todo 2'})
+        reminder.list.push({text: 'Todo 3', completed: true})
       });
     }
-    this.listData = {
-      title: "Reminders",
-      theme: colors.purple,
-      list: this.todos,
-    }
+    this.listData = this.listsData[0]
   }
 
   componentWillMount() {
@@ -233,10 +233,10 @@ export default class Day20 extends Component {
     return (
       <View style={styles.container}>
         <Reminder
+          realm={realm}
           title={this.listData.title}
           themeColor={this.listData.theme}
-          todos={this.listData.list}
-          remainCount={this.todos.filtered('completed = false').length} />
+          todos={this.listData.list} />
       </View>
     )
   }
