@@ -31,10 +31,6 @@
       "callbacksLast": true,
       "requiredFirst": true,
     }],
-    "react/jsx-sort-props": [1, {
-      "callbacksLast": true,
-      "shorthandFirst": true,
-    }],
     "react/sort-comp": [1, {
       order: [
         "static-methods",
@@ -42,7 +38,6 @@
         "/^_.+$/",
         '/^on.+$/',
         "rendering",
-        "everything-else",
       ],
       groups: {
         rendering: [
@@ -57,9 +52,9 @@
     "react/wrap-multilines": 1,
     "react/jsx-equals-spacing": 1,
 
-    "react-native/no-unused-styles": 1,
+    # "react-native/no-unused-styles": 1,
     "react-native/split-platform-components": 2,
-    "react-native/no-inline-styles": 1,
+    # "react-native/no-inline-styles": 1,
     # "react-native/no-color-literals": 1,
   }
 }
