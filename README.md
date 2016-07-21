@@ -1,6 +1,10 @@
 # 30 days of React Native
 Inspired by https://github.com/fangwei716/30-days-of-react-native, this repo is to replicate the UI of 30 days
 
+[![Code Climate](https://codeclimate.com/github/huchenme/30daysOfReactNative/badges/gpa.svg)](https://codeclimate.com/github/huchenme/30daysOfReactNative)
+[![Test Coverage](https://codeclimate.com/github/huchenme/30daysOfReactNative/badges/coverage.svg)](https://codeclimate.com/github/huchenme/30daysOfReactNative/coverage)
+[![Issue Count](https://codeclimate.com/github/huchenme/30daysOfReactNative/badges/issue_count.svg)](https://codeclimate.com/github/huchenme/30daysOfReactNative)
+
 ## Days progress
 
 - [x] Day 1

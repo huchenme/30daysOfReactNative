@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "cc": "codeclimate analyze"
   },
   "dependencies": {
     "babel-preset-react-native-stage-0": "^1.0.1",
