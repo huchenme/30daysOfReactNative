@@ -1,12 +1,10 @@
-import React, { Component, PropTypes } from 'react';
-import * as colors from './colors';
+import React, {Component, PropTypes} from 'react';
 import {
   View,
   Text,
   Image,
   StyleSheet,
   StatusBar,
-  TouchableHighlight,
   TouchableWithoutFeedback,
   Dimensions,
 } from 'react-native';
@@ -33,6 +31,7 @@ const FullVideo = () => (
 const Dot = ({active = false}) => (
   <View style={[styles.dot, active && styles.activeDot]}></View>
 )
+Dot.propTypes = {active: PropTypes.bool};
 
 class HintSwiper extends Component {
   render() {

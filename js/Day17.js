@@ -1,14 +1,11 @@
-import React, { Component, PropTypes } from 'react';
+import React, {Component, PropTypes} from 'react';
 import fuzzy from 'fuzzy';
 import * as colors from './colors';
 import {
   View,
   Text,
-  TextInput,
   StyleSheet,
-  ListView,
   ScrollView,
-  TouchableHighlight,
 } from 'react-native';
 import SearchBar from 'react-native-search-bar';
 import Separator from './Separator';
@@ -100,6 +97,7 @@ const Row = ({children}) => {
     </View>
   )
 };
+Row.propTypes = {children: PropTypes.element.isRequired}
 
 export default class Day17 extends Component {
   constructor() {
@@ -116,7 +114,7 @@ export default class Day17 extends Component {
   }
 
   _onChangeText(text) {
-    const options = { pre: '>' };
+    const options = {pre: '>'};
     const results = fuzzy.filter(text, this.states, options)
     const matches = results.map(function(el) { return el.string; });
     this.setState({

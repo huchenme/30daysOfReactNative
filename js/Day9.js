@@ -1,25 +1,19 @@
-import React, { Component, PropTypes } from 'react';
-import * as colors from './colors';
+import React, {Component, PropTypes} from 'react';
 import {
   View,
   Text,
   Image,
   StyleSheet,
-  Dimensions,
   TabBarIOS,
   ScrollView,
-  RefreshControl,
   Animated,
-  Easing,
   StatusBar,
   SegmentedControlIOS,
-  NativeModules
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {screenWidth, screenHeight} from './dimensions';
+import {screenWidth} from './dimensions';
 
 const twitterBlue = "#1DA1F2";
-const twitterBrandColor = "#3BA2F3";
 const twitterGray = "#8899A6";
 
 const HEADER_MAX_HEIGHT = 125;
@@ -37,6 +31,11 @@ const TwitterIcon = ({name, size = 24, style = {}}) => (
     <Icon name={name} size={size} color="white" />
   </View>
 )
+TwitterIcon.propTypes = {
+  name: PropTypes.string.isRequired,
+  size: PropTypes.number,
+  style: PropTypes.object,
+}
 
 const TopBar = ({top}) => (
   <View style={styles.topBar}>
@@ -59,6 +58,9 @@ const TopBar = ({top}) => (
     </View>
   </View>
 )
+TopBar.propTypes = {
+  top: PropTypes.number.isRequired,
+}
 
 class TwitterTabs extends Component {
   state = {
@@ -135,12 +137,6 @@ class TwitterFlow extends Component {
       inputRange: [INITIAL_SCROLLY, INITIAL_SCROLLY + HEADER_SCROLL_DISTANCE],
       outputRange: [HEADER_MAX_HEIGHT, HEADER_MIN_HEIGHT],
       extrapolateRight: 'clamp',
-    });
-
-    const imageTranslate = this.state.scrollY.interpolate({
-      inputRange: [INITIAL_SCROLLY, INITIAL_SCROLLY + HEADER_SCROLL_DISTANCE],
-      outputRange: [0, -HEADER_SCROLL_DISTANCE],
-      extrapolate: 'clamp',
     });
 
     const imageBlur = this.state.scrollY.interpolate({

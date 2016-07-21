@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component, PropTypes} from 'react';
 import {
   StyleSheet,
   Text,
@@ -9,9 +9,8 @@ import {
   ScrollView,
   Image
 } from 'react-native'
-import * as colors from './colors';
 import days from './days';
-import {screenWidth, screenHeight} from './dimensions';
+import {screenWidth} from './dimensions';
 import Icon from 'react-native-vector-icons/Ionicons';
 import IconFA from 'react-native-vector-icons/FontAwesome';
 import Swiper from 'react-native-swiper';
@@ -30,8 +29,23 @@ const DayBox = ({day, index, goToDay}) => (
     </View>
   </TouchableHighlight>
 )
+DayBox.propTypes = {
+  day: PropTypes.shape({
+    day: PropTypes.number.isRequired,
+    isFA: PropTypes.bool.isRequired,
+    icon: PropTypes.string.isRequired,
+    size: PropTypes.number.isRequired,
+    color: PropTypes.string.isRequired,
+  }).isRequired,
+  index: PropTypes.number.isRequired,
+  goToDay: PropTypes.func.isRequired,
+}
 
 export default class Main extends Component {
+  static propTypes = {
+    navigator: PropTypes.object.isRequired,
+  }
+
   componentWillMount() {
     StatusBar.setBarStyle('default');
     DeviceEventEmitter.addListener(

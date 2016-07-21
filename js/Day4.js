@@ -1,11 +1,8 @@
-import React, { Component, PropTypes } from 'react';
-import * as colors from './colors';
+import React, {Component} from 'react';
 import {
   View,
-  Text,
   Image,
   StyleSheet,
-  Dimensions,
   NativeModules,
   TouchableHighlight
 } from 'react-native';

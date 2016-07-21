@@ -1,5 +1,4 @@
-import React, { Component, PropTypes } from 'react';
-import * as colors from './colors';
+import React, {Component, PropTypes} from 'react';
 import {
   Animated,
   View,
@@ -7,7 +6,6 @@ import {
   Image,
   Easing,
   StyleSheet,
-  Dimensions,
   StatusBar,
   ScrollView,
   TouchableWithoutFeedback
@@ -47,6 +45,7 @@ class TabBar extends Component {
     goToPage: PropTypes.func,
     activeTab: PropTypes.number,
     tabs: PropTypes.array,
+    scrollValue: PropTypes.number.isRequired
   }
 
   render() {
@@ -89,7 +88,7 @@ class TabBar extends Component {
               </TouchableWithoutFeedback>
             );
           })}
-          <Animated.View style={[styles.tabUnderlineStyle, { left } ]} />
+          <Animated.View style={[styles.tabUnderlineStyle, {left}]} />
         </View>
       </View>
     );

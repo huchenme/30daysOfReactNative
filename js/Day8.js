@@ -1,5 +1,4 @@
-import React, { Component, PropTypes } from 'react';
-import * as colors from './colors';
+import React, {Component, PropTypes} from 'react';
 import * as dimensions from './dimensions';
 import {
   Image,
@@ -33,8 +32,16 @@ const Section = ({children}) => (
     {children}
   </View>
 )
+Section.propTypes = {
+  children: PropTypes.element.isRequired
+}
 
 class Row extends Component {
+  static propTypes = {
+    icon: PropTypes.string.isRequired,
+    children: PropTypes.element.isRequired,
+  }
+
   state = {
     highlighted: false
   }
@@ -262,7 +269,7 @@ const styles = StyleSheet.create({
   menu: {
     backgroundColor: 'white',
     width: menuWidth,
-    height: dimensions.height,
+    height: dimensions.screenHeight,
     shadowColor: "#000",
     shadowOpacity: 0.3,
     shadowRadius: 5,

@@ -1,12 +1,8 @@
-import React, { Component, PropTypes } from 'react';
-import * as colors from './colors';
+import React, {Component} from 'react';
 import {
   View,
   Text,
-  Image,
   StyleSheet,
-  Dimensions,
-  TouchableHighlight
 } from 'react-native';
 
 export default class Day23 extends Component {

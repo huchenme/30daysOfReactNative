@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import * as colors from './colors';
 import {
   View,
@@ -34,7 +34,7 @@ export default class Day1 extends Component {
     dataSource: this.ds.cloneWithRows([])
   }
 
-  componentDidMount() {
+  componentWillMount() {
     const {height} = Dimensions.get('window');
     const rowCount = Math.floor((height - 64 - 180 - 118) / 44);
     this.setState({
@@ -51,7 +51,6 @@ export default class Day1 extends Component {
     const seconds = sec_num - (hours * 3600) - (minutes * 60);
     const miniSeconds = mini_sec_num - sec_num * 100;
 
-    const hoursString = hours < 10 ? `0${hours}` : hours;
     const miniutesString = minutes < 10 ? `0${minutes}` : minutes;
     const secondsString = seconds < 10 ? `0${seconds}` : seconds;
     const miniSecondsString = miniSeconds < 10 ? `0${miniSeconds}` : miniSeconds;
@@ -229,7 +228,6 @@ export default class Day1 extends Component {
   }
 
   render() {
-    const {dataSource} = this.state;
     const totalLaps = this.state.lapTimings.length;
     return (
       <View style={styles.container}>

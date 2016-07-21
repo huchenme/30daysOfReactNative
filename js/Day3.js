@@ -1,11 +1,8 @@
-import React, { Component, PropTypes } from 'react';
-import * as colors from './colors';
+import React, {Component, PropTypes} from 'react';
 import {
   View,
-  Text,
   Image,
   StyleSheet,
-  Dimensions,
   TabBarIOS,
   ScrollView,
   RefreshControl,
@@ -22,7 +19,7 @@ const twitterGray = "#8899A6";
 // TODO: pull to refresh down arrow
 
 class Entrance extends Component {
-  static PropTypes = {
+  static propTypes = {
     hideEntrance: PropTypes.func.isRequired
   }
 
@@ -100,6 +97,11 @@ const TwitterIcon = ({name, size = 28, style = {}}) => (
     <Icon name={name} size={size} color={twitterBlue} />
   </View>
 )
+TwitterIcon.propTypes = {
+  name: PropTypes.string.isRequired,
+  size: PropTypes.number,
+  style: PropTypes.object,
+}
 
 const TopBar = () => (
   <View style={styles.topBar}>

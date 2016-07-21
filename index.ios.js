@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
   AppRegistry,
-  StyleSheet,
   NavigatorIOS
 } from 'react-native';
 import Main from './js/Main';
@@ -15,8 +14,7 @@ class AwesomeProject extends Component {
           title: '30 Days of RN',
           navigationBarHidden: false
         }}
-        style={{flex: 1}}
-      />
+        style={{flex: 1}}/>
     );
   }
 }

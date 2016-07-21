@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, {Component, PropTypes} from 'react';
 import * as colors from './colors';
 import Realm from 'realm';
 import {
@@ -11,7 +11,7 @@ import {
   TouchableWithoutFeedback,
   LayoutAnimation
 } from 'react-native';
-import { ListView } from 'realm/react-native';
+import {ListView} from 'realm/react-native';
 import Separator from './Separator';
 import {screenWidth, screenHeight} from './dimensions';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -39,6 +39,12 @@ const Header = ({title, themeColor, count = 0, toggleTab}) => {
     </TouchableWithoutFeedback>
   )
 };
+Header.propTypes = {
+  title: PropTypes.string.isRequired,
+  themeColor: PropTypes.string.isRequired,
+  count: PropTypes.number,
+  toggleTab: PropTypes.func,
+}
 
 const TodoToggle = ({onPress, themeColor, completed = false}) => {
   return (
@@ -49,6 +55,11 @@ const TodoToggle = ({onPress, themeColor, completed = false}) => {
       </View>
     </TouchableWithoutFeedback>
   )
+}
+TodoToggle.propTypes = {
+  completed: PropTypes.bool,
+  themeColor: PropTypes.string.isRequired,
+  onPress: PropTypes.func,
 }
 
 const animations = {
@@ -71,6 +82,8 @@ class TodoItem extends Component {
       text: PropTypes.string,
     }).isRequired,
     themeColor: PropTypes.string.isRequired,
+    realm: PropTypes.any.isRequired,
+    resetDataSource: PropTypes.func.isRequired,
   }
 
   toggleTodo = () => {
@@ -119,7 +132,8 @@ export class Reminder extends Component {
     todos: PropTypes.object.isRequired,
     title: PropTypes.string.isRequired,
     toggleTab: PropTypes.func,
-    realm: PropTypes.any
+    realm: PropTypes.any,
+    style: PropTypes.object
   }
 
   static defaultProps = {
@@ -219,7 +233,6 @@ export class Reminder extends Component {
 export default class Day20 extends Component {
   constructor(props) {
     super(props);
-    console.log(realm.path)
     this.listsData = realm.objects('TodoList');
     if (this.listsData.length < 1) {
       realm.write(() => {

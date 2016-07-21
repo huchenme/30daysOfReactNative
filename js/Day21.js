@@ -1,15 +1,10 @@
-import React, { Component, PropTypes } from 'react';
+import React, {Component} from 'react';
 import Realm from 'realm';
-import * as colors from './colors';
 import {
   View,
-  Text,
-  TextInput,
   StyleSheet,
-  ListView,
   TouchableHighlight,
   StatusBar,
-  TouchableWithoutFeedback,
   LayoutAnimation
 } from 'react-native';
 import {Reminder} from './Day20'
@@ -69,8 +64,6 @@ function reminderScale(index, state, totalCount) {
 export default class Day21 extends Component {
   constructor(props) {
     super(props);
-
-    console.log(realm.path)
 
     this.listsData = realm.objects('TodoList');
     if (this.listsData.length < 1) {
