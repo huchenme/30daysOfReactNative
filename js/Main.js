@@ -128,17 +128,6 @@ export default class Main extends Component {
 }
 
 const styles = StyleSheet.create({
-  rowContainer: {
-    paddingLeft: 15,
-    paddingRight: 15,
-    height: 44,
-    justifyContent: 'center',
-  },
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
   touchBoxContainer:{
     flexDirection: "row",
     flexWrap:"wrap",

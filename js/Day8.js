@@ -232,7 +232,6 @@ const styles = StyleSheet.create({
   image: {
     width: menuWidth
   },
-  mapView: StyleSheet.absoluteFill,
   drop: {
     ...StyleSheet.absoluteFillObject,
     backgroundColor: 'rgba(0, 0, 0, 0.6)'

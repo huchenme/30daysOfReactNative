@@ -1,21 +1,21 @@
-import React, {Component, PropTypes} from 'react';
 import * as colors from './colors';
-import Realm from 'realm';
 import {
-  View,
+  Image,
+  LayoutAnimation,
+  StatusBar,
+  StyleSheet,
   Text,
   TextInput,
-  StyleSheet,
-  Image,
-  StatusBar,
   TouchableWithoutFeedback,
-  LayoutAnimation
+  View,
 } from 'react-native';
-import {ListView} from 'realm/react-native';
-import Separator from './Separator';
-import {screenWidth, screenHeight} from './dimensions';
-import Icon from 'react-native-vector-icons/Ionicons';
+import React, {Component, PropTypes} from 'react';
 import {Todo, TodoList} from './schema';
+import {screenHeight, screenWidth} from './dimensions';
+import Icon from 'react-native-vector-icons/Ionicons';
+import {ListView} from 'realm/react-native';
+import Realm from 'realm';
+import Separator from './Separator';
 
 const realm = new Realm({
   path: 'day20.realm',
@@ -341,11 +341,6 @@ const styles = StyleSheet.create({
     borderColor: '#C6C6C6',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  fill: {
-    width: 15,
-    height: 15,
-    borderRadius: 15,
   },
   separator: {
     marginLeft: 38

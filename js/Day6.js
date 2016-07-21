@@ -129,9 +129,6 @@ export default class Day6 extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   logo: {
     position: 'absolute',
     top: 60,

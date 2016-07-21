@@ -341,7 +341,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  buttonDisabled: {
-    backgroundColor: '#F7F7F9',
-  },
 });

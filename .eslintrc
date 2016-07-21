@@ -3,6 +3,7 @@
   "parser": "babel-eslint",
   "plugins": [
     "react",
+    "react-native"
   ],
   "extends": [
     "eslint:recommended",
@@ -22,5 +23,11 @@
     "no-unused-vars": [1, {"vars": "all", "args": "none"}],
     "object-curly-spacing": [1, "never"],
     "array-bracket-spacing": [1, "never"],
+    "sort-imports": 1,
+
+    "react-native/no-unused-styles": 1,
+    "react-native/split-platform-components": 2,
+    "react-native/no-inline-styles": 1,
+    # "react-native/no-color-literals": 1,
   }
 }

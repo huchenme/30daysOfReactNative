@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {
   AppRegistry,
-  NavigatorIOS
+  NavigatorIOS,
+  StyleSheet
 } from 'react-native';
 import Main from './js/Main';
 
@@ -14,9 +15,15 @@ class AwesomeProject extends Component {
           title: '30 Days of RN',
           navigationBarHidden: false
         }}
-        style={{flex: 1}}/>
+        style={styles.container}/>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+})
 
 AppRegistry.registerComponent('AwesomeProject', () => AwesomeProject);
