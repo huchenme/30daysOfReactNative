@@ -1,17 +1,33 @@
 import Day1 from './Day1';
+import Day2 from './Day2';
 import Day3 from './Day3';
 import Day4 from './Day4';
 import Day5 from './Day5';
 import Day6 from './Day6';
+import Day7 from './Day7';
 import Day8 from './Day8';
 import Day9 from './Day9';
+import Day10 from './Day10';
+import Day11 from './Day11';
+import Day12 from './Day12';
+import Day13 from './Day13';
+import Day14 from './Day14';
+import Day15 from './Day15';
+import Day16 from './Day16';
 import Day17 from './Day17';
+import Day18 from './Day18';
 import Day19 from './Day19';
 import Day20 from './Day20';
 import Day21 from './Day21';
+import Day22 from './Day22';
+import Day23 from './Day23';
 import Day24 from './Day24';
 import Day25 from './Day25';
+import Day26 from './Day26';
+import Day27 from './Day27';
+import Day28 from './Day28';
 import Day29 from './Day29';
+import Day30 from './Day30';
 
 const days = [
   {
@@ -25,6 +41,16 @@ const days = [
     color: "#ff856c",
   },
   {
+    day: 2,
+    title: "A weather app",
+    component: Day2,
+    isFA: false,
+    icon: "ios-partly-sunny",
+    size: 60,
+    color: "#90bdc1",
+    hideNav: true,
+  },
+  {
     day: 3,
     title: "Twitter",
     component: Day3,
@@ -32,7 +58,7 @@ const days = [
     icon: "logo-twitter",
     size:50,
     color:"#2aa2ef",
-    hideNav: true
+    hideNav: true,
   },
   {
     day: 4,
@@ -42,7 +68,7 @@ const days = [
     icon: "contao",
     size:50,
     color:"#FF9A05",
-    hideNav: false
+    hideNav: false,
   },
   {
     day: 5,
@@ -52,7 +78,7 @@ const days = [
     icon: "ios-pin",
     size:50,
     color:"#00D204",
-    hideNav: false
+    hideNav: false,
   },
   {
     day: 6,
@@ -62,7 +88,17 @@ const days = [
     icon: "spotify",
     size:50,
     color:"#777",
-    hideNav: true
+    hideNav: true,
+  },
+  {
+    day: 7,
+    title:"Moveable Circle",
+    component: Day7,
+    isFA: false,
+    icon: "ios-baseball",
+    size:50,
+    color:"#5e2a06",
+    hideNav: true,
   },
   {
     day: 8,
@@ -72,7 +108,7 @@ const days = [
     icon: "google",
     size:50,
     color:"#4285f4",
-    hideNav: true
+    hideNav: true,
   },
   {
     day: 9,
@@ -82,7 +118,77 @@ const days = [
     icon: "ios-egg",
     size:50,
     color:"#2aa2ef",
-    hideNav: true
+    hideNav: true,
+  },
+  {
+    day: 10,
+    title:"Tumblr Menu",
+    component: Day10,
+    isFA: false,
+    icon: "logo-tumblr",
+    size:50,
+    color:"#37465c",
+    hideNav: true,
+  },
+  {
+    day: 11,
+    title:"OpenGL",
+    component: Day11,
+    isFA: false,
+    icon: "ios-contrast",
+    size:50,
+    color:"#2F3600",
+    hideNav: false,
+  },
+  {
+    day: 12,
+    title:"charts",
+    component: Day12,
+    isFA: false,
+    icon: "ios-stats",
+    size:50,
+    color:"#fd8f9d",
+    hideNav: false,
+  },
+  {
+    day: 13,
+    title:"tweet",
+    component: Day13,
+    isFA: false,
+    icon: "md-chatboxes",
+    size:50,
+    color:"#83709d",
+    hideNav: true,
+  },
+  {
+    day: 14,
+    title:"tinder",
+    component: Day14,
+    isFA: false,
+    icon: "md-flame",
+    size:50,
+    color:"#ff6b6b",
+    hideNav: true,
+  },
+  {
+    day: 15,
+    title:"Time picker",
+    component: Day15,
+    isFA: false,
+    icon: "ios-calendar-outline",
+    size:50,
+    color:"#ec240e",
+    hideNav: false,
+  },
+  {
+    day: 16,
+    title:"Gesture unlock",
+    component: Day16,
+    isFA: false,
+    icon: "ios-unlock",
+    size:50,
+    color:"#32A69B",
+    hideNav: true,
   },
   {
     day: 17,
@@ -92,7 +198,17 @@ const days = [
     icon: "ios-search",
     size:50,
     color:"#69B32A",
-    hideNav: false
+    hideNav: false,
+  },
+  {
+    day: 18,
+    title:"Sortable",
+    component: Day18,
+    isFA: false,
+    icon: "ios-move",
+    size:50,
+    color:"#68231A",
+    hideNav: true,
   },
   {
     day: 19,
@@ -102,7 +218,7 @@ const days = [
     icon: "ios-log-in",
     size:50,
     color:"#fdbded",
-    hideNav: false
+    hideNav: false,
   },
   {
     day: 20,
@@ -112,7 +228,7 @@ const days = [
     icon: "ios-list-outline",
     size:50,
     color:"#68d746",
-    hideNav: true
+    hideNav: true,
   },
   {
     day: 21,
@@ -122,7 +238,27 @@ const days = [
     icon: "ios-paper-outline",
     size:50,
     color:"#fe952b",
-    hideNav: true
+    hideNav: true,
+  },
+  {
+    day: 22,
+    title:"Google Now",
+    component: Day22,
+    isFA: false,
+    icon: "md-mic",
+    size:50,
+    color:"#4285f4",
+    hideNav: true,
+  },
+  {
+    day: 23,
+    title:"Local WebView",
+    component: Day23,
+    isFA: true,
+    icon: "safari",
+    size:50,
+    color:"#23bfe7",
+    hideNav: false,
   },
   {
     day: 24,
@@ -132,7 +268,7 @@ const days = [
     icon: "logo-youtube",
     size:50,
     color:"#e32524",
-    hideNav: true
+    hideNav: true,
   },
   {
     day: 25,
@@ -142,7 +278,37 @@ const days = [
     icon: "ios-compass",
     size:50,
     color:"#00ab6b",
-    hideNav: true
+    hideNav: true,
+  },
+  {
+    day: 26,
+    title:"swipe and switch",
+    component: Day26,
+    isFA: false,
+    icon: "ios-shuffle",
+    size:50,
+    color:"#893D54",
+    hideNav: true,
+  },
+  {
+    day: 27,
+    title:"iMessage Gradient",
+    component: Day27,
+    isFA: false,
+    icon: "ios-chatbubbles",
+    size:50,
+    color:"#248ef5",
+    hideNav: false,
+  },
+  {
+    day: 28,
+    title:"iMessage image picker",
+    component: Day28,
+    isFA: false,
+    icon: "md-images",
+    size:50,
+    color:"#f5248e",
+    hideNav: true,
   },
   {
     day: 29,
@@ -152,7 +318,17 @@ const days = [
     icon: "md-menu",
     size:50,
     color:"#48f52e",
-    hideNav: false
+    hideNav: false,
+  },
+  {
+    day:30,
+    title:"Push Notifications",
+    component: Day30,
+    isFA: false,
+    icon: "md-notifications",
+    size:50,
+    color:"#f27405",
+    hideNav: false,
   },
 ];
 
