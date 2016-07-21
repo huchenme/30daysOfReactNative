@@ -44,6 +44,7 @@
 		0D0A6A0B01DB44C68F3ADC57 /* libRealmReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A7A458FAD2844CCB1E606E3 /* libRealmReact.a */; };
 		4460A1A9FCB74DE48F48CC49 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AF0AF8A75E374130BAC457A1 /* libc++.tbd */; };
 		D93493E64DF342818CC626FB /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B8D5AF46678A4A4CBF617FFA /* libz.tbd */; };
+		068AAAC506F0429C8DE52F43 /* libRNBlur.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 963EEBD7348F442AAAAB8818 /* libRNBlur.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -215,6 +216,8 @@
 		9A7A458FAD2844CCB1E606E3 /* libRealmReact.a */ = {isa = PBXFileReference; name = "libRealmReact.a"; path = "libRealmReact.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		AF0AF8A75E374130BAC457A1 /* libc++.tbd */ = {isa = PBXFileReference; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = sourcecode.text-based-dylib-definition; explicitFileType = undefined; includeInIndex = 0; };
 		B8D5AF46678A4A4CBF617FFA /* libz.tbd */ = {isa = PBXFileReference; name = "libz.tbd"; path = "usr/lib/libz.tbd"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = sourcecode.text-based-dylib-definition; explicitFileType = undefined; includeInIndex = 0; };
+		8F140396CB7341609793CE0D /* RNBlur.xcodeproj */ = {isa = PBXFileReference; name = "RNBlur.xcodeproj"; path = "../node_modules/react-native-blur/ios/RNBlur.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		963EEBD7348F442AAAAB8818 /* libRNBlur.a */ = {isa = PBXFileReference; name = "libRNBlur.a"; path = "libRNBlur.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -252,6 +255,7 @@
 				0D0A6A0B01DB44C68F3ADC57 /* libRealmReact.a in Frameworks */,
 				4460A1A9FCB74DE48F48CC49 /* libc++.tbd in Frameworks */,
 				D93493E64DF342818CC626FB /* libz.tbd in Frameworks */,
+				068AAAC506F0429C8DE52F43 /* libRNBlur.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -445,6 +449,7 @@
 				CE2FA84AA7F04CCCAEC65213 /* TouchID.xcodeproj */,
 				13ECC49462C0478E9ECA9675 /* RNQuickAction.xcodeproj */,
 				C2A3DD27936B49A7A625B293 /* RealmReact.xcodeproj */,
+				8F140396CB7341609793CE0D /* RNBlur.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -946,6 +951,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -968,6 +974,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1002,6 +1009,7 @@
 					"$(SRCROOT)/../node_modules/react-native-touch-id",
 					"$(SRCROOT)/../node_modules/react-native-quick-actions/RNQuickAction/RNQuickAction",
 					"$(SRCROOT)/../node_modules/realm/src/**",
+					"$(SRCROOT)/../node_modules/react-native-blur/ios",
 				);
 				INFOPLIST_FILE = AwesomeProject/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1036,6 +1044,7 @@
 					"$(SRCROOT)/../node_modules/react-native-touch-id",
 					"$(SRCROOT)/../node_modules/react-native-quick-actions/RNQuickAction/RNQuickAction",
 					"$(SRCROOT)/../node_modules/realm/src/**",
+					"$(SRCROOT)/../node_modules/react-native-blur/ios",
 				);
 				INFOPLIST_FILE = AwesomeProject/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1098,6 +1107,7 @@
 					"$(SRCROOT)/../node_modules/react-native-touch-id",
 					"$(SRCROOT)/../node_modules/react-native-quick-actions/RNQuickAction/RNQuickAction",
 					"$(SRCROOT)/../node_modules/realm/src/**",
+					"$(SRCROOT)/../node_modules/react-native-blur/ios",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -1144,6 +1154,7 @@
 					"$(SRCROOT)/../node_modules/react-native-touch-id",
 					"$(SRCROOT)/../node_modules/react-native-quick-actions/RNQuickAction/RNQuickAction",
 					"$(SRCROOT)/../node_modules/realm/src/**",
+					"$(SRCROOT)/../node_modules/react-native-blur/ios",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
