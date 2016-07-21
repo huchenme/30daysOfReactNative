@@ -24,6 +24,38 @@
     "object-curly-spacing": [1, "never"],
     "array-bracket-spacing": [1, "never"],
     "sort-imports": 1,
+    "comma-dangle": [1, "always-multiline"],
+    semi: [1, "never"],
+
+    "react/sort-prop-types": [1, {
+      "callbacksLast": true,
+      "requiredFirst": true,
+    }],
+    "react/jsx-sort-props": [1, {
+      "callbacksLast": true,
+      "shorthandFirst": true,
+    }],
+    "react/sort-comp": [1, {
+      order: [
+        "static-methods",
+        "lifecycle",
+        "/^_.+$/",
+        '/^on.+$/',
+        "rendering",
+        "everything-else",
+      ],
+      groups: {
+        rendering: [
+          '/^render.+$/',
+          'render',
+        ]
+      }
+    }],
+    "react/jsx-space-before-closing": 1,
+    "react/jsx-curly-spacing": 1,
+    "react/self-closing-comp": 1,
+    "react/wrap-multilines": 1,
+    "react/jsx-equals-spacing": 1,
 
     "react-native/no-unused-styles": 1,
     "react-native/split-platform-components": 2,

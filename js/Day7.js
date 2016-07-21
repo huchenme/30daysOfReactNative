@@ -1,11 +1,11 @@
-import React, {Component} from 'react';
 import {
   Image,
-  StyleSheet,
   StatusBar,
-} from 'react-native';
-import {screenWidth, screenHeight} from './dimensions'
-import Icon from 'react-native-vector-icons/Ionicons';
+  StyleSheet,
+} from 'react-native'
+import React, {Component} from 'react'
+import {screenHeight, screenWidth} from './dimensions'
+import Icon from 'react-native-vector-icons/Ionicons'
 
 export default class Day7 extends Component {
   componentWillMount() {
@@ -15,10 +15,13 @@ export default class Day7 extends Component {
   render() {
     return (
       <Image
-        style={styles.container}
         resizeMode="cover"
-        source={require('./assets/agrass.png')}>
-        <Icon name="ios-baseball" size={100} color="white" />
+        source={require('./assets/agrass.png')}
+        style={styles.container}>
+        <Icon
+          color="white"
+          name="ios-baseball"
+          size={100} />
       </Image>
     )
   }
@@ -29,6 +32,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     width: screenWidth,
     height: screenHeight,
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
 })
