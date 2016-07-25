@@ -22,7 +22,7 @@ Inspired by https://github.com/fangwei716/30-days-of-react-native, this repo is 
 - [ ] Day 13
 - [ ] Day 14
 - [ ] Day 15
-- [ ] Day 16
+- [x] Day 16
 - [x] Day 17
 - [ ] Day 18
 - [x] Day 19

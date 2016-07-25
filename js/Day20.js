@@ -1,4 +1,4 @@
-import * as colors from './colors';
+import * as colors from './colors'
 import {
   Image,
   LayoutAnimation,
@@ -8,19 +8,19 @@ import {
   TextInput,
   TouchableWithoutFeedback,
   View,
-} from 'react-native';
-import React, {Component, PropTypes} from 'react';
-import {Todo, TodoList} from './schema';
-import {screenHeight, screenWidth} from './dimensions';
-import Icon from 'react-native-vector-icons/Ionicons';
-import {ListView} from 'realm/react-native';
-import Realm from 'realm';
-import Separator from './Separator';
+} from 'react-native'
+import React, {Component, PropTypes} from 'react'
+import {Todo, TodoList} from './schema'
+import {screenHeight, screenWidth} from './dimensions'
+import Icon from 'react-native-vector-icons/Ionicons'
+import {ListView} from 'realm/react-native'
+import Realm from 'realm'
+import Separator from './Separator'
 
 const realm = new Realm({
   path: 'day20.realm',
-  schema: [Todo, TodoList]
-});
+  schema: [Todo, TodoList],
+})
 
 // FIXME: known issue that if user type too fast on existing item, console will complain
 // "Native TextInput(xxx) is x events ahead of JS - try to make your JS faster."
@@ -38,10 +38,10 @@ const Header = ({title, themeColor, count = 0, toggleTab}) => {
       </View>
     </TouchableWithoutFeedback>
   )
-};
+}
 Header.propTypes = {
-  title: PropTypes.string.isRequired,
   themeColor: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
   count: PropTypes.number,
   toggleTab: PropTypes.func,
 }
@@ -51,14 +51,14 @@ const TodoToggle = ({onPress, themeColor, completed = false}) => {
     <TouchableWithoutFeedback
       onPress={onPress}>
       <View style={[styles.toggle, completed && {borderColor: themeColor}]}>
-        <View style={completed && [styles.fill, {backgroundColor:themeColor}]}></View>
+        <View style={completed && [styles.fill, {backgroundColor: themeColor}]} />
       </View>
     </TouchableWithoutFeedback>
   )
 }
 TodoToggle.propTypes = {
-  completed: PropTypes.bool,
   themeColor: PropTypes.string.isRequired,
+  completed: PropTypes.bool,
   onPress: PropTypes.func,
 }
 
@@ -68,7 +68,7 @@ const animations = {
     type: LayoutAnimation.Types.linear,
     springDamping: 0.7,
   },
-};
+}
 
 // TODO: row dynamic height
 // TODO: tap anywhere will focus on textinput
@@ -77,26 +77,26 @@ const animations = {
 
 class TodoItem extends Component {
   static propTypes = {
+    realm: PropTypes.any.isRequired,
+    resetDataSource: PropTypes.func.isRequired,
+    themeColor: PropTypes.string.isRequired,
     todo: PropTypes.shape({
       completed: PropTypes.bool,
       text: PropTypes.string,
     }).isRequired,
-    themeColor: PropTypes.string.isRequired,
-    realm: PropTypes.any.isRequired,
-    resetDataSource: PropTypes.func.isRequired,
   }
 
-  toggleTodo = () => {
+  _toggleTodo = () => {
     this.props.realm.write(() => {
-      this.props.todo.completed = !this.props.todo.completed;
-    });
+      this.props.todo.completed = !this.props.todo.completed
+    })
     this.props.resetDataSource()
   }
 
-  onChangeText = (text) => {
+  _onChangeText = (text) => {
     this.props.realm.write(() => {
-      this.props.todo.text = text;
-    });
+      this.props.todo.text = text
+    })
     this.props.resetDataSource()
   }
 
@@ -104,7 +104,7 @@ class TodoItem extends Component {
     const {
       todo,
       themeColor,
-    } = this.props;
+    } = this.props
 
     return (
       <View>
@@ -112,11 +112,11 @@ class TodoItem extends Component {
           <TodoToggle
             themeColor={themeColor}
             completed={todo.completed}
-            onPress={this.toggleTodo} />
+            onPress={this._toggleTodo} />
           <TextInput
             style={[styles.todoTextInput, todo.completed && styles.todoTextCompleted]}
             defaultValue={todo.text}
-            onChangeText={this.onChangeText} />
+            onChangeText={this._onChangeText} />
         </View>
         <View style={styles.separator}>
           <Separator />
@@ -129,15 +129,15 @@ class TodoItem extends Component {
 export class Reminder extends Component {
   static propTypes = {
     themeColor: PropTypes.string.isRequired,
-    todos: PropTypes.object.isRequired,
     title: PropTypes.string.isRequired,
-    toggleTab: PropTypes.func,
+    todos: PropTypes.object.isRequired,
     realm: PropTypes.any,
-    style: PropTypes.object
+    style: PropTypes.object,
+    toggleTab: PropTypes.func,
   }
 
   static defaultProps = {
-    remainCount: 0
+    remainCount: 0,
   }
 
   state = {
@@ -152,32 +152,32 @@ export class Reminder extends Component {
     this.resetDataSource()
   }
 
-  resetDataSource = () => {
+  _resetDataSource = () => {
     this.setState({
       dataSource: this.state.dataSource.cloneWithRows(this.props.todos),
-      remainCount: this.props.todos.filtered('completed = false').length
+      remainCount: this.props.todos.filtered('completed = false').length,
     })
     LayoutAnimation.configureNext(animations)
   }
 
-  addTodo = (event) => {
-    const text = event.nativeEvent.text.trim();
+  _addTodo = (event) => {
+    const text = event.nativeEvent.text.trim()
     if (text !== '') {
       this.props.realm.write(() => {
-        this.props.todos.push({text});
-      });
-      this.resetDataSource()
+        this.props.todos.push({text})
+      })
+      this._resetDataSource()
     }
     this._addTextInput.setNativeProps({
       text: '',
-    });
+    })
   }
 
   renderRow = (rowData, sectionID, rowID) => {
     return (
       <TodoItem
         todo={rowData}
-        resetDataSource={this.resetDataSource}
+        resetDataSource={this._resetDataSource}
         realm={this.props.realm}
         themeColor={this.props.themeColor}
       />
@@ -189,13 +189,13 @@ export class Reminder extends Component {
       <View>
         <View style={styles.todoRow}>
           <View style={styles.addIcon}>
-            <Icon name="ios-add" color="#C6C6C6" size={35}/>
+            <Icon name="ios-add" color="#C6C6C6" size={35} />
           </View>
           <TextInput
             ref={component => this._addTextInput = component}
             autoFocus
             enablesReturnKeyAutomatically
-            onEndEditing={this.addTodo}
+            onEndEditing={this._addTodo}
             style={styles.todoTextInput} />
         </View>
         <View style={styles.separator}>
@@ -206,7 +206,7 @@ export class Reminder extends Component {
   }
 
   render() {
-    const remainCount = this.state.remainCount;
+    const remainCount = this.state.remainCount
     return (
       <View style={[styles.reminderContainer, this.props.style]}>
         <Image
@@ -232,21 +232,21 @@ export class Reminder extends Component {
 
 export default class Day20 extends Component {
   constructor(props) {
-    super(props);
-    this.listsData = realm.objects('TodoList');
+    super(props)
+    this.listsData = realm.objects('TodoList')
     if (this.listsData.length < 1) {
       realm.write(() => {
-        const reminder = realm.create('TodoList', {title: 'Reminders', theme: colors.purple});
+        const reminder = realm.create('TodoList', {title: 'Reminders', theme: colors.purple})
         reminder.list.push({text: 'Todo 1'})
         reminder.list.push({text: 'Todo 2'})
         reminder.list.push({text: 'Todo 3', completed: true})
-      });
+      })
     }
     this.listData = this.listsData[0]
   }
 
   componentWillMount() {
-    StatusBar.setBarStyle('light-content');
+    StatusBar.setBarStyle('light-content')
   }
 
   render() {
@@ -265,7 +265,7 @@ export default class Day20 extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1E1F3C'
+    backgroundColor: '#1E1F3C',
   },
   reminderContainer: {
     position: 'absolute',
@@ -275,13 +275,13 @@ const styles = StyleSheet.create({
     height: screenHeight - 63,
     borderRadius: 10,
     backgroundColor: '#F9F9F9',
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOpacity: 0.3,
     shadowRadius: 2,
     shadowOffset: {
       height: -1,
       width: 0,
-    }
+    },
   },
   reminderBg: {
     position: 'absolute',
@@ -298,15 +298,15 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     paddingBottom: 20,
     paddingLeft: 15,
-    paddingRight: 15
+    paddingRight: 15,
   },
   headerText: {
     fontSize: 30,
     fontWeight: '500',
     backgroundColor: 'transparent',
-    textShadowColor:"rgba(0, 0, 0, 0.3)",
-    textShadowOffset:{width:0, height:1},
-    textShadowRadius:1,
+    textShadowColor: 'rgba(0, 0, 0, 0.3)',
+    textShadowOffset: {width: 0, height: 1},
+    textShadowRadius: 1,
   },
   todoRow: {
     paddingLeft: 15,
@@ -314,7 +314,7 @@ const styles = StyleSheet.create({
     height: 44,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
   },
   todoTextInput: {
     flex: 1,
@@ -322,7 +322,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
   },
   todoTextCompleted: {
-    color: colors.textSecondary
+    color: colors.textSecondary,
   },
   addIcon: {
     width: 23,
@@ -330,7 +330,7 @@ const styles = StyleSheet.create({
     marginRight: 15,
     backgroundColor: 'transparent',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   toggle: {
     width: 23,
@@ -343,6 +343,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   separator: {
-    marginLeft: 38
-  }
-});
+    marginLeft: 38,
+  },
+})

@@ -23,11 +23,14 @@
     "no-unused-vars": [1, {"vars": "all", "args": "none"}],
     "object-curly-spacing": [1, "never"],
     "array-bracket-spacing": [1, "never"],
-    "sort-imports": 1,
     "comma-dangle": [1, "always-multiline"],
     semi: [1, "never"],
     "quotes": [1, "single", "avoid-escape"],
     "indent": [1, 2],
+    "space-infix-ops": 1,
+    "key-spacing": 1,
+    "no-trailing-spaces": 1,
+    "space-in-parens": 1,
 
     "react/sort-prop-types": [1, {
       "callbacksLast": true,
@@ -55,7 +58,7 @@
     "react/jsx-equals-spacing": 1,
 
     # "react-native/no-unused-styles": 1,
-    "react-native/split-platform-components": 2,
+    # "react-native/split-platform-components": 2,
     # "react-native/no-inline-styles": 1,
     # "react-native/no-color-literals": 1,
   }
