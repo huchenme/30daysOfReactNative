@@ -1,13 +1,13 @@
 import React, {Component, PropTypes} from 'react'
 import {
-  StyleSheet,
-  Slider,
-  Text,
   ScrollView,
+  Slider,
+  StyleSheet,
+  Text,
 } from 'react-native'
-import GL from 'gl-react'
 import {Surface} from 'gl-react-native'
 import {screenWidth} from './dimensions'
+import GL from 'gl-react'
 import resolveAssetSource from 'resolveAssetSource'
 
 const Header = ({children}) => (
