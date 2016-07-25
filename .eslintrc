@@ -26,6 +26,8 @@
     "sort-imports": 1,
     "comma-dangle": [1, "always-multiline"],
     semi: [1, "never"],
+    "quotes": [1, "single", "avoid-escape"],
+    "indent": [1, 2],
 
     "react/sort-prop-types": [1, {
       "callbacksLast": true,

@@ -1,6 +1,7 @@
 package com.awesomeproject;
 
 import com.facebook.react.ReactActivity;
+import com.projectseptember.RNGL.RNGLPackage;
 import com.cmcewen.blurview.BlurViewPackage;
 import io.realm.react.RealmReactPackage;
 import com.brentvatne.RCTVideo.ReactVideoPackage;
