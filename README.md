@@ -226,3 +226,7 @@ Push Notification.
 Wechat Menu.
 
 ![day31](https://raw.githubusercontent.com/huchenme/30daysOfReactNative/master/screens/day31.gif)
+
+## Reference
+
+- [Make Gif tutorial](https://gist.github.com/dergachev/4627207)
