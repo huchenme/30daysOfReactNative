@@ -151,11 +151,7 @@ export default class Day1 extends Component {
       style={styles.controlButton}
       underlayColor={colors.buttonUnderlay}
       onPress={this.startTimer}>
-      <Text
-        style={{
-          color: colors.green,
-          fontSize: 17,
-        }}>
+      <Text style={[styles.buttonText, {color: colors.green}]}>
         Start
       </Text>
     </TouchableHighlight>
@@ -166,11 +162,7 @@ export default class Day1 extends Component {
       style={styles.controlButton}
       underlayColor={colors.buttonUnderlay}
       onPress={this.stopTimer}>
-      <Text
-        style={{
-          color: colors.red,
-          fontSize: 17,
-        }}>
+      <Text style={[styles.buttonText, {color: colors.red}]}>
         Stop
       </Text>
     </TouchableHighlight>
@@ -185,11 +177,7 @@ export default class Day1 extends Component {
         style={style}
         underlayColor={colors.buttonUnderlay}
         onPress={this.lap}>
-        <Text
-          style={{
-            color: textColor,
-            fontSize: 17,
-          }}>
+        <Text style={[styles.buttonText, {color: textColor}]}>
           Lap
         </Text>
       </TouchableHighlight>
@@ -201,11 +189,7 @@ export default class Day1 extends Component {
       style={styles.controlButton}
       underlayColor={colors.buttonUnderlay}
       onPress={this.resetTimer}>
-      <Text
-        style={{
-          color: colors.textPrimary,
-          fontSize: 17,
-        }}>
+      <Text style={[styles.buttonText, {color: colors.textPrimary}]}>
         Reset
       </Text>
     </TouchableHighlight>
@@ -232,30 +216,14 @@ export default class Day1 extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.watchFace}>
-          <View
-            style={{
-              position: 'relative',
-            }}>
-            <Text
-              style={{
-                fontSize: 70,
-                fontWeight: '100',
-                color: colors.textPrimary,
-                fontFamily: 'Helvetica Neue',
-              }}>{this.totalTimeDisplay()}</Text>
-            <View
-              style={{
-                position: 'absolute',
-                top: -17,
-                right: 0,
-              }}>
-              <Text
-                style={{
-                  color: colors.textSecondary,
-                  fontSize: 21,
-                  fontWeight: '300',
-                  fontFamily: 'Helvetica Neue',
-                }}>{this.lapTimeDisplay()}</Text>
+          <View>
+            <Text style={styles.totalTimeDisplay}>
+              {this.totalTimeDisplay()}
+            </Text>
+            <View style={styles.lapTimeContainer}>
+              <Text style={styles.lapTimeDisplay}>
+                {this.lapTimeDisplay()}
+              </Text>
             </View>
           </View>
         </View>
@@ -353,5 +321,25 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  buttonText: {
+    fontSize: 17,
+  },
+  totalTimeDisplay: {
+    fontSize: 70,
+    fontWeight: '100',
+    color: colors.textPrimary,
+    fontFamily: 'Helvetica Neue',
+  },
+  lapTimeDisplay: {
+    color: colors.textSecondary,
+    fontSize: 21,
+    fontWeight: '300',
+    fontFamily: 'Helvetica Neue',
+  },
+  lapTimeContainer: {
+    position: 'absolute',
+    top: -17,
+    right: 0,
   },
 })
