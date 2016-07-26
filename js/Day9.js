@@ -28,7 +28,7 @@ const FINISH_BLUR = 132 + INITIAL_SCROLLY
 
 const TwitterIcon = ({name, size = 24, style = {}}) => (
   <View style={[styles.icon, style]}>
-    <Icon name={name} size={size} color="white" />
+    <Icon name={name} size={size} color='white' />
   </View>
 )
 TwitterIcon.propTypes = {
@@ -40,7 +40,7 @@ TwitterIcon.propTypes = {
 const TopBar = ({top}) => (
   <View style={styles.topBar}>
     <View style={[styles.nav, styles.navLeft]}>
-      <TwitterIcon name="ios-arrow-back" style={{marginLeft: 6}} />
+      <TwitterIcon name='ios-arrow-back' style={{marginLeft: 6}} />
     </View>
     <View style={[styles.nav, styles.navMid]}>
       <Animated.View style={[styles.headTextContainer, {top}]}>
@@ -53,8 +53,8 @@ const TopBar = ({top}) => (
       </Animated.View>
     </View>
     <View style={[styles.nav, styles.navRight]}>
-      <TwitterIcon name="md-search" />
-      <TwitterIcon name="md-create" style={{marginRight: 6}} />
+      <TwitterIcon name='md-search' />
+      <TwitterIcon name='md-create' style={{marginRight: 6}} />
     </View>
   </View>
 )
@@ -65,7 +65,7 @@ TopBar.propTypes = {
 class TwitterTabs extends Component {
   state = {
     notifCount: 1,
-    selectedTab: 'home'
+    selectedTab: 'home',
   }
 
   selectTab = (tab) => {
@@ -79,36 +79,36 @@ class TwitterTabs extends Component {
       <TabBarIOS
         unselectedTintColor={twitterGray}
         tintColor={twitterBlue}
-        barTintColor="white">
+        barTintColor='white'>
         <Icon.TabBarItem
-          title="Home"
-          iconName="ios-home-outline"
-          selectedIconName="ios-home"
+          title='Home'
+          iconName='ios-home-outline'
+          selectedIconName='ios-home'
           selected={this.state.selectedTab === 'home'}
           onPress={this.selectTab.bind(this, 'home')}>
           <TwitterFlow />
         </Icon.TabBarItem>
         <Icon.TabBarItem
-          title="Notification"
-          iconName="ios-notifications-outline"
-          selectedIconName="ios-notifications"
+          title='Notification'
+          iconName='ios-notifications-outline'
+          selectedIconName='ios-notifications'
           badge={this.state.notifCount}
           selected={this.state.selectedTab === 'notifications'}
           onPress={this.selectTab.bind(this, 'notifications')}>
           <TwitterFlow />
         </Icon.TabBarItem>
         <Icon.TabBarItem
-          title="Messages"
-          iconName="ios-mail-outline"
-          selectedIconName="ios-mail"
+          title='Messages'
+          iconName='ios-mail-outline'
+          selectedIconName='ios-mail'
           selected={this.state.selectedTab === 'messages'}
           onPress={this.selectTab.bind(this, 'messages')}>
           <TwitterFlow />
         </Icon.TabBarItem>
         <Icon.TabBarItem
-          title="Me"
-          iconName="ios-person-outline"
-          selectedIconName="ios-person"
+          title='Me'
+          iconName='ios-person-outline'
+          selectedIconName='ios-person'
           selected={this.state.selectedTab === 'me'}
           onPress={this.selectTab.bind(this, 'me')}>
           <TwitterFlow />
@@ -127,7 +127,7 @@ class TwitterFlow extends Component {
   componentDidMount() {
     this.state.scrollY.addListener(({value}) => {
       this.setState({
-        headerZIndex: value >= INITIAL_SCROLLY + HEADER_SCROLL_DISTANCE ? 1 : 0
+        headerZIndex: value >= INITIAL_SCROLLY + HEADER_SCROLL_DISTANCE ? 1 : 0,
       })
     })
   }
@@ -137,31 +137,31 @@ class TwitterFlow extends Component {
       inputRange: [INITIAL_SCROLLY, INITIAL_SCROLLY + HEADER_SCROLL_DISTANCE],
       outputRange: [HEADER_MAX_HEIGHT, HEADER_MIN_HEIGHT],
       extrapolateRight: 'clamp',
-    });
+    })
 
     const imageBlur = this.state.scrollY.interpolate({
-      inputRange: [INITIAL_SCROLLY-30, INITIAL_SCROLLY, START_BLUR, FINISH_BLUR],
+      inputRange: [INITIAL_SCROLLY - 30, INITIAL_SCROLLY, START_BLUR, FINISH_BLUR],
       outputRange: [1, 0, 0, 1],
       extrapolate: 'clamp',
-    });
+    })
 
     const avatarScale = this.state.scrollY.interpolate({
       inputRange: [INITIAL_SCROLLY, INITIAL_SCROLLY + HEADER_SCROLL_DISTANCE],
-      outputRange: [1, 43/68],
+      outputRange: [1, 43 / 68],
       extrapolate: 'clamp',
-    });
+    })
 
     const avatarTop = this.state.scrollY.interpolate({
       inputRange: [INITIAL_SCROLLY, INITIAL_SCROLLY + HEADER_SCROLL_DISTANCE],
       outputRange: [-28, -12],
       extrapolate: 'clamp',
-    });
+    })
 
     const textTop = this.state.scrollY.interpolate({
       inputRange: [INITIAL_SCROLLY, INITIAL_SCROLLY + 155],
       outputRange: [155, 0],
       extrapolate: 'clamp',
-    });
+    })
 
     return (
       <View style={styles.twitterFlow}>
@@ -169,16 +169,16 @@ class TwitterFlow extends Component {
           style={[
             styles.header,
             {height: headerHeight},
-            {zIndex: this.state.headerZIndex}
+            {zIndex: this.state.headerZIndex},
           ]}>
           <Animated.Image
             style={[styles.bg, {height: headerHeight}]}
-            resizeMode="cover"
+            resizeMode='cover'
             source={require('./assets/day9/background.png')}>
           </Animated.Image>
           <Animated.Image
             style={[styles.bg, {opacity: imageBlur, height: headerHeight}]}
-            resizeMode="cover"
+            resizeMode='cover'
             source={require('./assets/day9/backgroundBlur.png')}>
           </Animated.Image>
           <TopBar top={textTop} />
@@ -199,12 +199,12 @@ class TwitterFlow extends Component {
             <Animated.View style={[styles.avatarContainer, {
               top: avatarTop,
               transform: [{
-                scale: avatarScale
+                scale: avatarScale,
               }],
             }]}>
               <Image
                 style={styles.avatar}
-                resizeMode="contain"
+                resizeMode='contain'
                 source={require('./assets/day9/avatar.png')} />
             </Animated.View>
           </Image>
@@ -212,7 +212,7 @@ class TwitterFlow extends Component {
             <SegmentedControlIOS
               values={['Tweets', 'Media', 'Likes']}
               selectedIndex={0}
-              tintColor="#059FF5"
+              tintColor='#059FF5'
               onChange={() => {}}
             />
           </View>
@@ -225,7 +225,7 @@ class TwitterFlow extends Component {
 
 export default class Day9 extends Component {
   componentWillMount() {
-    StatusBar.setBarStyle('light-content');
+    StatusBar.setBarStyle('light-content')
   }
 
   render() {
@@ -239,7 +239,7 @@ export default class Day9 extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
   },
   twitterFlow: {
     flex: 1,
@@ -253,33 +253,33 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   nav: {
-    flex:1,
-    alignItems:"center",
-    flexDirection:"row",
-    overflow: 'hidden'
+    flex: 1,
+    alignItems: 'center',
+    flexDirection: 'row',
+    overflow: 'hidden',
   },
   navLeft: {
-    justifyContent:"flex-start",
+    justifyContent: 'flex-start',
   },
   navMid: {
-    justifyContent:"center",
+    justifyContent: 'center',
   },
   navRight: {
-    justifyContent:"flex-end",
+    justifyContent: 'flex-end',
   },
   icon: {
     height: 38,
     width: 38,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'transparent'
+    backgroundColor: 'transparent',
   },
   bg: {
     width: screenWidth,
     height: 125,
     position: 'absolute',
     bottom: 0,
-    left: 0
+    left: 0,
   },
   header: {
     position: 'absolute',
@@ -288,26 +288,26 @@ const styles = StyleSheet.create({
     right: 0,
   },
   profile: {
-    overflow: 'visible'
+    overflow: 'visible',
   },
   text: {
     color: 'white',
     backgroundColor: 'transparent',
-    textShadowColor:"rgba(0, 0, 0, 0.3)",
-    textShadowOffset:{width:0, height:1},
-    textShadowRadius:1,
+    textShadowColor: 'rgba(0, 0, 0, 0.3)',
+    textShadowOffset: {width: 0, height: 1},
+    textShadowRadius: 1,
   },
   textHead: {
     fontWeight: '500',
-    fontSize: 14
+    fontSize: 14,
   },
   textCount: {
     fontWeight: '400',
-    fontSize: 10
+    fontSize: 10,
   },
   headTextContainer: {
     alignItems: 'center',
-    position: 'relative'
+    position: 'relative',
   },
   segmentedControl: {
     paddingVertical: 8,
@@ -319,7 +319,7 @@ const styles = StyleSheet.create({
   avatar: {
     width: 68,
     height: 68,
-    borderRadius: 8
+    borderRadius: 8,
   },
   avatarContainer: {
     width: 75,
@@ -330,5 +330,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     position: 'absolute',
     left: 8,
-  }
-});
+  },
+})

@@ -1,10 +1,10 @@
-import React, {Component} from 'react';
+import React, {Component} from 'react'
 import {
   AppRegistry,
   NavigatorIOS,
-  StyleSheet
-} from 'react-native';
-import Main from './js/Main';
+  StyleSheet,
+} from 'react-native'
+import Main from './js/Main'
 
 class AwesomeProject extends Component {
   render() {
@@ -13,10 +13,10 @@ class AwesomeProject extends Component {
         initialRoute={{
           component: Main,
           title: '30 Days of RN',
-          navigationBarHidden: false
+          navigationBarHidden: false,
         }}
-        style={styles.container}/>
-    );
+        style={styles.container} />
+    )
   }
 }
 
@@ -26,4 +26,4 @@ const styles = StyleSheet.create({
   },
 })
 
-AppRegistry.registerComponent('AwesomeProject', () => AwesomeProject);
+AppRegistry.registerComponent('AwesomeProject', () => AwesomeProject)

@@ -1,25 +1,25 @@
-import React, {Component} from 'react';
-import * as colors from './colors';
+import React, {Component} from 'react'
+import * as colors from './colors'
 import {
   View,
   Text,
   StyleSheet,
   ListView,
   TouchableHighlight,
-  Dimensions
-} from 'react-native';
-import Separator from './Separator';
+  Dimensions,
+} from 'react-native'
+import Separator from './Separator'
 
 function convertLapTimingsToDataSource(timings = [], row = 6) {
-  let newTimings = timings;
+  let newTimings = timings
   for (let i = timings.length; i < row; i++) {
-    newTimings = [...newTimings, 0];
+    newTimings = [...newTimings, 0]
   }
-  return newTimings;
+  return newTimings
 }
 
 export default class Day1 extends Component {
-  ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+  ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
 
   state = {
     started: false,
@@ -31,48 +31,48 @@ export default class Day1 extends Component {
     accumulatedLapTime: 0,
     lapTimings: [],
     rowCount: 0,
-    dataSource: this.ds.cloneWithRows([])
+    dataSource: this.ds.cloneWithRows([]),
   }
 
   componentWillMount() {
-    const {height} = Dimensions.get('window');
-    const rowCount = Math.floor((height - 64 - 180 - 118) / 44);
+    const {height} = Dimensions.get('window')
+    const rowCount = Math.floor((height - 64 - 180 - 118) / 44)
     this.setState({
       rowCount,
-      dataSource: this.ds.cloneWithRows(convertLapTimingsToDataSource([], rowCount))
+      dataSource: this.ds.cloneWithRows(convertLapTimingsToDataSource([], rowCount)),
     })
   }
 
   timeDisplay = (time) => {
-    const mini_sec_num = Math.floor(time / 10);
-    const sec_num = Math.floor(mini_sec_num / 100);
-    const hours = Math.floor(sec_num / 3600);
-    const minutes = Math.floor((sec_num - (hours * 3600)) / 60);
-    const seconds = sec_num - (hours * 3600) - (minutes * 60);
-    const miniSeconds = mini_sec_num - sec_num * 100;
+    const mini_sec_num = Math.floor(time / 10)
+    const sec_num = Math.floor(mini_sec_num / 100)
+    const hours = Math.floor(sec_num / 3600)
+    const minutes = Math.floor((sec_num - (hours * 3600)) / 60)
+    const seconds = sec_num - (hours * 3600) - (minutes * 60)
+    const miniSeconds = mini_sec_num - sec_num * 100
 
-    const miniutesString = minutes < 10 ? `0${minutes}` : minutes;
-    const secondsString = seconds < 10 ? `0${seconds}` : seconds;
-    const miniSecondsString = miniSeconds < 10 ? `0${miniSeconds}` : miniSeconds;
+    const miniutesString = minutes < 10 ? `0${minutes}` : minutes
+    const secondsString = seconds < 10 ? `0${seconds}` : seconds
+    const miniSecondsString = miniSeconds < 10 ? `0${miniSeconds}` : miniSeconds
     return `${miniutesString}:${secondsString}.${miniSecondsString}`
   }
 
   totalTimeDisplay = () => {
-    const totalTime = this.state.currentTime - this.state.initialTime + this.state.accumulatedTime;
-    return this.timeDisplay(totalTime);
+    const totalTime = this.state.currentTime - this.state.initialTime + this.state.accumulatedTime
+    return this.timeDisplay(totalTime)
   }
 
   lapTimeDisplay = () => {
-    const lapTime = this.state.currentTime - this.state.initialLapTime + this.state.accumulatedLapTime;
-    return this.timeDisplay(lapTime);
+    const lapTime = this.state.currentTime - this.state.initialLapTime + this.state.accumulatedLapTime
+    return this.timeDisplay(lapTime)
   }
 
   currentTime = () => {
-    return (new Date()).getTime();
+    return (new Date()).getTime()
   }
 
   startTimer = () => {
-    const currentTime = this.currentTime();
+    const currentTime = this.currentTime()
     if (!this.state.started) {
       this.setState({
         started: true,
@@ -81,20 +81,20 @@ export default class Day1 extends Component {
         accumulatedLapTime: 0,
         initialTime: currentTime,
         initialLapTime: currentTime,
-        currentTime
+        currentTime,
       })
     } else {
       this.setState({
         running: true,
         initialTime: currentTime,
         initialLapTime: currentTime,
-        currentTime
+        currentTime,
       })
     }
     this._interval = setInterval(
       () => {
         this.setState({
-          currentTime: this.currentTime()
+          currentTime: this.currentTime(),
         })
       }
     , 10)
@@ -110,18 +110,18 @@ export default class Day1 extends Component {
         accumulatedLapTime: this.state.currentTime - this.state.initialLapTime + this.state.accumulatedLapTime,
       })
       clearInterval(this._interval)
-      this._interval = null;
+      this._interval = null
     }
   }
 
   lap = () => {
-    const currentLapTiming = this.state.currentTime - this.state.initialLapTime + this.state.accumulatedLapTime;
+    const currentLapTiming = this.state.currentTime - this.state.initialLapTime + this.state.accumulatedLapTime
     const newLapTimings = [currentLapTiming, ...this.state.lapTimings]
     this.setState({
       lapTimings: newLapTimings,
       dataSource: this.ds.cloneWithRows(convertLapTimingsToDataSource(newLapTimings, this.state.rowCount)),
       initialLapTime: this.currentTime(),
-      accumulatedLapTime: 0
+      accumulatedLapTime: 0,
     })
   }
 
@@ -135,15 +135,15 @@ export default class Day1 extends Component {
       accumulatedTime: 0,
       accumulatedLapTime: 0,
       lapTimings: [],
-      dataSource: this.ds.cloneWithRows(convertLapTimingsToDataSource([], this.state.rowCount))
+      dataSource: this.ds.cloneWithRows(convertLapTimingsToDataSource([], this.state.rowCount)),
     })
     clearInterval(this._interval)
-    this._interval = null;
+    this._interval = null
   }
 
   componentWillUnmount() {
     clearInterval(this._interval)
-    this._interval = null;
+    this._interval = null
   }
 
   startButton = () => (
@@ -177,8 +177,8 @@ export default class Day1 extends Component {
   )
 
   lapButton = () => {
-    const style = this.state.started ? styles.controlButton : [styles.controlButton, styles.buttonDisabled];
-    const textColor = this.state.started ? colors.textPrimary : colors.textSecondary;
+    const style = this.state.started ? styles.controlButton : [styles.controlButton, styles.buttonDisabled]
+    const textColor = this.state.started ? colors.textPrimary : colors.textSecondary
     return (
       <TouchableHighlight
         disabled={!this.state.started}
@@ -213,56 +213,61 @@ export default class Day1 extends Component {
 
   leftButton = () => {
     if (this.state.started && !this.state.running) {
-      return this.resetButton();
+      return this.resetButton()
     } else {
-      return this.lapButton();
+      return this.lapButton()
     }
   }
 
   rightButton = () => {
     if (this.state.running) {
-      return this.stopButton();
+      return this.stopButton()
     } else {
-      return this.startButton();
+      return this.startButton()
     }
   }
 
   render() {
-    const totalLaps = this.state.lapTimings.length;
+    const totalLaps = this.state.lapTimings.length
     return (
       <View style={styles.container}>
         <View style={styles.watchFace}>
-          <View style={{
+          <View
+            style={{
               position: 'relative',
             }}>
-            <Text style={{
+            <Text
+              style={{
                 fontSize: 70,
                 fontWeight: '100',
                 color: colors.textPrimary,
-                fontFamily: 'Helvetica Neue'
+                fontFamily: 'Helvetica Neue',
               }}>{this.totalTimeDisplay()}</Text>
-            <View style={{
+            <View
+              style={{
                 position: 'absolute',
                 top: -17,
                 right: 0,
               }}>
-              <Text style={{
+              <Text
+                style={{
                   color: colors.textSecondary,
                   fontSize: 21,
                   fontWeight: '300',
-                  fontFamily: 'Helvetica Neue'
+                  fontFamily: 'Helvetica Neue',
                 }}>{this.lapTimeDisplay()}</Text>
             </View>
           </View>
         </View>
-        <View style={{
+        <View
+          style={{
             flex: 1,
-            backgroundColor: '#EFEFF4'
+            backgroundColor: '#EFEFF4',
           }}>
           <View
             style={{
               height: 118,
-              flexDirection: 'row'
+              flexDirection: 'row',
             }}>
             <View style={styles.controlButtonContainer}>
               {this.leftButton()}
@@ -271,7 +276,8 @@ export default class Day1 extends Component {
               {this.rightButton()}
             </View>
           </View>
-          <View style={{
+          <View
+            style={{
               flex: 1,
             }}>
             <ListView
@@ -279,7 +285,8 @@ export default class Day1 extends Component {
               dataSource={this.state.dataSource}
               enableEmptySections
               renderRow={(rowData, sectionID, rowID) => (
-                <View style={{
+                <View
+                  style={{
                     paddingLeft: 45,
                     paddingRight: 45,
                     height: 44,
@@ -291,16 +298,22 @@ export default class Day1 extends Component {
                       alignItems: 'center',
                       justifyContent: 'space-between',
                     }}>
-                      <Text style={{
+                      <Text
+                        style={{
                           color: colors.textSecondary,
-                          fontSize: 17
-                        }}>Lap {totalLaps - rowID}</Text>
-                      <Text style={{
+                          fontSize: 17,
+                        }}>
+                        Lap {totalLaps - rowID}
+                      </Text>
+                      <Text
+                        style={{
                           color: colors.textPrimary,
                           fontSize: 22,
                           fontWeight: '300',
-                          fontFamily: 'HelveticaNeue'
-                        }}>{this.timeDisplay(rowData)}</Text>
+                          fontFamily: 'HelveticaNeue',
+                        }}>
+                        {this.timeDisplay(rowData)}
+                      </Text>
                     </View>
                   )}
                 </View>
@@ -341,4 +354,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-});
+})

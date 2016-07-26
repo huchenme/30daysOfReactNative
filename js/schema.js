@@ -1,4 +1,4 @@
-import Realm from 'realm';
+import Realm from 'realm'
 
 export class Todo extends Realm.Object {}
 Todo.schema = {
@@ -7,7 +7,7 @@ Todo.schema = {
     completed: {type: 'bool', default: false},
     text: 'string',
   },
-};
+}
 
 export class TodoList extends Realm.Object {}
 TodoList.schema = {
@@ -17,4 +17,4 @@ TodoList.schema = {
     theme: 'string',
     list: {type: 'list', objectType: 'Todo'},
   },
-};
+}

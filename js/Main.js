@@ -1,4 +1,4 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component, PropTypes} from 'react'
 import {
   StyleSheet,
   Text,
@@ -7,24 +7,24 @@ import {
   DeviceEventEmitter,
   TouchableHighlight,
   ScrollView,
-  Image
+  Image,
 } from 'react-native'
-import days from './days';
-import {screenWidth} from './dimensions';
-import Icon from 'react-native-vector-icons/Ionicons';
-import IconFA from 'react-native-vector-icons/FontAwesome';
-import Swiper from 'react-native-swiper';
+import days from './days'
+import {screenWidth} from './dimensions'
+import Icon from 'react-native-vector-icons/Ionicons'
+import IconFA from 'react-native-vector-icons/FontAwesome'
+import Swiper from 'react-native-swiper'
 
 const DayBox = ({day, index, goToDay}) => (
   <TouchableHighlight
-    style={[styles.touchBox, index%3 == 2 && styles.touchBoxRight]}
-    underlayColor="#eee"
+    style={[styles.touchBox, index % 3 == 2 && styles.touchBoxRight]}
+    underlayColor='#eee'
     onPress={goToDay}>
     <View style={styles.boxContainer}>
       <Text style={styles.boxText}>Day {day.day}</Text>
       {day.isFA
-        ? <IconFA size={day.size} name={day.icon} style={[styles.boxIcon,{color:day.color}]}></IconFA>
-        : <Icon size={day.size} name={day.icon} style={[styles.boxIcon,{color:day.color}]}></Icon>
+        ? <IconFA size={day.size} name={day.icon} style={[styles.boxIcon, {color: day.color}]} />
+        : <Icon size={day.size} name={day.icon} style={[styles.boxIcon, {color: day.color}]} />
       }
     </View>
   </TouchableHighlight>
@@ -37,8 +37,8 @@ DayBox.propTypes = {
     size: PropTypes.number.isRequired,
     color: PropTypes.string.isRequired,
   }).isRequired,
-  index: PropTypes.number.isRequired,
   goToDay: PropTypes.func.isRequired,
+  index: PropTypes.number.isRequired,
 }
 
 export default class Main extends Component {
@@ -47,42 +47,42 @@ export default class Main extends Component {
   }
 
   componentWillMount() {
-    StatusBar.setBarStyle('default');
+    StatusBar.setBarStyle('default')
     DeviceEventEmitter.addListener(
     'quickActionShortcut', (data) => {
       switch(data.type){
-        case "day1":
-          this.jumpToDay(0);
-          break;
-        case "day3":
-          this.jumpToDay(1);
-          break;
-        case "day4":
-          this.jumpToDay(2);
-          break;
-        case "day5":
-          this.jumpToDay(3);
-          break;
+      case 'day1':
+        this.jumpToDay(0)
+        break
+      case 'day3':
+        this.jumpToDay(1)
+        break
+      case 'day4':
+        this.jumpToDay(2)
+        break
+      case 'day5':
+        this.jumpToDay(3)
+        break
       }
-    });
+    })
   }
 
   jumpToDay = (index) => {
-    const day = days[index];
+    const day = days[index]
     this.props.navigator.resetTo({
       title: day.title,
       component: day.component,
-      navigationBarHidden: day.hideNav
-    });
+      navigationBarHidden: day.hideNav,
+    })
   }
 
   goToDay = (index) => {
-    const day = days[index];
+    const day = days[index]
     this.props.navigator.push({
       title: day.title,
       component: day.component,
-      navigationBarHidden: day.hideNav
-    });
+      navigationBarHidden: day.hideNav,
+    })
   }
 
   render() {
@@ -97,7 +97,7 @@ export default class Main extends Component {
           <TouchableHighlight onPress={() => this.goToDay(1)}>
             <View style={styles.slide}>
               <Image
-                resizeMode="cover"
+                resizeMode='cover'
                 style={styles.image}
                 source={require('./assets/banner1.png')} />
               <Text style={styles.slideText}>Day {days[1].day}: {days[1].title}</Text>
@@ -106,7 +106,7 @@ export default class Main extends Component {
           <TouchableHighlight onPress={() => this.goToDay(2)}>
             <View style={styles.slide}>
               <Image
-                resizeMode="cover"
+                resizeMode='cover'
                 style={styles.image}
                 source={require('./assets/banner2.png')} />
               <Text style={styles.slideText}>Day {days[2].day}: {days[2].title}</Text>
@@ -129,43 +129,43 @@ export default class Main extends Component {
 }
 
 const styles = StyleSheet.create({
-  touchBoxContainer:{
-    flexDirection: "row",
-    flexWrap:"wrap",
+  touchBoxContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
     width: screenWidth,
     alignItems: 'flex-start',
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor:"#ccc",
-    borderBottomWidth: 0
+    borderColor: '#ccc',
+    borderBottomWidth: 0,
   },
   touchBox: {
-    backgroundColor:"#fff",
+    backgroundColor: '#fff',
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderRightWidth: StyleSheet.hairlineWidth,
-    borderBottomColor:"#ccc",
-    borderRightColor:"#ccc",
-    width: screenWidth/3 - StyleSheet.hairlineWidth,
-    height: screenWidth/3 - StyleSheet.hairlineWidth,
+    borderBottomColor: '#ccc',
+    borderRightColor: '#ccc',
+    width: screenWidth / 3 - StyleSheet.hairlineWidth,
+    height: screenWidth / 3 - StyleSheet.hairlineWidth,
   },
   touchBoxRight: {
     borderRightWidth: 0,
   },
   boxContainer: {
-    alignItems:"center",
-    justifyContent:"center",
-    flex: 1
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
   },
   boxText: {
-    position: "absolute",
+    position: 'absolute',
     bottom: 15,
-    width: screenWidth/3,
-    textAlign: "center",
+    width: screenWidth / 3,
+    textAlign: 'center',
     left: 0,
-    backgroundColor: "transparent"
+    backgroundColor: 'transparent',
   },
-  boxIcon:{
-    position: "relative",
-    top:-10
+  boxIcon: {
+    position: 'relative',
+    top: -10,
   },
   slide: {
     flex: 1,
@@ -173,19 +173,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  slideText:{
-    position:"absolute",
+  slideText: {
+    position: 'absolute',
     bottom: 0,
-    paddingTop:5,
-    paddingBottom:5,
-    backgroundColor:"rgba(255,255,255,0.5)",
+    paddingTop: 5,
+    paddingBottom: 5,
+    backgroundColor: 'rgba(255,255,255,0.5)',
     width: screenWidth,
-    textAlign:"center",
-    fontSize: 12
+    textAlign: 'center',
+    fontSize: 12,
   },
-  image:{
+  image: {
     width: screenWidth,
-    height: 150
+    height: 150,
   },
   activeDot: {
     backgroundColor: 'rgba(255,255,255,0.8)',
@@ -196,5 +196,5 @@ const styles = StyleSheet.create({
     marginRight: 3,
     marginTop: 3,
     marginBottom: 3,
-  }
-});
+  },
+})

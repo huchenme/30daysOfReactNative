@@ -17,8 +17,8 @@ const maxLeft = screenWidth - ballRadius * 2
 export default class Day7 extends Component {
   constructor(props) {
     super(props)
-    this.previousBallLeft = screenWidth/2 - ballRadius
-    this.previousBallTop = screenHeight/2 - ballRadius
+    this.previousBallLeft = screenWidth / 2 - ballRadius
+    this.previousBallTop = screenHeight / 2 - ballRadius
     this.state = {
       opacity: 1,
       ballLeft: this.previousBallLeft,
@@ -79,7 +79,7 @@ export default class Day7 extends Component {
   render() {
     return (
       <Image
-        resizeMode="cover"
+        resizeMode='cover'
         source={require('./assets/agrass.png')}
         style={styles.container}>
         <Image
@@ -104,8 +104,8 @@ const styles = StyleSheet.create({
   },
   icon: {
     position: 'absolute',
-    height: ballRadius*2,
-    width: ballRadius*2,
+    height: ballRadius * 2,
+    width: ballRadius * 2,
     borderRadius: ballRadius,
   },
 })

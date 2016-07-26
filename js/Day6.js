@@ -1,4 +1,4 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component, PropTypes} from 'react'
 import {
   View,
   Text,
@@ -7,9 +7,9 @@ import {
   StatusBar,
   TouchableWithoutFeedback,
   Dimensions,
-} from 'react-native';
-import Video from 'react-native-video';
-import Swiper from 'react-native-swiper';
+} from 'react-native'
+import Video from 'react-native-video'
+import Swiper from 'react-native-swiper'
 
 // TODO: pause autoplay after touch
 
@@ -23,15 +23,15 @@ const FullVideo = () => (
   <Video
     source={{uri: 'moments'}}
     style={StyleSheet.absoluteFill}
-    resizeMode="cover"
+    resizeMode='cover'
     repeat={true}
     muted />
 )
 
 const Dot = ({active = false}) => (
-  <View style={[styles.dot, active && styles.activeDot]}></View>
+  <View style={[styles.dot, active && styles.activeDot]} />
 )
-Dot.propTypes = {active: PropTypes.bool};
+Dot.propTypes = {active: PropTypes.bool}
 
 class HintSwiper extends Component {
   render() {
@@ -78,15 +78,15 @@ class HintSwiper extends Component {
 
 class Buttons extends Component {
   state = {
-    signupButtonColor: '#1DB954'
+    signupButtonColor: '#1DB954',
   }
 
   onPressIn = () => {
-    this.setState({signupButtonColor: '#1ED760'});
+    this.setState({signupButtonColor: '#1ED760'})
   }
 
   onPressOut = () => {
-    this.setState({signupButtonColor: '#1DB954'});
+    this.setState({signupButtonColor: '#1DB954'})
   }
 
   render() {
@@ -111,7 +111,7 @@ class Buttons extends Component {
 
 export default class Day6 extends Component {
   componentDidMount() {
-    StatusBar.setBarStyle('light-content');
+    StatusBar.setBarStyle('light-content')
   }
 
   render() {
@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
     bottom: 50,
     left: 0,
     right: 0,
-    top: 0
+    top: 0,
   },
   buttons: {
     position: 'absolute',
@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 50,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   buttonText: {
     fontWeight: '600',
@@ -165,24 +165,24 @@ const styles = StyleSheet.create({
   slide: {
     flex: 1,
     justifyContent: 'flex-end',
-    paddingBottom: 84
+    paddingBottom: 84,
   },
   slideTextTitle: {
     color: 'white',
     fontFamily: 'Avenir Next',
     textAlign: 'center',
     fontSize: 22,
-    fontWeight: '600'
+    fontWeight: '600',
   },
   slideText: {
     color: 'rgba(255,255,255,0.8)',
     fontFamily: 'Avenir Next',
     textAlign: 'center',
     fontSize: 16,
-    fontWeight: '500'
+    fontWeight: '500',
   },
   paginationStyle: {
-    bottom: 45
+    bottom: 45,
   },
   dot: {
     backgroundColor: '#333',
@@ -190,9 +190,9 @@ const styles = StyleSheet.create({
     height: 7,
     borderRadius: 7,
     marginLeft: 4,
-    marginRight: 4
+    marginRight: 4,
   },
   activeDot: {
-    backgroundColor: 'white'
-  }
-});
+    backgroundColor: 'white',
+  },
+})

@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import {
   Animated,
-  Easing,
   Image,
   StatusBar,
   StyleSheet,
@@ -58,14 +57,14 @@ export default class Day10 extends Component {
       <View style={styles.container}>
         <Image
           style={styles.bg}
-          resizeMode="cover"
+          resizeMode='cover'
           source={require('./assets/day10/tumblr.png')} />
         <TouchableWithoutFeedback onPress={this._showMenu}>
           <View style={styles.touchBar} />
         </TouchableWithoutFeedback>
         {
           this.state.show && (
-            <BlurView blurType="dark" style={styles.blur}>
+            <BlurView blurType='dark' style={styles.blur}>
               <Animated.View style={[styles.menuItem, styles.menuItem1, {left: this.state.shift}]}>
                 <Image
                   style={styles.menuItemImage}
@@ -103,7 +102,7 @@ export default class Day10 extends Component {
                 <Text style={styles.menuItemText}>Audio</Text>
               </Animated.View>
               <TouchableHighlight
-                underlayColor="transparent"
+                underlayColor='transparent'
                 onPress={this._hideMenu}
                 style={styles.dismiss}>
                 <Text style={styles.dismissText}>NeverMind</Text>
@@ -179,8 +178,8 @@ const styles = StyleSheet.create({
   },
   dismissText: {
     textAlign: 'center',
-    color:'rgba(255,255,255,0.2)',
-    fontWeight:'700',
+    color: 'rgba(255,255,255,0.2)',
+    fontWeight: '700',
   },
   touchBar: {
     position: 'absolute',

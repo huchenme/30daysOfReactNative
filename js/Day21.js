@@ -1,20 +1,20 @@
-import React, {Component} from 'react';
-import Realm from 'realm';
+import React, {Component} from 'react'
+import Realm from 'realm'
 import {
   View,
   StyleSheet,
   TouchableHighlight,
   StatusBar,
-  LayoutAnimation
-} from 'react-native';
+  LayoutAnimation,
+} from 'react-native'
 import {Reminder} from './Day20'
 import {screenHeight, screenWidth} from './dimensions'
-import {Todo, TodoList} from './schema';
+import {Todo, TodoList} from './schema'
 
 const realm = new Realm({
   path: 'day21.realm',
-  schema: [Todo, TodoList]
-});
+  schema: [Todo, TodoList],
+})
 
 const animations = {
   duration: 200,
@@ -25,13 +25,13 @@ const animations = {
     type: LayoutAnimation.Types.linear,
     springDamping: 0.5,
   },
-};
+}
 
 function reminderTopPosition(index, state, totalCount) {
   if (state.init) {
-    return 20 + 76*index
+    return 20 + 76 * index
   } else {
-    const {activeIndex} = state;
+    const {activeIndex} = state
     if (activeIndex === index) {
       return 20
     } else {
@@ -48,7 +48,7 @@ function reminderScale(index, state, totalCount) {
   if (state.init) {
     return 1
   } else {
-    const {activeIndex} = state;
+    const {activeIndex} = state
     if (activeIndex === index) {
       return 1
     } else {
@@ -63,28 +63,28 @@ function reminderScale(index, state, totalCount) {
 
 export default class Day21 extends Component {
   constructor(props) {
-    super(props);
+    super(props)
 
-    this.listsData = realm.objects('TodoList');
+    this.listsData = realm.objects('TodoList')
     if (this.listsData.length < 1) {
       realm.write(() => {
-        realm.create('TodoList', {title: 'Scheduled', theme: '#979797'});
-        realm.create('TodoList', {title: 'Movie', theme: '#cb7adf'});
-        realm.create('TodoList', {title: 'Work', theme: '#f9005f'});
-        realm.create('TodoList', {title: 'Home', theme: '#00a8f4'});
-        realm.create('TodoList', {title: 'Reminder', theme: '#68d746'});
-        const development = realm.create('TodoList', {title: 'Development', theme: '#fe952b'});
+        realm.create('TodoList', {title: 'Scheduled', theme: '#979797'})
+        realm.create('TodoList', {title: 'Movie', theme: '#cb7adf'})
+        realm.create('TodoList', {title: 'Work', theme: '#f9005f'})
+        realm.create('TodoList', {title: 'Home', theme: '#00a8f4'})
+        realm.create('TodoList', {title: 'Reminder', theme: '#68d746'})
+        const development = realm.create('TodoList', {title: 'Development', theme: '#fe952b'})
         development.list.push({text: 'day20'})
         development.list.push({text: 'day21'})
         development.list.push({text: 'day22'})
         development.list.push({text: 'day23'})
         development.list.push({text: 'day24'})
         development.list.push({text: 'day25'})
-      });
+      })
     }
     this.state = {
       init: true,
-      activeIndex: null
+      activeIndex: null,
     }
   }
 
@@ -94,22 +94,22 @@ export default class Day21 extends Component {
     } else {
       this.setState({
         activeIndex: index,
-        init: false
+        init: false,
       })
-      LayoutAnimation.configureNext(animations);
+      LayoutAnimation.configureNext(animations)
     }
   }
 
   reset = () => {
     this.setState({
       activeIndex: null,
-      init: true
+      init: true,
     })
-    LayoutAnimation.configureNext(animations);
+    LayoutAnimation.configureNext(animations)
   }
 
   componentWillMount() {
-    StatusBar.setBarStyle('light-content');
+    StatusBar.setBarStyle('light-content')
   }
 
   render() {
@@ -123,9 +123,9 @@ export default class Day21 extends Component {
               top: reminderTopPosition(index, this.state, this.listsData.length),
               transform: [
                 {
-                  scale: reminderScale(index, this.state, this.listsData.length)
-                }
-              ]
+                  scale: reminderScale(index, this.state, this.listsData.length),
+                },
+              ],
             }}
             toggleTab={()=>this.toggleTab(index)}
             title={listData.title}
@@ -134,10 +134,10 @@ export default class Day21 extends Component {
             todos={listData.list} />
         ))}
         <TouchableHighlight
-          underlayColor="transparent"
+          underlayColor='transparent'
           style={styles.reset}
           onPress={this.reset}>
-          <View></View>
+          <View />
         </TouchableHighlight>
       </View>
     )
@@ -147,13 +147,13 @@ export default class Day21 extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1E1F3C'
+    backgroundColor: '#1E1F3C',
   },
   reset: {
     height: 30,
     width: screenWidth,
-    position: "absolute",
+    position: 'absolute',
     bottom: 0,
     left: 0,
-  }
-});
+  },
+})

@@ -45,7 +45,7 @@ export default class Day15 extends Component {
     return (
       <View style={styles.container}>
         <Modal
-          animationType={"slide"}
+          animationType={'slide'}
           transparent={false}
           visible={this.state.modalVisible}>
           <View style={{
@@ -74,13 +74,13 @@ export default class Day15 extends Component {
             }}>
               <DatePickerIOS
                 date={this.state.tempDate}
-                mode="date"
+                mode='date'
                 timeZoneOffsetInMinutes={this.state.timeZoneOffsetInHours * 60}
                 onDateChange={this.onDateChange}
               />
               <DatePickerIOS
                 date={this.state.tempDate}
-                mode="time"
+                mode='time'
                 timeZoneOffsetInMinutes={this.state.timeZoneOffsetInHours * 60}
                 onDateChange={this.onDateChange}
                 minuteInterval={10}
@@ -97,7 +97,7 @@ export default class Day15 extends Component {
             {moment(this.state.date).format('MMMM Do YYYY, h:mm:ss a')}
           </Text>
           <TouchableHighlight
-            underlayColor="transparent"
+            underlayColor='transparent'
             onPress={this._showModal}>
             <Text
               style={{

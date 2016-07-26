@@ -1,15 +1,15 @@
-import React, {Component} from 'react';
+import React, {Component} from 'react'
 import {
   View,
   StyleSheet,
   TouchableHighlight,
   StatusBar,
-  ActionSheetIOS
-} from 'react-native';
+  ActionSheetIOS,
+} from 'react-native'
 
-import WebBrowser from './browser';
-import Icon from 'react-native-vector-icons/Ionicons';
-import {screenWidth} from './dimensions';
+import WebBrowser from './browser'
+import Icon from 'react-native-vector-icons/Ionicons'
+import {screenWidth} from './dimensions'
 
 export default class Day19 extends Component {
   componentWillMount() {
@@ -23,15 +23,15 @@ export default class Day19 extends Component {
     },
     (error) => alert(error),
     (success, method) => {
-    });
+    })
   }
 
   render() {
     return (
       <View style={styles.container}>
         <WebBrowser
-          ref="browser"
-          url="https://github.com/facebook/react-native"
+          ref='browser'
+          url='https://github.com/facebook/react-native'
           hideHomeButton={true}
           hideToolbar={false}
           hideAddressBar={false}
@@ -40,8 +40,8 @@ export default class Day19 extends Component {
           foregroundColor={'#555'}
           backgroundColor={'#00ab6b'}
         />
-        <TouchableHighlight underlayColor="transparent" onPress={this._showShareActionSheet}>
-          <Icon name="ios-share-outline" style={styles.shareIcon} color="#555" size={30}/>
+        <TouchableHighlight underlayColor='transparent' onPress={this._showShareActionSheet}>
+          <Icon name='ios-share-outline' style={styles.shareIcon} color='#555' size={30} />
         </TouchableHighlight>
       </View>
     )
@@ -52,11 +52,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 20,
-    backgroundColor: '#00ab6b'
+    backgroundColor: '#00ab6b',
   },
   shareIcon: {
     position: 'absolute',
     bottom: 0,
-    left: screenWidth / 2 - 15
-  }
+    left: screenWidth / 2 - 15,
+  },
 })

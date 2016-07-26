@@ -11,7 +11,7 @@ class SetPassword extends Component{
   static propTypes = {
     password: PropTypes.string.isRequired,
     setPassword: PropTypes.func.isRequired,
-  };
+  }
 
   constructor(props) {
     super(props)
@@ -75,7 +75,7 @@ export class EnterPassword extends Component{
   static propTypes = {
     enterPassword: PropTypes.func.isRequired,
     password: PropTypes.string.isRequired,
-  };
+  }
 
   constructor(props) {
     super(props)
@@ -134,7 +134,7 @@ export default class Day16 extends Component {
 
   _setPassword = (password) => {
     this.setState({
-      password: password,
+      password,
       hasSet: true,
     })
   }

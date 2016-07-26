@@ -1,15 +1,15 @@
-import React, {Component} from 'react';
+import React, {Component} from 'react'
 import {
   View,
   Text,
   StyleSheet,
-} from 'react-native';
+} from 'react-native'
 
-import TouchID from 'react-native-touch-id';
+import TouchID from 'react-native-touch-id'
 
 export default class Day19 extends Component {
   state = {
-    authenticated: false
+    authenticated: false,
   }
 
   componentDidMount() {
@@ -19,7 +19,7 @@ export default class Day19 extends Component {
     })
     .catch(error => {
       // Failure code
-    });
+    })
   }
 
   render() {

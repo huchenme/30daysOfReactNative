@@ -4,13 +4,13 @@
  * @flow
  */
 
-import React, {Component} from 'react';
+import React, {Component} from 'react'
 import {
   AppRegistry,
   StyleSheet,
   Text,
-  View
-} from 'react-native';
+  View,
+} from 'react-native'
 
 class AwesomeProject extends Component {
   render() {
@@ -26,7 +26,7 @@ class AwesomeProject extends Component {
           Shake or press menu button for dev menu
         </Text>
       </View>
-    );
+    )
   }
 }
 
@@ -47,6 +47,6 @@ const styles = StyleSheet.create({
     color: '#333333',
     marginBottom: 5,
   },
-});
+})
 
-AppRegistry.registerComponent('AwesomeProject', () => AwesomeProject);
+AppRegistry.registerComponent('AwesomeProject', () => AwesomeProject)

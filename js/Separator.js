@@ -1,5 +1,5 @@
 import React from 'react'
-import * as colors from './colors';
+import * as colors from './colors'
 import {
   View,
   StyleSheet,
@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     marginLeft: 15,
     height: StyleSheet.hairlineWidth,
     backgroundColor: colors.separator,
-    flex: 1
+    flex: 1,
   },
 })
 

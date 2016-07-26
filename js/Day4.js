@@ -1,15 +1,15 @@
-import React, {Component} from 'react';
+import React, {Component} from 'react'
 import {
   View,
   Image,
   StyleSheet,
   NativeModules,
-  TouchableHighlight
-} from 'react-native';
+  TouchableHighlight,
+} from 'react-native'
 
 export default class Day4 extends Component {
   onImgPress = () => {
-    NativeModules.JTSImagePreview.showImage('http://i.imgur.com/sKh7Z6R.png');
+    NativeModules.JTSImagePreview.showImage('http://i.imgur.com/sKh7Z6R.png')
   }
 
   render() {

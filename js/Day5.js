@@ -1,12 +1,12 @@
-import React, {Component} from 'react';
+import React, {Component} from 'react'
 import {
   View,
   Text,
   StyleSheet,
   MapView,
-  TouchableHighlight
-} from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
+  TouchableHighlight,
+} from 'react-native'
+import Icon from 'react-native-vector-icons/Ionicons'
 
 export default class Day5 extends Component {
   state = {
@@ -15,7 +15,7 @@ export default class Day5 extends Component {
     annotations: [],
     showsUserLocation: false,
     followUserLocation: false,
-  };
+  }
 
   onRegionChangeComplete(region) {
     if (this.state.isFirstLoad) {
@@ -26,7 +26,7 @@ export default class Day5 extends Component {
           title: 'You Are Here',
         }],
         isFirstLoad: false,
-      });
+      })
     }
   }
 
@@ -51,10 +51,10 @@ export default class Day5 extends Component {
         <View style={styles.buttonContainer}>
           <TouchableHighlight
             style={styles.button}
-            underlayColor="#00bd03"
+            underlayColor='#00bd03'
             onPress={this.onButtonPress}>
             <View style={styles.buttonTextWrapper}>
-              <Icon name="md-navigate" size={20} color="white" style={styles.icon} />
+              <Icon name='md-navigate' size={20} color='white' style={styles.icon} />
               <Text style={styles.buttonText}>Find my location</Text>
             </View>
           </TouchableHighlight>
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#00a803',
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: "#009302",
+    borderColor: '#009302',
     borderRadius: 4,
   },
   buttonTextWrapper: {
@@ -89,9 +89,9 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: 'white',
-    fontSize: 18
+    fontSize: 18,
   },
   icon: {
     marginRight: 8,
-  }
+  },
 })

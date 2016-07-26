@@ -1,4 +1,4 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component, PropTypes} from 'react'
 import {
   Animated,
   View,
@@ -8,33 +8,33 @@ import {
   StyleSheet,
   StatusBar,
   ScrollView,
-  TouchableWithoutFeedback
-} from 'react-native';
+  TouchableWithoutFeedback,
+} from 'react-native'
 
-import {screenWidth} from './dimensions';
-import ScrollableTabView from 'react-native-scrollable-tab-view';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import {screenWidth} from './dimensions'
+import ScrollableTabView from 'react-native-scrollable-tab-view'
+import Icon from 'react-native-vector-icons/MaterialIcons'
 
 const tabs = [
   {
-    icon: "home",
+    icon: 'home',
     iconSize: 28,
-    title: "Home",
+    title: 'Home',
   },
   {
-    icon: "whatshot",
+    icon: 'whatshot',
     iconSize: 28,
-    title: "Trending",
+    title: 'Trending',
   },
   {
-    icon: "subscriptions",
+    icon: 'subscriptions',
     iconSize: 26,
-    title: "Subscriptions",
+    title: 'Subscriptions',
   },
   {
-    icon: "person",
+    icon: 'person',
     iconSize: 32,
-    title: "Account",
+    title: 'Account',
   },
 ]
 
@@ -42,17 +42,17 @@ class TabBar extends Component {
   tabIcons = []
 
   static propTypes = {
-    goToPage: PropTypes.func,
+    scrollValue: PropTypes.number.isRequired,
     activeTab: PropTypes.number,
+    goToPage: PropTypes.func,
     tabs: PropTypes.array,
-    scrollValue: PropTypes.number.isRequired
   }
 
   render() {
     const left = this.props.scrollValue.interpolate({
       inputRange: [0, 1],
       outputRange: [0, screenWidth / 4],
-    });
+    })
 
     return (
       <View style={styles.nav}>
@@ -60,13 +60,13 @@ class TabBar extends Component {
           <Text style={styles.headerText}>{tabs[this.props.activeTab].title}</Text>
           <View style={styles.icons}>
             <Icon
-              name="search"
+              name='search'
               size={24}
               color='white'
               style={{marginRight: 24}}
             />
             <Icon
-              name="more-vert"
+              name='more-vert'
               size={24}
               color='white'
             />
@@ -86,12 +86,12 @@ class TabBar extends Component {
                   />
                 </View>
               </TouchableWithoutFeedback>
-            );
+            )
           })}
           <Animated.View style={[styles.tabUnderlineStyle, {left}]} />
         </View>
       </View>
-    );
+    )
   }
 }
 
@@ -114,7 +114,7 @@ export default class Day24 extends Component {
     }
 
     this.setState({
-      currentTab: i
+      currentTab: i,
     })
   }
 
@@ -127,18 +127,18 @@ export default class Day24 extends Component {
           {
             toValue: 16,
             duration: 375,
-            easing: Easing.bezier(0.4, 0.0, 0.2, 1)
+            easing: Easing.bezier(0.4, 0.0, 0.2, 1),
           }
         ),
         Animated.timing(
           this.state.camIconOpacity,
           {
             toValue: 1,
-            duration: 200
+            duration: 200,
           }
-        )
-      ])
-    ]).start();
+        ),
+      ]),
+    ]).start()
   }
 
   hideCamIcon = () => {
@@ -150,18 +150,18 @@ export default class Day24 extends Component {
           {
             toValue: -56,
             duration: 375,
-            easing: Easing.bezier(0.4, 0.0, 0.2, 1)
+            easing: Easing.bezier(0.4, 0.0, 0.2, 1),
           }
         ),
         Animated.timing(
           this.state.camIconOpacity,
           {
             toValue: 0,
-            duration: 375
+            duration: 375,
           }
-        )
-      ])
-    ]).start();
+        ),
+      ]),
+    ]).start()
   }
 
   render() {
@@ -171,16 +171,16 @@ export default class Day24 extends Component {
         <ScrollableTabView
           onChangeTab={this.onChangeTab}
           renderTabBar={() => <TabBar />}>
-          <ScrollView tabLabel="home" style={styles.tabView}>
+          <ScrollView tabLabel='home' style={styles.tabView}>
             <Image source={require('./assets/day24/screen1.png')} />
           </ScrollView>
-          <ScrollView tabLabel="trending" style={styles.tabView}>
+          <ScrollView tabLabel='trending' style={styles.tabView}>
             <Image source={require('./assets/day24/screen2.png')} />
           </ScrollView>
-          <ScrollView tabLabel="subscriptions" style={styles.tabView}>
+          <ScrollView tabLabel='subscriptions' style={styles.tabView}>
             <Image source={require('./assets/day24/screen3.png')} />
           </ScrollView>
-          <ScrollView tabLabel="account" style={styles.tabView}>
+          <ScrollView tabLabel='account' style={styles.tabView}>
             <Image source={require('./assets/day24/screen4.png')} />
           </ScrollView>
         </ScrollableTabView>
@@ -189,10 +189,10 @@ export default class Day24 extends Component {
             styles.camIcon,
             {
               bottom: this.state.camIconBottom,
-              opacity: this.state.camIconOpacity
-            }
+              opacity: this.state.camIconOpacity,
+            },
           ]}>
-          <Icon name="videocam" size={24} color='white' />
+          <Icon name='videocam' size={24} color='white' />
         </Animated.View>
       </View>
     )
@@ -205,37 +205,37 @@ const styles = StyleSheet.create({
   },
   statusBar: {
     backgroundColor: '#C41C14',
-    height: 20
+    height: 20,
   },
   tabView: {
-    flex: 1
+    flex: 1,
   },
   nav: {
     zIndex: 1,
     backgroundColor: '#E62117',
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOpacity: 0.24,
     shadowRadius: 5,
     shadowOffset: {
       height: 2,
-      width: 0
-    }
+      width: 0,
+    },
   },
   header: {
     height: 48,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   headerText: {
     color: 'white',
     fontSize: 20,
-    marginLeft: 16
+    marginLeft: 16,
   },
   icons: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginHorizontal: 4
+    marginHorizontal: 4,
   },
   tabs: {
     height: 48,
@@ -262,12 +262,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#E62117',
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOpacity: 0.24,
     shadowRadius: 6,
     shadowOffset: {
       height: 6,
-      width: 0
-    }
-  }
+      width: 0,
+    },
+  },
 })

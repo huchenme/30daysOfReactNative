@@ -103,22 +103,22 @@ class Row extends Component {
 const Menu = () => (
   <View style={styles.menu}>
     <Image
-      resizeMode="contain"
+      resizeMode='contain'
       source={require('./assets/day8.png')}
       style={styles.image}
     />
     <ScrollView>
       <Section>
-        <Row icon="location-on">Your places</Row>
-        <Row icon="rate-review">Your contributions</Row>
-        <Row icon="signal-wifi-off">Offline areas</Row>
+        <Row icon='location-on'>Your places</Row>
+        <Row icon='rate-review'>Your contributions</Row>
+        <Row icon='signal-wifi-off'>Offline areas</Row>
       </Section>
       <Section>
-        <Row icon="traffic">Traffic</Row>
-        <Row icon="train">Public transport</Row>
-        <Row icon="directions-bike">Cycling</Row>
-        <Row icon="satellite">Satelite</Row>
-        <Row icon="terrain">Terrain</Row>
+        <Row icon='traffic'>Traffic</Row>
+        <Row icon='train'>Public transport</Row>
+        <Row icon='directions-bike'>Cycling</Row>
+        <Row icon='satellite'>Satelite</Row>
+        <Row icon='terrain'>Terrain</Row>
       </Section>
       <Section>
         <Row>Settings</Row>

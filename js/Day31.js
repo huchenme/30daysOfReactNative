@@ -83,7 +83,7 @@ export default class Day31 extends Component {
       <View style={styles.container}>
         <StatusBar hidden />
         <Modal
-          animationType={"none"}
+          animationType={'none'}
           transparent
           onShow={this._onModalShown}
           visible={this.state.modalVisible}>
@@ -105,29 +105,29 @@ export default class Day31 extends Component {
                 bottom: this.state.blurViewBottom,
               }]}>
               <BlurView
-                ref="blurView"
-                blurType="xlight"
+                ref='blurView'
+                blurType='xlight'
                 onLayout={this._onMenuLayout}>
                 <TouchableHighlight
-                  underlayColor="transparent"
+                  underlayColor='transparent'
                   onPress={this._hideModal}
                   style={[styles.row, styles.borderBottom]}>
                   <Text style={styles.menuText}>小视频</Text>
                 </TouchableHighlight>
                 <TouchableHighlight
-                  underlayColor="transparent"
+                  underlayColor='transparent'
                   onPress={this._hideModal}
                   style={[styles.row, styles.borderBottom]}>
                   <Text style={styles.menuText}>拍照</Text>
                 </TouchableHighlight>
                 <TouchableHighlight
-                  underlayColor="transparent"
+                  underlayColor='transparent'
                   onPress={this._hideModal}
                   style={[styles.row]}>
                   <Text style={styles.menuText}>从手机相册选择</Text>
                 </TouchableHighlight>
                 <TouchableHighlight
-                  underlayColor="transparent"
+                  underlayColor='transparent'
                   onPress={this._hideModal}
                   style={[styles.row, {marginTop: 6}]}>
                   <Text style={styles.menuText}>取消</Text>

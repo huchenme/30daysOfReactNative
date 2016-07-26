@@ -23,7 +23,7 @@ const realm = new Realm({
 })
 
 // FIXME: known issue that if user type too fast on existing item, console will complain
-// "Native TextInput(xxx) is x events ahead of JS - try to make your JS faster."
+// 'Native TextInput(xxx) is x events ahead of JS - try to make your JS faster.'
 // it is fixed for new todo item by not call setState directly
 
 const Header = ({title, themeColor, count = 0, toggleTab}) => {
@@ -189,7 +189,7 @@ export class Reminder extends Component {
       <View>
         <View style={styles.todoRow}>
           <View style={styles.addIcon}>
-            <Icon name="ios-add" color="#C6C6C6" size={35} />
+            <Icon name='ios-add' color='#C6C6C6' size={35} />
           </View>
           <TextInput
             ref={component => this._addTextInput = component}
