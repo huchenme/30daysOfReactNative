@@ -37,6 +37,7 @@ Inspired by https://github.com/fangwei716/30-days-of-react-native, this repo is 
 - [ ] Day 28
 - [x] Day 29
 - [ ] Day 30
+- [ ] Day 31: Wechat context menu
 - [x] Day 20 & 21 use Realm
 - [x] Main Navigation
 - [x] Icon

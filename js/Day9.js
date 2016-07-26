@@ -1,4 +1,4 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component, PropTypes} from 'react'
 import {
   View,
   Text,
@@ -9,19 +9,19 @@ import {
   Animated,
   StatusBar,
   SegmentedControlIOS,
-} from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
-import {screenWidth} from './dimensions';
+} from 'react-native'
+import Icon from 'react-native-vector-icons/Ionicons'
+import {screenWidth} from './dimensions'
 
-const twitterBlue = "#1DA1F2";
-const twitterGray = "#8899A6";
+const twitterBlue = '#1DA1F2'
+const twitterGray = '#8899A6'
 
-const HEADER_MAX_HEIGHT = 125;
-const HEADER_MIN_HEIGHT = 64;
-const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
-const INITIAL_SCROLLY = -HEADER_MAX_HEIGHT;
-const START_BLUR = 100 + INITIAL_SCROLLY;
-const FINISH_BLUR = 132 + INITIAL_SCROLLY;
+const HEADER_MAX_HEIGHT = 125
+const HEADER_MIN_HEIGHT = 64
+const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT
+const INITIAL_SCROLLY = -HEADER_MAX_HEIGHT
+const START_BLUR = 100 + INITIAL_SCROLLY
+const FINISH_BLUR = 132 + INITIAL_SCROLLY
 
 // TODO: indicator inset
 // TODO: sticky segment
@@ -59,7 +59,7 @@ const TopBar = ({top}) => (
   </View>
 )
 TopBar.propTypes = {
-  top: PropTypes.number.isRequired,
+  top: PropTypes.object.isRequired,
 }
 
 class TwitterTabs extends Component {
@@ -71,7 +71,7 @@ class TwitterTabs extends Component {
   selectTab = (tab) => {
     this.setState({
       selectedTab: tab,
-    });
+    })
   }
 
   render() {

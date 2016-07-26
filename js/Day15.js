@@ -7,30 +7,38 @@ import {
   Modal,
   DatePickerIOS,
 } from 'react-native'
+import moment from 'moment'
+import * as colors from './colors'
 import NavigationBar from 'react-native-navbar'
 
 export default class Day15 extends Component {
   state = {
     modalVisible: false,
+    tempDate: new Date(),
     date: new Date(),
     timeZoneOffsetInHours: (-1) * (new Date()).getTimezoneOffset() / 60,
   }
 
-  _setModalVisible(value) {
-    this.setState({modalVisible: value})
+  _showModal = () => {
+    this.setState({
+      modalVisible: true,
+      tempDate: this.state.date,
+    })
+  }
+
+  _hideModal = () => {
+    this.setState({modalVisible: false})
+  }
+
+  _setTime = () => {
+    this.setState({
+      modalVisible: false,
+      date: this.state.tempDate,
+    })
   }
 
   onDateChange = (date) => {
-    console.log(date);
-    this.setState({date: date})
-  }
-
-  onTimezoneChange = (event) => {
-    var offset = parseInt(event.nativeEvent.text, 10)
-    if (isNaN(offset)) {
-      return
-    }
-    this.setState({timeZoneOffsetInHours: offset})
+    this.setState({tempDate: date})
   }
 
   render() {
@@ -53,15 +61,11 @@ export default class Day15 extends Component {
               }}
               leftButton={{
                 title: 'Cancel',
-                handler: () => {
-                  this._setModalVisible(false)
-                },
+                handler: this._hideModal,
               }}
               rightButton={{
                 title: 'Set',
-                handler: () => {
-                  this._setModalVisible(false)
-                },
+                handler: this._setTime,
               }}
             />
             <View style={{
@@ -69,13 +73,13 @@ export default class Day15 extends Component {
               justifyContent: 'space-around',
             }}>
               <DatePickerIOS
-                date={this.state.date}
+                date={this.state.tempDate}
                 mode="date"
                 timeZoneOffsetInMinutes={this.state.timeZoneOffsetInHours * 60}
                 onDateChange={this.onDateChange}
               />
               <DatePickerIOS
-                date={this.state.date}
+                date={this.state.tempDate}
                 mode="time"
                 timeZoneOffsetInMinutes={this.state.timeZoneOffsetInHours * 60}
                 onDateChange={this.onDateChange}
@@ -84,11 +88,26 @@ export default class Day15 extends Component {
             </View>
           </View>
         </Modal>
-        <TouchableHighlight
-          underlayColor="transparent"
-          onPress={() => {this._setModalVisible(true)}}>
-          <Text>Open Modal</Text>
-        </TouchableHighlight>
+        <View>
+          <Text
+            style={{
+              textAlign: 'center',
+              marginBottom: 10,
+            }}>
+            {moment(this.state.date).format('MMMM Do YYYY, h:mm:ss a')}
+          </Text>
+          <TouchableHighlight
+            underlayColor="transparent"
+            onPress={this._showModal}>
+            <Text
+              style={{
+                textAlign: 'center',
+                color: colors.blue,
+              }}>
+              Open Modal
+            </Text>
+          </TouchableHighlight>
+        </View>
       </View>
     )
   }

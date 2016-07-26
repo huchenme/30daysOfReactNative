@@ -1,5 +1,5 @@
-import React, {Component, PropTypes} from 'react';
-import * as dimensions from './dimensions';
+import React, {Component, PropTypes} from 'react'
+import * as dimensions from './dimensions'
 import {
   Image,
   MapView,
@@ -11,11 +11,11 @@ import {
   View,
   PanResponder,
   LayoutAnimation,
-} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+} from 'react-native'
+import Icon from 'react-native-vector-icons/MaterialIcons'
 
-const menuWidth = dimensions.screenWidth * 0.7;
-const minLeft = -menuWidth-10;
+const menuWidth = dimensions.screenWidth * 0.7
+const minLeft = -menuWidth - 10
 const customLayoutLinear = {
   duration: 200,
   create: {
@@ -25,7 +25,7 @@ const customLayoutLinear = {
   update: {
     type: LayoutAnimation.Types.easeInEaseOut,
   },
-};
+}
 
 const Section = ({children}) => (
   <View style={styles.section}>
@@ -33,33 +33,33 @@ const Section = ({children}) => (
   </View>
 )
 Section.propTypes = {
-  children: PropTypes.element.isRequired
+  children: PropTypes.any.isRequired,
 }
 
 class Row extends Component {
   static propTypes = {
-    icon: PropTypes.string.isRequired,
-    children: PropTypes.element.isRequired,
+    children: PropTypes.any.isRequired,
+    icon: PropTypes.string,
   }
 
   state = {
-    highlighted: false
+    highlighted: false,
   }
 
   onPressIn = () => {
     this.setState({
-      highlighted: true
+      highlighted: true,
     })
   }
 
   onPressOut = () => {
     this.setState({
-      highlighted: false
+      highlighted: false,
     })
   }
 
   render() {
-    let content;
+    let content
     if (this.props.icon) {
       content = (
         <View style={{
@@ -71,7 +71,7 @@ class Row extends Component {
             style={[
               {
                 color: 'rgba(0, 0, 0, 0.54)',
-                marginRight: 32
+                marginRight: 32,
               },
               this.state.highlighted && styles.highlightedText,
             ]}
@@ -137,8 +137,8 @@ export default class Day8 extends Component {
     menuLeft: minLeft,
   }
 
-  previousMenuLeft = minLeft;
-  previousDropOpacity = 0;
+  previousMenuLeft = minLeft
+  previousDropOpacity = 0
 
   componentWillMount() {
     this._panResponder = PanResponder.create({
@@ -154,7 +154,7 @@ export default class Day8 extends Component {
       onPanResponderRelease: this.onPanResponderEnd,
       onPanResponderTerminate: this.onPanResponderEnd,
       onShouldBlockNativeResponder: (evt, gestureState) => true,
-    });
+    })
   }
 
   onPanResponderMove = (evt, gestureState) => {
@@ -170,7 +170,7 @@ export default class Day8 extends Component {
     }
     this.setState({
       menuLeft: newMenuLeft,
-      dropOpacity: newDropOpacity
+      dropOpacity: newDropOpacity,
     })
   }
 
@@ -180,9 +180,9 @@ export default class Day8 extends Component {
     this.setState({
       dropOpacity: 0,
       menuLeft: minLeft,
-      showDrop: false
+      showDrop: false,
     })
-    LayoutAnimation.configureNext(customLayoutLinear);
+    LayoutAnimation.configureNext(customLayoutLinear)
   }
 
   openMenu = () => {
@@ -192,7 +192,7 @@ export default class Day8 extends Component {
       dropOpacity: 1,
       menuLeft: 0,
     })
-    LayoutAnimation.configureNext(customLayoutLinear);
+    LayoutAnimation.configureNext(customLayoutLinear)
   }
 
   onPanResponderEnd = (evt, gestureState) => {
@@ -212,7 +212,7 @@ export default class Day8 extends Component {
         />
         {this.state.showDrop && (
           <TouchableWithoutFeedback onPress={() => {this.closeMenu()}}>
-            <View style={[styles.drop, {opacity: this.state.dropOpacity}]}></View>
+            <View style={[styles.drop, {opacity: this.state.dropOpacity}]} />
           </TouchableWithoutFeedback>
         )}
         <View
@@ -227,19 +227,19 @@ export default class Day8 extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
   },
   image: {
-    width: menuWidth
+    width: menuWidth,
   },
   drop: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0, 0, 0, 0.6)'
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
   },
   section: {
     borderTopWidth: 1,
     borderTopColor: '#E0E0E0',
-    paddingVertical: 8
+    paddingVertical: 8,
   },
   row: {
     flexDirection: 'row',
@@ -248,15 +248,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   highlightedRow: {
-    backgroundColor: '#F0F0F0'
+    backgroundColor: '#F0F0F0',
   },
   text: {
     color: 'rgba(0, 0, 0, 0.87)',
     fontSize: 13,
-    fontWeight: '500'
+    fontWeight: '500',
   },
   highlightedText: {
-    color: '#4285F4'
+    color: '#4285F4',
   },
   menuContainer: {
     position: 'absolute',
@@ -269,12 +269,12 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     width: menuWidth,
     height: dimensions.screenHeight,
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOpacity: 0.3,
     shadowRadius: 5,
     shadowOffset: {
       height: 0,
-      width: 2
-    }
-  }
+      width: 2,
+    },
+  },
 })
