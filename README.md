@@ -225,4 +225,4 @@ Push Notification.
 ## Day 31
 Wechat Menu.
 
-![day31](https://raw.githubusercontent.com/fangwei716/ThirtyDaysOfReactNative/screens/day31.gif)
+![day31](https://raw.githubusercontent.com/fangwei716/ThirtyDaysOfReactNative/master/screens/day31.gif)
