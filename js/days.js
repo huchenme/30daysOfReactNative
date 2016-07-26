@@ -28,6 +28,7 @@ import Day27 from './Day27';
 import Day28 from './Day28';
 import Day29 from './Day29';
 import Day30 from './Day30';
+import Day31 from './Day31';
 
 const days = [
   {
@@ -329,6 +330,16 @@ const days = [
     size:50,
     color:"#f27405",
     hideNav: false,
+  },
+  {
+    day:31,
+    title:"Wechat Menu",
+    component: Day31,
+    isFA: true,
+    icon: "weixin",
+    size:45,
+    color:"#0ABA07",
+    hideNav: true,
   },
 ];
 

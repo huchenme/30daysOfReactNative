@@ -37,7 +37,7 @@ Inspired by https://github.com/fangwei716/30-days-of-react-native, this repo is 
 - [ ] Day 28
 - [x] Day 29
 - [ ] Day 30
-- [ ] Day 31: Wechat context menu
+- [x] Day 31: Wechat context menu
 - [x] Day 20 & 21 use Realm
 - [x] Main Navigation
 - [x] Icon
@@ -221,3 +221,8 @@ Quick action with 3D Touch. Quick action on launching days.
 Push Notification.
 
 ![day30](https://raw.githubusercontent.com/fangwei716/ThirtyDaysOfReactNative/screenshots/screenshot/day30.gif)
+
+## Day 31
+Wechat Menu.
+
+![day31](https://raw.githubusercontent.com/fangwei716/ThirtyDaysOfReactNative/screens/day31.gif)

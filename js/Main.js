@@ -88,6 +88,7 @@ export default class Main extends Component {
   render() {
     return (
       <ScrollView>
+        <StatusBar animated />
         <Swiper
           height={150}
           showsButtons={false}
