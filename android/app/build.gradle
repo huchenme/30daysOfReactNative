@@ -126,6 +126,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-linear-gradient')
     compile project(':gl-react-native')
     compile project(':react-native-blur')
     compile project(':realm')

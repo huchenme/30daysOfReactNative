@@ -16,6 +16,7 @@
     "react-native": "0.30.0",
     "react-native-blur": "^1.0.0",
     "react-native-gesture-password": "^0.2.0",
+    "react-native-linear-gradient": "^1.5.12",
     "react-native-loading-spinner-overlay": "^0.2.0",
     "react-native-navbar": "^1.5.0",
     "react-native-quick-actions": "^0.1.4",

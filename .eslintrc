@@ -40,6 +40,9 @@
     "semi": [1, "never"],
     "space-in-parens": 1,
     "space-infix-ops": 1,
+    "no-var": 1,
+    "prefer-const": 1,
+    "no-const-assign": 2,
 
     "react/sort-prop-types": [1, {
       "callbacksLast": true,
@@ -59,7 +62,8 @@
   },
   "settings": {
     "import/core-modules": [
-      'resolveAssetSource'
+      'resolveAssetSource',
+      'NativeModules',
     ],
   }
 }
