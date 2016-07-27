@@ -127,7 +127,7 @@ export default class Day17 extends Component {
       <ScrollView style={styles.container} contentOffset={{y: 44}}>
         <SearchBar
           placeholder='Search'
-          onChangeText={(text)=> this._onChangeText(text)}
+          onChangeText={(text) => this._onChangeText(text)}
         />
       {this.state.states.map((state, index) => (
         <Row key={index}>{state}</Row>

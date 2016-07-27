@@ -45,7 +45,7 @@ export default class Day10 extends Component {
       },
     ).start()
 
-    setTimeout(()=>{
+    setTimeout(() => {
       this.setState({
         show: false,
       })

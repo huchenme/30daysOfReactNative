@@ -119,7 +119,7 @@ export default class Main extends Component {
               key={index}
               day={day}
               index={index}
-              goToDay={()=>{this.goToDay(index)}}
+              goToDay={() => {this.goToDay(index)}}
             />
           ))}
         </View>

@@ -127,7 +127,7 @@ export default class Day21 extends Component {
                 },
               ],
             }}
-            toggleTab={()=>this.toggleTab(index)}
+            toggleTab={() => this.toggleTab(index)}
             title={listData.title}
             themeColor={listData.theme}
             remainCount={listData.list.filtered('completed = false').length}

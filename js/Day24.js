@@ -42,9 +42,9 @@ class TabBar extends Component {
   tabIcons = []
 
   static propTypes = {
-    scrollValue: PropTypes.number.isRequired,
     activeTab: PropTypes.number,
     goToPage: PropTypes.func,
+    scrollValue: PropTypes.object,
     tabs: PropTypes.array,
   }
 

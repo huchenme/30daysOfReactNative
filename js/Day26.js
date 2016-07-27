@@ -1,39 +1,39 @@
 import React, {Component, PropTypes} from 'react'
-import * as dimensions from './dimensions'
 import {
   Animated,
+  LayoutAnimation,
+  PanResponder,
   StyleSheet,
   Text,
-  TouchableWithoutFeedback,
   TouchableHighlight,
   View,
-  PanResponder,
-  LayoutAnimation,
 } from 'react-native'
 import Day22 from './Day22'
 import Day24 from './Day24'
 import Day25 from './Day25'
+import {screenWidth, screenHeight} from './dimensions'
 
 const menuWidth = 150
-const minLeft = -menuWidth - 10
-const customLayoutLinear = {
+const touchWidth = 10
+
+const CustomLayoutLinear = {
   duration: 200,
   create: {
     type: LayoutAnimation.Types.linear,
-    property: LayoutAnimation.Properties.left,
+    property: LayoutAnimation.Properties.opacity,
   },
   update: {
     type: LayoutAnimation.Types.easeInEaseOut,
   },
 }
 
-const Row = ({children}) => (
+const Row = ({children, onPress}) => (
   <TouchableHighlight
     underlayColor='rgba(255,255,255,0.15)'
     style={styles.row}
-    onPress={this.props.onPress}>
+    onPress={onPress}>
     <Text style={styles.text}>
-      {this.props.children}
+      {children}
     </Text>
   </TouchableHighlight>
 )
@@ -42,23 +42,29 @@ Row.propTypes = {
   onPress: PropTypes.func,
 }
 
-const Menu = () => (
+const Menu = ({goToDay}) => (
   <View style={styles.menu}>
-    <Row onPress={()=>{console.log('day 22')}}>Day 22</Row>
-    <Row onPress={()=>{console.log('day 24')}}>Day 24</Row>
-    <Row onPress={()=>{console.log('day 25')}}>Day 25</Row>
+    <Row onPress={() => {goToDay(22)}}>Day 22</Row>
+    <Row onPress={() => {goToDay(24)}}>Day 24</Row>
+    <Row onPress={() => {goToDay(25)}}>Day 25</Row>
   </View>
 )
+Menu.propTypes = {
+  goToDay: PropTypes.func.isRequired,
+}
 
-export default class Day26 extends Component {
-  state = {
-    showDrop: false,
-    dropOpacity: 0,
-    menuLeft: minLeft,
+class Main extends Component {
+  static propTypes = {
+    day: PropTypes.any.isRequired,
   }
 
-  previousMenuLeft = minLeft
-  previousDropOpacity = 0
+  state = {
+    showMenu: true,
+    left: new Animated.Value(0),
+    touchWidth,
+  }
+
+  previousLeft = 0
 
   componentWillMount() {
     this._panResponder = PanResponder.create({
@@ -66,9 +72,7 @@ export default class Day26 extends Component {
       onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
       onMoveShouldSetPanResponder: (evt, gestureState) => true,
       onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
-      onPanResponderGrant: (evt, gestureState) => {
-        this.setState({showDrop: true})
-      },
+      onPanResponderGrant: (evt, gestureState) => true,
       onPanResponderMove: this.onPanResponderMove,
       onPanResponderTerminationRequest: (evt, gestureState) => true,
       onPanResponderRelease: this.onPanResponderEnd,
@@ -77,66 +81,99 @@ export default class Day26 extends Component {
     })
   }
 
-  onPanResponderMove = (evt, gestureState) => {
-    let newMenuLeft = this.previousMenuLeft + gestureState.dx
-    let newDropOpacity = this.previousDropOpacity + Math.pow((gestureState.dx / -minLeft), 0.5)
-    if (newMenuLeft > 0) {
-      newMenuLeft = 0
-      newDropOpacity = 1
-    }
-    if (newMenuLeft < minLeft) {
-      newMenuLeft = minLeft
-      newDropOpacity = 0
-    }
-    this.setState({
-      menuLeft: newMenuLeft,
-      dropOpacity: newDropOpacity,
-    })
+  componentWillReceiveProps() {
+    this.closeMenu()
+    LayoutAnimation.configureNext(CustomLayoutLinear)
   }
 
-  closeMenu = () => {
-    this.previousMenuLeft = minLeft
-    this.newDropOpacity = 0
-    this.setState({
-      dropOpacity: 0,
-      menuLeft: minLeft,
-      showDrop: false,
-    })
-    LayoutAnimation.configureNext(customLayoutLinear)
+  onPanResponderMove = (evt, gestureState) => {
+    let newLeft = this.previousLeft + gestureState.dx
+    if (newLeft < 0) {
+      newLeft = 0
+    }
+    if (newLeft > menuWidth) {
+      newLeft = menuWidth
+    }
+    this.state.left.setValue(newLeft)
   }
 
   openMenu = () => {
-    this.previousMenuLeft = 0
-    this.newDropOpacity = 1
-    this.setState({
-      dropOpacity: 1,
-      menuLeft: 0,
-    })
-    LayoutAnimation.configureNext(customLayoutLinear)
+    this.previousLeft = menuWidth
+    this.setState({touchWidth: screenWidth})
+    Animated.spring(
+      this.state.left,
+      {
+        toValue: menuWidth,
+      }
+    ).start()
+  }
+
+  closeMenu = () => {
+    this.previousLeft = 0
+    this.setState({touchWidth})
+    Animated.spring(
+      this.state.left,
+      {
+        toValue: 0,
+      }
+    ).start()
   }
 
   onPanResponderEnd = (evt, gestureState) => {
-    if (gestureState.vx < 0 || gestureState.dx < 0) {
-      this.closeMenu()
-    } else if (gestureState.vx > 0 || gestureState.dx > 0) {
+    const left = this.previousLeft + gestureState.dx
+    if (left > menuWidth / 2) {
       this.openMenu()
+    } else {
+      this.closeMenu()
     }
+  }
+
+  render() {
+    const Day = this.props.day
+    return (
+      <Animated.View
+        style={[styles.main, this.state.showMenu && {
+          left: this.state.left,
+        }]}>
+        <Day />
+        <View
+          {...this._panResponder.panHandlers}
+          style={[styles.touchArea, {
+            width: this.state.touchWidth,
+          }]} />
+      </Animated.View>
+    )
+  }
+}
+
+export default class Day26 extends Component {
+  state = {
+    day: Day22,
+  }
+
+  _goToDay = (index) => {
+    let day
+    switch (index) {
+    case 22:
+      day = Day22
+      break
+    case 24:
+      day = Day24
+      break
+    case 25:
+      day = Day25
+      break
+    default:
+      day = Day22
+    }
+    this.setState({day})
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.menuContainer}>
-          <Menu />
-        </View>
-        <Animated.View style={styles.container} {...this._panResponder.panHandlers}>
-          <Day22 />
-        </Animated.View>
-        {false && this.state.showDrop && (
-          <TouchableWithoutFeedback onPress={() => {this.closeMenu()}}>
-            <View style={[styles.drop, {opacity: this.state.dropOpacity}]} />
-          </TouchableWithoutFeedback>
-        )}
+        <Menu goToDay={(index) => this._goToDay(index)} />
+        <Main day={this.state.day} />
       </View>
     )
   }
@@ -145,10 +182,6 @@ export default class Day26 extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  drop: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0, 0, 0, 0.6)',
   },
   row: {
     height: 48,
@@ -162,17 +195,29 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     textAlign: 'center',
   },
-  menuContainer: {
+  main: {
     position: 'absolute',
     top: 0,
-    bottom: 0,
     left: 0,
-    width: menuWidth + 20,
+    height: screenHeight,
+    width: screenWidth,
+    backgroundColor: 'white',
   },
   menu: {
     backgroundColor: '#893D54',
     width: menuWidth,
-    height: dimensions.screenHeight,
+    height: screenHeight,
     justifyContent: 'center',
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+  },
+  touchArea: {
+    width: touchWidth,
+    position: 'absolute',
+    height: screenHeight,
+    left: 0,
+    top: 0,
   },
 })

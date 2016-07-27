@@ -142,7 +142,7 @@ class TwitterPost extends Component {
         refreshControl={
           <RefreshControl
             refreshing={this.state.isRefreshing}
-            onRefresh={()=>this._onRefresh()}
+            onRefresh={() => this._onRefresh()}
             tintColor='#ddd'
           />
         }>
