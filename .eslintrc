@@ -22,6 +22,7 @@
     "setInterval": false,
     "setTimeout": false,
     "Set": false,
+    "fetch": false,
   },
   "rules": {
     "array-bracket-spacing": [1, "never"],
@@ -44,6 +45,7 @@
     "no-var": 1,
     "prefer-const": 1,
     "no-const-assign": 2,
+    "one-var": [2, "never"],
 
     "react/sort-prop-types": [1, {
       "callbacksLast": true,

@@ -17,7 +17,8 @@ import {screenHeight, screenWidth} from './dimensions'
 // TODO:
 // - [x] select photo should automatic center the Photo
 // - [x] handle panoroma photo
-// - [ ] checkbox should stick to right on scroll
+// - [ ] checkbox should stick to right on scroll (try change to listview and use
+// https://facebook.github.io/react-native/docs/listview.html#rendersectionheader)
 
 const CustomLayoutLinear = {
   duration: 200,
