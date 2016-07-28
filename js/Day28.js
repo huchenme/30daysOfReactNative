@@ -15,7 +15,7 @@ import {
 import {screenHeight, screenWidth} from './dimensions'
 
 // TODO:
-// - [ ] select photo should automatic center the Photo
+// - [x] select photo should automatic center the Photo
 // - [x] handle panoroma photo
 // - [ ] checkbox should stick to right on scroll
 
@@ -32,6 +32,7 @@ const CustomLayoutLinear = {
 
 const intialImageHeight = 129
 const activeImageHeight = 258
+const scrollViewWidth = screenWidth - 30
 
 const Checkbox = ({active = false}) => {
   const icon = active ? require('./assets/day28/check.png') : require('./assets/day28/circle.png')
@@ -54,6 +55,8 @@ export default class Day28 extends Component {
     showPicker: false,
     modalVisible: false,
     dropOpacity: new Animated.Value(0),
+    inactiveWidths: [],
+    activeWidths: [],
   }
 
   componentWillMount() {
@@ -65,19 +68,42 @@ export default class Day28 extends Component {
   storeImages(data) {
     const assets = data.edges
     const images = assets.map((asset) => asset.node.image)
-    this.setState({images})
+    const inactiveWidths = images.map(image => {
+      return Math.min(intialImageHeight * image.width / image.height, scrollViewWidth)
+    })
+    const activeWidths = images.map(image => {
+      return Math.min(activeImageHeight * image.width / image.height, scrollViewWidth)
+    })
+    this.setState({
+      images,
+      inactiveWidths,
+      activeWidths,
+    })
   }
 
   logImageError(err) {
     console.log(err)
   }
 
+  _imagePosition = (index) => {
+    let total = 0
+    for (let i = 0; i < index; i++) {
+      total += this.state.activeWidths[i]
+      total += 5
+    }
+    total += this.state.activeWidths[index] / 2
+    return Math.max(0, total - scrollViewWidth / 2)
+  }
+
   _selectImage = (index) => {
     let newSelected
     if (this.state.selected.has(index)) {
-      newSelected = this.state.selected.delete(index)
+      this.state.selected.delete(index)
+      newSelected = new Set(this.state.selected.values())
     } else {
-      newSelected = this.state.selected.add(index)
+      this.state.selected.add(index)
+      newSelected = new Set(this.state.selected.values())
+      this.refs.images.scrollTo({x: this._imagePosition(index)})
     }
     this.setState({
       selectActive: true,
@@ -152,20 +178,20 @@ export default class Day28 extends Component {
           <View style={[styles.test, this.state.showPicker ? {bottom: 0} : {top: screenHeight}]}>
             <View style={[styles.rowSection, {backgroundColor: '#F9F9F9'}]}>
               <ScrollView
+                ref='images'
                 horizontal
                 showsHorizontalScrollIndicator={false}
                 style={styles.imagesContainer}>
                 {this.state.images.map((image, index) => {
-                  const height = this.state.selectActive ? activeImageHeight : intialImageHeight
                   return (
                     <TouchableWithoutFeedback key={index} onPress={() => {this._selectImage(index)}}>
                       <Image
                         source={{uri: image.uri}}
                         style={{
                           marginLeft: index === 0 ? 0 : 5,
-                          height,
+                          height: this.state.selectActive ? activeImageHeight : intialImageHeight,
                           resizeMode: 'cover',
-                          width: Math.min(height * image.width / image.height, screenWidth - 30),
+                          width: this.state.selectActive ? this.state.activeWidths[index] : this.state.inactiveWidths[index],
                         }}
                       >
                         <View
