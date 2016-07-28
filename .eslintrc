@@ -54,6 +54,7 @@
     "react/jsx-space-before-closing": 1,
     "react/self-closing-comp": 1,
     "react/wrap-multilines": 1,
+    "prefer-template": 1,
 
     # "react-native/no-inline-styles": 1,
     # "react-native/no-unused-styles": 1,

@@ -309,7 +309,7 @@ const days = [
     icon: 'md-images',
     size: 50,
     color: '#f5248e',
-    hideNav: true,
+    hideNav: false,
   },
   {
     day: 29,
