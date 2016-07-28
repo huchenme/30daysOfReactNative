@@ -29,6 +29,7 @@ import Day28 from './Day28'
 import Day29 from './Day29'
 import Day30 from './Day30'
 import Day31 from './Day31'
+import Day32 from './Day32'
 
 const days = [
   {
@@ -339,6 +340,16 @@ const days = [
     icon: 'weixin',
     size: 45,
     color: '#0ABA07',
+    hideNav: true,
+  },
+  {
+    day: 32,
+    title: 'Sticky Header',
+    component: Day32,
+    isFA: false,
+    icon: 'ios-arrow-dropup-circle',
+    size: 50,
+    color: '#2196F3',
     hideNav: true,
   },
 ]
