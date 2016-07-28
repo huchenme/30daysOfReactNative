@@ -9,6 +9,7 @@ import {
   TouchableWithoutFeedback,
   LayoutAnimation,
   Text,
+  CameraRoll,
   TouchableHighlight,
 } from 'react-native'
 import {screenHeight, screenWidth} from './dimensions'
@@ -24,11 +25,33 @@ const CustomLayoutLinear = {
   },
 }
 
+const intialImageHeight = 129
+const activeImageHeight = 258
+
 export default class Day28 extends Component {
   state = {
+    images: [],
+    selectActive: false,
+    selected: [],
     showPicker: false,
     modalVisible: false,
     dropOpacity: new Animated.Value(0),
+  }
+
+  componentWillMount() {
+    CameraRoll
+      .getPhotos({first: 10})
+      .done((data) => this.storeImages(data), (err) => this.logImageError(err))
+  }
+
+  storeImages(data) {
+    const assets = data.edges
+    const images = assets.map((asset) => asset.node.image)
+    this.setState({images})
+  }
+
+  logImageError(err) {
+    console.log(err)
   }
 
   _onModalShown = () => {
@@ -94,6 +117,24 @@ export default class Day28 extends Component {
           </TouchableWithoutFeedback>
           <View style={[styles.test, this.state.showPicker ? {bottom: 0} : {top: screenHeight}]}>
             <View style={[styles.rowSection, {backgroundColor: '#F9F9F9'}]}>
+              <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                style={styles.imagesContainer}>
+                {this.state.images.map((image, index) => {
+                  return (
+                    <Image
+                      key={index}
+                      source={{uri: image.uri}}
+                      style={{
+                        marginLeft: index === 0 ? 0 : 5,
+                        height: intialImageHeight,
+                        width: intialImageHeight * image.width / image.height,
+                      }}
+                    />
+                  )
+                })}
+              </ScrollView>
               <TouchableHighlight style={styles.row}>
                 <Text style={styles.menuText}>Photo Library</Text>
               </TouchableHighlight>
@@ -157,5 +198,9 @@ const styles = StyleSheet.create({
     color: '#007AFF',
     fontSize: 20,
     textAlign: 'center',
+  },
+  imagesContainer: {
+    margin: 5,
+    height: intialImageHeight,
   },
 })
