@@ -14,6 +14,11 @@ import {
 } from 'react-native'
 import {screenHeight, screenWidth} from './dimensions'
 
+// TODO:
+// - [ ] select photo should automatic center the Photo
+// - [x] handle panoroma photo
+// - [ ] checkbox should stick to right on scroll
+
 const CustomLayoutLinear = {
   duration: 200,
   create: {
@@ -159,7 +164,8 @@ export default class Day28 extends Component {
                         style={{
                           marginLeft: index === 0 ? 0 : 5,
                           height,
-                          width: height * image.width / image.height,
+                          resizeMode: 'cover',
+                          width: Math.min(height * image.width / image.height, screenWidth - 30),
                         }}
                       >
                         <View
