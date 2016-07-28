@@ -21,6 +21,7 @@
     "clearTimeout": false,
     "setInterval": false,
     "setTimeout": false,
+    "Set": false,
   },
   "rules": {
     "array-bracket-spacing": [1, "never"],

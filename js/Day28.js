@@ -28,11 +28,21 @@ const CustomLayoutLinear = {
 const intialImageHeight = 129
 const activeImageHeight = 258
 
+const Checkbox = ({active = false}) => {
+  const icon = active ? require('./assets/day28/check.png') : require('./assets/day28/circle.png')
+  return (
+    <Image
+      style={styles.checkbox}
+      source={icon}
+    />
+  )
+}
+
 export default class Day28 extends Component {
   state = {
     images: [],
-    selectActive: false,
-    selected: [],
+    selectActive: true,
+    selected: new Set([1, 2]),
     showPicker: false,
     modalVisible: false,
     dropOpacity: new Animated.Value(0),
@@ -122,16 +132,26 @@ export default class Day28 extends Component {
                 showsHorizontalScrollIndicator={false}
                 style={styles.imagesContainer}>
                 {this.state.images.map((image, index) => {
+                  const height = this.state.selectActive ? activeImageHeight : intialImageHeight
                   return (
                     <Image
                       key={index}
                       source={{uri: image.uri}}
                       style={{
                         marginLeft: index === 0 ? 0 : 5,
-                        height: intialImageHeight,
-                        width: intialImageHeight * image.width / image.height,
+                        height,
+                        width: height * image.width / image.height,
                       }}
-                    />
+                    >
+                      <View
+                        style={{
+                          position: 'absolute',
+                          right: 14,
+                          bottom: 14,
+                        }}>
+                        <Checkbox active={index % 2 === 0} />
+                      </View>
+                    </Image>
                   )
                 })}
               </ScrollView>
@@ -201,6 +221,18 @@ const styles = StyleSheet.create({
   },
   imagesContainer: {
     margin: 5,
-    height: intialImageHeight,
+  },
+  checkbox: {
+    backgroundColor: 'transparent',
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    shadowOffset: {
+      width: 0,
+      height: 0,
+    },
+    shadowRadius: 3,
+    shadowColor: '#777',
+    shadowOpacity: 0.3,
   },
 })
