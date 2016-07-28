@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {Component, PropTypes} from 'react'
 import {
   View,
   Modal,
@@ -37,12 +37,15 @@ const Checkbox = ({active = false}) => {
     />
   )
 }
+Checkbox.propTypes = {
+  active: PropTypes.bool,
+}
 
 export default class Day28 extends Component {
   state = {
     images: [],
-    selectActive: true,
-    selected: new Set([1, 2]),
+    selectActive: false,
+    selected: new Set(),
     showPicker: false,
     modalVisible: false,
     dropOpacity: new Animated.Value(0),
@@ -62,6 +65,20 @@ export default class Day28 extends Component {
 
   logImageError(err) {
     console.log(err)
+  }
+
+  _selectImage = (index) => {
+    let newSelected
+    if (this.state.selected.has(index)) {
+      newSelected = this.state.selected.delete(index)
+    } else {
+      newSelected = this.state.selected.add(index)
+    }
+    this.setState({
+      selectActive: true,
+      selected: newSelected,
+    })
+    LayoutAnimation.configureNext(CustomLayoutLinear)
   }
 
   _onModalShown = () => {
@@ -98,6 +115,8 @@ export default class Day28 extends Component {
     LayoutAnimation.configureNext(CustomLayoutLinear, () => {
       this.setState({
         modalVisible: false,
+        selectActive: false,
+        selected: new Set(),
       })
     })
   }
@@ -134,32 +153,37 @@ export default class Day28 extends Component {
                 {this.state.images.map((image, index) => {
                   const height = this.state.selectActive ? activeImageHeight : intialImageHeight
                   return (
-                    <Image
-                      key={index}
-                      source={{uri: image.uri}}
-                      style={{
-                        marginLeft: index === 0 ? 0 : 5,
-                        height,
-                        width: height * image.width / image.height,
-                      }}
-                    >
-                      <View
+                    <TouchableWithoutFeedback key={index} onPress={() => {this._selectImage(index)}}>
+                      <Image
+                        source={{uri: image.uri}}
                         style={{
-                          position: 'absolute',
-                          right: 14,
-                          bottom: 14,
-                        }}>
-                        <Checkbox active={index % 2 === 0} />
-                      </View>
-                    </Image>
+                          marginLeft: index === 0 ? 0 : 5,
+                          height,
+                          width: height * image.width / image.height,
+                        }}
+                      >
+                        <View
+                          style={{
+                            position: 'absolute',
+                            right: 14,
+                            bottom: 14,
+                          }}>
+                          <Checkbox active={this.state.selected.has(index)} />
+                        </View>
+                      </Image>
+                    </TouchableWithoutFeedback>
                   )
                 })}
               </ScrollView>
               <TouchableHighlight style={styles.row}>
-                <Text style={styles.menuText}>Photo Library</Text>
+                <Text style={styles.menuText}>
+                  {this.state.selected.size === 0 ? 'Photo Library' : `Send ${this.state.selected.size} ${this.state.selected.size > 1 ? 'Photos' : 'Photo'}`}
+                </Text>
               </TouchableHighlight>
               <TouchableHighlight style={[styles.row, {borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: '#B2C2D2'}]}>
-                <Text style={styles.menuText}>Take Photo or Video</Text>
+                <Text style={styles.menuText}>
+                  {this.state.selected.size === 0 ? 'Take Photo or Video' : 'Add Comment'}
+                </Text>
               </TouchableHighlight>
             </View>
             <View style={[styles.rowSection, {marginTop: 8}]}>
@@ -227,12 +251,13 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
     borderRadius: 12,
+    overflow: 'visible',
     shadowOffset: {
       width: 0,
       height: 0,
     },
-    shadowRadius: 3,
-    shadowColor: '#777',
+    shadowRadius: 2,
+    shadowColor: 'black',
     shadowOpacity: 0.3,
   },
 })
