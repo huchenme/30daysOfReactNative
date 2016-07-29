@@ -4,21 +4,32 @@ import {
   Text,
   StyleSheet,
 } from 'react-native'
+import Swiper from 'react-native-swiper'
 
 export default class Day2 extends Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Text>Day 2</Text>
-      </View>
+      <Swiper style={styles.wrapper}>
+        <View style={styles.container}>
+          <Text>Day 1</Text>
+        </View>
+        <View style={styles.container}>
+          <Text>Day 2</Text>
+        </View>
+        <View style={styles.container}>
+          <Text>Day 3</Text>
+        </View>
+      </Swiper>
     )
   }
 }
 
 const styles = StyleSheet.create({
+  wrapper: {
+  },
   container: {
     flex: 1,
-    marginTop: 64,
+    backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',
   },
