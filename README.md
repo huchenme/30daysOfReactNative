@@ -140,7 +140,7 @@ Multi page Reminder
 ## Day 22
 Google Now
 
-![day22](https://raw.githubusercontent.com/fangwei716/ThirtyDaysOfReactNative/screenshots/screenshot/day22.gif)
+![day22](https://raw.githubusercontent.com/huchenme/30daysOfReactNative/master/screens/day22.gif)
 
 ## Day 23
 Local WebView
