@@ -4,6 +4,7 @@ import {
   Text,
   View,
   ListView,
+  StatusBar,
   TouchableOpacity,
   ActivityIndicator,
   AlertIOS,
@@ -35,6 +36,10 @@ export default class Day32 extends Component {
         sectionHeaderHasChanged: (s1, s2) => s1 !== s2,
       }),
     }
+  }
+
+  componentWillMount() {
+    StatusBar.setBarStyle('light-content')
   }
 
   componentDidMount() {

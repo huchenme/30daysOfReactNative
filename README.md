@@ -194,6 +194,11 @@ Wechat Menu.
 
 ![day31](https://raw.githubusercontent.com/huchenme/30daysOfReactNative/master/screens/day31.gif)
 
+## Day 32
+Sticky header.
+
+![day31](https://raw.githubusercontent.com/huchenme/30daysOfReactNative/master/screens/day32.gif)
+
 ## Reference
 
-- [Make Gif tutorial](https://gist.github.com/dergachev/4627207)
+- [Make GIF tutorial](https://gist.github.com/dergachev/4627207)
