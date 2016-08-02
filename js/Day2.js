@@ -1,5 +1,6 @@
 import React, {Component, PropTypes} from 'react'
 import {
+  Animated,
   Image,
   ScrollView,
   StatusBar,
@@ -22,6 +23,7 @@ class Weather extends Component{
     super(props)
     this.state = {
       weather: weatherData,
+      scrollX: new Animated.Value(0),
     }
   }
 
@@ -61,7 +63,9 @@ class Weather extends Component{
       return (
         <View key={elem.key}>
           <Image style={styles.image} source={elem.bg} />
-          <ScrollView style={styles.pageContainer}  showsVerticalScrollIndicator={false}>
+          <ScrollView
+            style={styles.pageContainer}
+            showsVerticalScrollIndicator={false}>
             <View style={styles.headInfo}>
               <Text style={styles.city}>{elem.city}</Text>
               <Text style={styles.abs}>{elem.abs}</Text>
@@ -153,6 +157,10 @@ class Weather extends Component{
         <Swiper
           style={styles.wrapper}
           showsButtons={false}
+          scrollEventThrottle={16}
+          onScroll={Animated.event(
+            [{nativeEvent: {contentOffset: {x: this.state.scrollX}}}]
+          )}
           paginationStyle={{bottom: 10, paddingTop: 10, borderTopColor: 'rgba(255,255,255,0.7)', borderTopWidth: StyleSheet.hairlineWidth}}
           dot={<View style={{backgroundColor: 'rgba(255,255,255,0.2)', width: 6, height: 6, borderRadius: 3, marginLeft: 3, marginRight: 3, marginTop: 3, marginBottom: 3}} />}
           activeDot={<View style={{backgroundColor: 'rgba(255,255,255,0.5)', width: 6, height: 6, borderRadius: 3, marginLeft: 3, marginRight: 3, marginTop: 3, marginBottom: 3}} />}>
