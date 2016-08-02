@@ -14,6 +14,13 @@ import {screenWidth, screenHeight} from './dimensions'
 import Icon from 'react-native-vector-icons/Ionicons'
 import Swiper from 'react-native-swiper'
 
+// TODO:
+// - [x] animate backgroundImage
+// - [x] add more data
+// - [ ] animate title when scroll left and right
+// - [ ] animate title when scroll up and down
+// - [ ] reset to top when scroll back
+
 class Weather extends Component{
   static propTypes = {
     back: React.PropTypes.func.isRequired,
@@ -61,109 +68,130 @@ class Weather extends Component{
       })
 
       return (
-        <View key={elem.key}>
-          <Image style={styles.image} source={elem.bg} />
-          <ScrollView
-            style={styles.pageContainer}
-            showsVerticalScrollIndicator={false}>
-            <View style={styles.headInfo}>
-              <Text style={styles.city}>{elem.city}</Text>
-              <Text style={styles.abs}>{elem.abs}</Text>
-              <Text style={styles.degree}>{elem.degree}</Text>
-              <Text style={styles.circle}>°</Text>
+        <ScrollView
+          key={elem.key}
+          style={styles.pageContainer}
+          showsVerticalScrollIndicator={false}>
+          <View style={styles.headInfo}>
+            <Text style={styles.city}>{elem.city}</Text>
+            <Text style={styles.abs}>{elem.abs}</Text>
+            <Text style={styles.degree}>{elem.degree}</Text>
+            <Text style={styles.circle}>°</Text>
+          </View>
+          <View style={styles.withinDay}>
+            <View style={styles.withinDayGeneral}>
+              <View style={styles.withinDayHead}>
+                <Text style={styles.withinDayWeek}>{elem.today.week}</Text>
+                <Text style={styles.withinDayDay}>{elem.today.day}</Text>
+              </View>
+              <View style={styles.withinDayTail}>
+                <Text style={styles.withinDayHigh}>{elem.today.high}</Text>
+                <Text style={elem.night ? styles.withinDayLowNight : styles.withinDayLow}>{elem.today.low}</Text>
+              </View>
             </View>
-            <View style={styles.withinDay}>
-              <View style={styles.withinDayGeneral}>
-                <View style={styles.withinDayHead}>
-                  <Text style={styles.withinDayWeek}>{elem.today.week}</Text>
-                  <Text style={styles.withinDayDay}>{elem.today.day}</Text>
+            <ScrollView  horizontal={true} showsHorizontalScrollIndicator={false} style={styles.withinDayHoursContainer}>
+              <View style={styles.withinDayHours}>
+                {hourView}
+              </View>
+            </ScrollView>
+            <View style={styles.withinWeek}>
+              {dayView}
+            </View>
+            <View style={styles.weatherInfo}>
+              <Text style={styles.weatherInfoText}>{elem.info}</Text>
+            </View>
+            <View style={styles.weatherOther}>
+              <View style={styles.weatherOtherSection}>
+                <View style={styles.weatherOtherLine}>
+                  <Text style={styles.weatherOtherTitle}>日出：</Text>
+                  <Text style={styles.weatherOtherValue}>{elem.rise}</Text>
                 </View>
-                <View style={styles.withinDayTail}>
-                  <Text style={styles.withinDayHigh}>{elem.today.high}</Text>
-                  <Text style={elem.night ? styles.withinDayLowNight : styles.withinDayLow}>{elem.today.low}</Text>
+                <View style={styles.weatherOtherLine}>
+                  <Text style={styles.weatherOtherTitle}>日落：</Text>
+                  <Text style={styles.weatherOtherValue}>{elem.down}</Text>
                 </View>
               </View>
-              <ScrollView  horizontal={true} showsHorizontalScrollIndicator={false} style={styles.withinDayHoursContainer}>
-                <View style={styles.withinDayHours}>
-                  {hourView}
+              <View style={styles.weatherOtherSection}>
+                <View style={styles.weatherOtherLine}>
+                  <Text style={styles.weatherOtherTitle}>降雨概率：</Text>
+                  <Text style={styles.weatherOtherValue}>{elem.prop}</Text>
                 </View>
-              </ScrollView>
-              <View style={styles.withinWeek}>
-                {dayView}
+                <View style={styles.weatherOtherLine}>
+                  <Text style={styles.weatherOtherTitle}>湿度：</Text>
+                  <Text style={styles.weatherOtherValue}>{elem.humi}</Text>
+                </View>
               </View>
-              <View style={styles.weatherInfo}>
-                <Text style={styles.weatherInfoText}>{elem.info}</Text>
+              <View style={styles.weatherOtherSection}>
+                <View style={styles.weatherOtherLine}>
+                  <Text style={styles.weatherOtherTitle}>风速：</Text>
+                  <Text style={styles.weatherOtherValue}><Text style={{fontSize: 10}}>{elem.dir}</Text>{elem.speed}</Text>
+                </View>
+                <View style={styles.weatherOtherLine}>
+                  <Text style={styles.weatherOtherTitle}>体感温度：</Text>
+                  <Text style={styles.weatherOtherValue}>{elem.feel}</Text>
+                </View>
               </View>
-              <View style={styles.weatherOther}>
-                <View style={styles.weatherOtherSection}>
-                  <View style={styles.weatherOtherLine}>
-                    <Text style={styles.weatherOtherTitle}>日出：</Text>
-                    <Text style={styles.weatherOtherValue}>{elem.rise}</Text>
-                  </View>
-                  <View style={styles.weatherOtherLine}>
-                    <Text style={styles.weatherOtherTitle}>日落：</Text>
-                    <Text style={styles.weatherOtherValue}>{elem.down}</Text>
-                  </View>
+              <View style={styles.weatherOtherSection}>
+                <View style={styles.weatherOtherLine}>
+                  <Text style={styles.weatherOtherTitle}>降水量：</Text>
+                  <Text style={styles.weatherOtherValue}>{elem.rain}</Text>
                 </View>
-                <View style={styles.weatherOtherSection}>
-                  <View style={styles.weatherOtherLine}>
-                    <Text style={styles.weatherOtherTitle}>降雨概率：</Text>
-                    <Text style={styles.weatherOtherValue}>{elem.prop}</Text>
-                  </View>
-                  <View style={styles.weatherOtherLine}>
-                    <Text style={styles.weatherOtherTitle}>湿度：</Text>
-                    <Text style={styles.weatherOtherValue}>{elem.humi}</Text>
-                  </View>
+                <View style={styles.weatherOtherLine}>
+                  <Text style={styles.weatherOtherTitle}>气压：</Text>
+                  <Text style={styles.weatherOtherValue}>{elem.pres}</Text>
                 </View>
-                <View style={styles.weatherOtherSection}>
-                  <View style={styles.weatherOtherLine}>
-                    <Text style={styles.weatherOtherTitle}>风速：</Text>
-                    <Text style={styles.weatherOtherValue}><Text style={{fontSize: 10}}>{elem.dir}</Text>{elem.speed}</Text>
-                  </View>
-                  <View style={styles.weatherOtherLine}>
-                    <Text style={styles.weatherOtherTitle}>体感温度：</Text>
-                    <Text style={styles.weatherOtherValue}>{elem.feel}</Text>
-                  </View>
+              </View>
+              <View style={styles.weatherOtherSection}>
+                <View style={styles.weatherOtherLine}>
+                  <Text style={styles.weatherOtherTitle}>能见度：</Text>
+                  <Text style={styles.weatherOtherValue}>{elem.sight}</Text>
                 </View>
-                <View style={styles.weatherOtherSection}>
-                  <View style={styles.weatherOtherLine}>
-                    <Text style={styles.weatherOtherTitle}>降水量：</Text>
-                    <Text style={styles.weatherOtherValue}>{elem.rain}</Text>
-                  </View>
-                  <View style={styles.weatherOtherLine}>
-                    <Text style={styles.weatherOtherTitle}>气压：</Text>
-                    <Text style={styles.weatherOtherValue}>{elem.pres}</Text>
-                  </View>
-                </View>
-                <View style={styles.weatherOtherSection}>
-                  <View style={styles.weatherOtherLine}>
-                    <Text style={styles.weatherOtherTitle}>能见度：</Text>
-                    <Text style={styles.weatherOtherValue}>{elem.sight}</Text>
-                  </View>
-                  <View style={styles.weatherOtherLine}>
-                    <Text style={styles.weatherOtherTitle}>紫外线指数：</Text>
-                    <Text style={styles.weatherOtherValue}>{elem.uv}</Text>
-                  </View>
+                <View style={styles.weatherOtherLine}>
+                  <Text style={styles.weatherOtherTitle}>紫外线指数：</Text>
+                  <Text style={styles.weatherOtherValue}>{elem.uv}</Text>
                 </View>
               </View>
             </View>
-          </ScrollView>
-        </View>
+          </View>
+        </ScrollView>
       )
     })
 
+    const image0Opacity = this.state.scrollX.interpolate({
+      inputRange: [0, screenWidth],
+      outputRange: [1, 0],
+      extrapolate: 'clamp',
+    })
+
+    const image1Opacity = this.state.scrollX.interpolate({
+      inputRange: [0, screenWidth],
+      outputRange: [0, 1],
+      extrapolate: 'clamp',
+    })
+
+    const opacities = [image0Opacity, image1Opacity]
+
     return(
       <View>
+        {this.state.weather.map((elem, index) => (
+          <Animated.Image
+            key={elem.key}
+            style={[StyleSheet.absoluteFill, {opacity: opacities[index]}]}
+            source={elem.bg}
+          />
+        ))}
         <Swiper
+          loop={false}
+          bounces={true}
           style={styles.wrapper}
           showsButtons={false}
           scrollEventThrottle={16}
           onScroll={Animated.event(
             [{nativeEvent: {contentOffset: {x: this.state.scrollX}}}]
           )}
-          paginationStyle={{bottom: 10, paddingTop: 10, borderTopColor: 'rgba(255,255,255,0.7)', borderTopWidth: StyleSheet.hairlineWidth}}
-          dot={<View style={{backgroundColor: 'rgba(255,255,255,0.2)', width: 6, height: 6, borderRadius: 3, marginLeft: 3, marginRight: 3, marginTop: 3, marginBottom: 3}} />}
-          activeDot={<View style={{backgroundColor: 'rgba(255,255,255,0.5)', width: 6, height: 6, borderRadius: 3, marginLeft: 3, marginRight: 3, marginTop: 3, marginBottom: 3}} />}>
+          paginationStyle={styles.pagination}
+          dot={<View style={styles.dot} />}
+          activeDot={<View style={[styles.dot, styles.activeDot]} />}>
           {slides}
         </Swiper>
         <TouchableHighlight onPress={() => this._back()} style={styles.backBtn}>
@@ -183,20 +211,25 @@ export default class Day2 extends Component{
     StatusBar.setBarStyle('light-content')
   }
 
-  _back() {
+  _back = () => {
     this.props.navigator.pop()
   }
 
   render() {
     return(
       <View style={styles.weatherContainer}>
-        <Weather back={() => this._back()} />
+        <Weather back={this._back} />
       </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
+  bg: {
+    flex: 1,
+    width: screenWidth,
+    height: screenHeight,
+  },
   pageContainer: {
     backgroundColor: 'transparent',
     position: 'absolute',
@@ -421,5 +454,24 @@ const styles = StyleSheet.create({
   },
   backBtnIcon: {
     color: '#fff',
+  },
+  pagination: {
+    bottom: 10,
+    paddingTop: 10,
+    borderTopColor: 'rgba(255,255,255,0.7)',
+    borderTopWidth: StyleSheet.hairlineWidth,
+  },
+  dot: {
+    backgroundColor: 'rgba(255,255,255,0.2)',
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    marginLeft: 3,
+    marginRight: 3,
+    marginTop: 3,
+    marginBottom: 3,
+  },
+  activeDot: {
+    backgroundColor: 'rgba(255,255,255,0.5)',
   },
 })
