@@ -21,6 +21,18 @@ import Swiper from 'react-native-swiper'
 // - [ ] animate title when scroll up and down
 // - [ ] reset to top when scroll back
 
+const imageOpacity = (index, totalSlides, scrollX) => {
+  if (index === 0) {
+    return new Animated.Value(1)
+  } else {
+    return scrollX.interpolate({
+      inputRange: [screenWidth * (index - 1), screenWidth * index],
+      outputRange: [0, 1],
+      extrapolate: 'clamp',
+    })
+  }
+}
+
 class City extends Component {
   static propTypes = {
     weather: PropTypes.object.isRequired,
@@ -153,7 +165,6 @@ class Weather extends Component{
   constructor(props) {
     super(props)
     this.state = {
-      weather: weatherData,
       scrollX: new Animated.Value(0),
     }
   }
@@ -163,30 +174,16 @@ class Weather extends Component{
   }
 
   render() {
-    const slides = this.state.weather.map(elem => (
+    const slides = weatherData.map(elem => (
       <City key={elem.key} weather={elem} />
     ))
 
-    const image0Opacity = this.state.scrollX.interpolate({
-      inputRange: [0, screenWidth],
-      outputRange: [1, 0],
-      extrapolate: 'clamp',
-    })
-
-    const image1Opacity = this.state.scrollX.interpolate({
-      inputRange: [0, screenWidth],
-      outputRange: [0, 1],
-      extrapolate: 'clamp',
-    })
-
-    const opacities = [image0Opacity, image1Opacity]
-
     return(
       <View>
-        {this.state.weather.map((elem, index) => (
+        {weatherData.map((elem, index) => (
           <Animated.Image
             key={elem.key}
-            style={[StyleSheet.absoluteFill, {opacity: opacities[index]}]}
+            style={[StyleSheet.absoluteFill, {opacity: imageOpacity(index, weatherData.length, this.state.scrollX)}]}
             source={elem.bg}
           />
         ))}
