@@ -18,8 +18,11 @@ import Swiper from 'react-native-swiper'
 // - [x] animate backgroundImage
 // - [x] add more data
 // - [x] animate title when scroll left and right
-// - [ ] animate title when scroll up and down
+// - [x] animate title when scroll up and down
 // - [ ] reset to top when scroll back
+// - [ ] pan area
+// - [ ] pull down hour view should stick with day view
+// - [ ] pull up day view should only scroll when hour view stick to top
 
 const imageOpacity = (index, totalSlides, scrollX) => {
   if (index === 0) {
@@ -45,6 +48,10 @@ class City extends Component {
   static propTypes = {
     weather: PropTypes.object.isRequired,
     headerRight: PropTypes.any,
+  }
+
+  state = {
+    scrollY: new Animated.Value(0),
   }
 
   render() {
@@ -76,18 +83,43 @@ class City extends Component {
       )
     })
 
+    const headerHeight = this.state.scrollY.interpolate({
+      inputRange: [0, 200],
+      outputRange: [280, 85],
+      extrapolate: 'clamp',
+    })
+
+    const headerTop = this.state.scrollY.interpolate({
+      inputRange: [75, 200],
+      outputRange: [0, 50],
+      extrapolate: 'clamp',
+    })
+
+    const opacityTemp = this.state.scrollY.interpolate({
+      inputRange: [0, 75],
+      outputRange: [1, 0],
+      extrapolate: 'clamp',
+    })
+
+    const opacityDay = this.state.scrollY.interpolate({
+      inputRange: [0, 50],
+      outputRange: [1, 0],
+      extrapolate: 'clamp',
+    })
+
     return (
-      <ScrollView
-        style={styles.pageContainer}
-        showsVerticalScrollIndicator={false}>
-        <Animated.View style={[styles.headInfo, {right: this.props.headerRight}]}>
-          <Text style={styles.city}>{elem.city}</Text>
-          <Text style={styles.abs}>{elem.abs}</Text>
-          <Text style={styles.degree}>{elem.degree}</Text>
-          <Text style={styles.circle}>°</Text>
-        </Animated.View>
-        <View style={styles.withinDay}>
-          <View style={styles.withinDayGeneral}>
+      <View
+        style={styles.pageContainer}>
+        <View>
+          <Animated.View style={[styles.headInfo, {height: headerHeight, top: headerTop, right: this.props.headerRight}]}>
+            <Text style={styles.city}>{elem.city}</Text>
+            <Text style={styles.abs}>{elem.abs}</Text>
+            <Animated.View style={{opacity: opacityTemp}}>
+              <Text style={styles.degree}>{elem.degree}</Text>
+              <Text style={styles.circle}>°</Text>
+            </Animated.View>
+          </Animated.View>
+          <Animated.View style={[styles.withinDayGeneral, {opacity: opacityDay}]}>
             <View style={styles.withinDayHead}>
               <Text style={styles.withinDayWeek}>{elem.today.week}</Text>
               <Text style={styles.withinDayDay}>{elem.today.day}</Text>
@@ -96,12 +128,19 @@ class City extends Component {
               <Text style={styles.withinDayHigh}>{elem.today.high}</Text>
               <Text style={elem.night ? styles.withinDayLowNight : styles.withinDayLow}>{elem.today.low}</Text>
             </View>
-          </View>
+          </Animated.View>
           <ScrollView  horizontal={true} showsHorizontalScrollIndicator={false} style={styles.withinDayHoursContainer}>
             <View style={styles.withinDayHours}>
               {hourView}
             </View>
           </ScrollView>
+        </View>
+        <ScrollView
+          scrollEventThrottle={16}
+          onScroll={Animated.event(
+            [{nativeEvent: {contentOffset: {y: this.state.scrollY}}}]
+          )}
+          showsVerticalScrollIndicator={false}>
           <View style={styles.withinWeek}>
             {dayView}
           </View>
@@ -160,8 +199,8 @@ class City extends Component {
               </View>
             </View>
           </View>
-        </View>
-      </ScrollView>
+        </ScrollView>
+      </View>
     )
   }
 }
@@ -255,9 +294,9 @@ const styles = StyleSheet.create({
     height: screenHeight - 53,
   },
   headInfo: {
-    paddingTop: 70,
     alignItems: 'center',
-    paddingBottom: 60,
+    height: 280,
+    justifyContent: 'center',
     position: 'relative',
   },
   city: {
@@ -281,8 +320,8 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: '300',
     position: 'absolute',
-    top: 130,
-    right: screenWidth / 2 - 55,
+    right: -10,
+    top: 10,
   },
   withinDayGeneral: {
     flexDirection: 'row',
@@ -320,13 +359,13 @@ const styles = StyleSheet.create({
   },
   withinDayLow: {
     fontSize: 16,
-    color: '#eee',
+    color: 'rgba(255,255,255,0.4)',
     fontWeight: '200',
     width: 30,
   },
   withinDayLowNight: {
     fontSize: 16,
-    color: '#aaa',
+    color: 'rgba(255,255,255,0.4)',
     fontWeight: '200',
     width: 30,
   },
@@ -410,13 +449,13 @@ const styles = StyleSheet.create({
     color: '#fff',
   },
   withinWeekLow: {
-    color: 'rgba(255,255,255,0.95)',
+    color: 'rgba(255,255,255,0.4)',
     width: 35,
     fontSize: 16,
     textAlign: 'right',
   },
   withinWeekLowNight: {
-    color: 'rgba(255,255,255,0.3)',
+    color: 'rgba(255,255,255,0.4)',
     width: 35,
     fontSize: 16,
     textAlign: 'right',
