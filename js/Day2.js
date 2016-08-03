@@ -17,7 +17,7 @@ import Swiper from 'react-native-swiper'
 // TODO:
 // - [x] animate backgroundImage
 // - [x] add more data
-// - [ ] animate title when scroll left and right
+// - [x] animate title when scroll left and right
 // - [ ] animate title when scroll up and down
 // - [ ] reset to top when scroll back
 
@@ -33,9 +33,18 @@ const imageOpacity = (index, totalSlides, scrollX) => {
   }
 }
 
+const headerRight = (index, totalSlides, scrollX) => {
+  return scrollX.interpolate({
+    inputRange: [screenWidth * (index - 1), screenWidth * (index + 1)],
+    outputRange: [-70, 70],
+    extrapolate: 'clamp',
+  })
+}
+
 class City extends Component {
   static propTypes = {
     weather: PropTypes.object.isRequired,
+    headerRight: PropTypes.any,
   }
 
   render() {
@@ -71,12 +80,12 @@ class City extends Component {
       <ScrollView
         style={styles.pageContainer}
         showsVerticalScrollIndicator={false}>
-        <View style={styles.headInfo}>
+        <Animated.View style={[styles.headInfo, {right: this.props.headerRight}]}>
           <Text style={styles.city}>{elem.city}</Text>
           <Text style={styles.abs}>{elem.abs}</Text>
           <Text style={styles.degree}>{elem.degree}</Text>
           <Text style={styles.circle}>°</Text>
-        </View>
+        </Animated.View>
         <View style={styles.withinDay}>
           <View style={styles.withinDayGeneral}>
             <View style={styles.withinDayHead}>
@@ -174,8 +183,8 @@ class Weather extends Component{
   }
 
   render() {
-    const slides = weatherData.map(elem => (
-      <City key={elem.key} weather={elem} />
+    const slides = weatherData.map((elem, index) => (
+      <City key={elem.key} weather={elem} headerRight={headerRight(index, weatherData.length, this.state.scrollX)} />
     ))
 
     return(
@@ -249,6 +258,7 @@ const styles = StyleSheet.create({
     paddingTop: 70,
     alignItems: 'center',
     paddingBottom: 60,
+    position: 'relative',
   },
   city: {
     fontSize: 25,
@@ -400,13 +410,13 @@ const styles = StyleSheet.create({
     color: '#fff',
   },
   withinWeekLow: {
-    color: '#eee',
+    color: 'rgba(255,255,255,0.95)',
     width: 35,
     fontSize: 16,
     textAlign: 'right',
   },
   withinWeekLowNight: {
-    color: '#aaa',
+    color: 'rgba(255,255,255,0.3)',
     width: 35,
     fontSize: 16,
     textAlign: 'right',
