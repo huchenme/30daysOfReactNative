@@ -1174,7 +1174,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = me.huchen.AwesomeProject;
+				PRODUCT_BUNDLE_IDENTIFIER = me.huchen.30daysOfReactNative;
 				PRODUCT_NAME = AwesomeProject;
 			};
 			name = Debug;
@@ -1184,7 +1184,7 @@
 			baseConfigurationReference = B01978B9550AE70D172EC253 /* Pods-AwesomeProject.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -1211,7 +1211,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = me.huchen.AwesomeProject;
+				PRODUCT_BUNDLE_IDENTIFIER = me.huchen.30daysOfReactNative;
 				PRODUCT_NAME = AwesomeProject;
 			};
 			name = Release;
