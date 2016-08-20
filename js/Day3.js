@@ -217,7 +217,7 @@ class TwitterTabs extends Component {
 
 export default class Day3 extends Component {
   state = {
-    hideEntrance: true,
+    hideEntrance: false,
   }
 
   hideEntrance = () => {
