@@ -3,7 +3,7 @@ Inspired by https://github.com/fangwei716/30-days-of-react-native, this repo is 
 
 [![Code Climate](https://codeclimate.com/github/huchenme/30daysOfReactNative/badges/gpa.svg)](https://codeclimate.com/github/huchenme/30daysOfReactNative)
 [![Test Coverage](https://codeclimate.com/github/huchenme/30daysOfReactNative/badges/coverage.svg)](https://codeclimate.com/github/huchenme/30daysOfReactNative/coverage)
-[![Issue Count](https://codeclimate.com/github/huchenme/30daysOfReactNative/badges/issue_count.svg)](https://codeclimate.com/github/huchenme/30daysOfReactNative)
+[![Issue Count](https://codeclimate.com/github/huchenme/30daysOfReactNative/badges/issue_count.svg)](https://codeclimate.com/github/huchenme/30daysOfReactNative) [![Greenkeeper badge](https://badges.greenkeeper.io/huchenme/30daysOfReactNative.svg)](https://greenkeeper.io/)
 
 ## Days progress
 
