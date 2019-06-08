@@ -1,0 +1,10 @@
+{
+  "groups": {
+    "default": {
+      "packages": [
+        "js/browser/package.json",
+        "package.json"
+      ]
+    }
+  }
+}
